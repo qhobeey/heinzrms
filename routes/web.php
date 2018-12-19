@@ -12,5 +12,213 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
+});
+
+Route::get('test/sms/{to}/{text}', 'ApiController@sendSms');
+
+Auth::routes();
+
+Route::prefix('console')->group(function () {
+    Route::get('/', 'ConsoleController@index');
+    Route::get('back/response', 'ConsoleController@back')->name('console.back');
+    Route::get('dashboard', 'ConsoleController@dashboard')->name('console.dashboard');
+    Route::resource('accountants', 'AccountantController');
+    Route::resource('supervisors', 'SupervisorController');
+    Route::resource('collectors', 'CollectorController');
+    Route::resource('cashiers', 'CashierController');
+    Route::resource('stock', 'StockController');
+    Route::get('issue/stock', 'StockController@createIssue')->name('stock.issue');
+    Route::post('issue/stock', 'StockController@storeIssue')->name('stock.issue');
+    Route::get('find/gcr', 'StockController@findStock')->name('stock.find');
+    Route::get('return/gcr', 'StockController@returnStock')->name('stock.return');
+    Route::get('filter/cashier/form', 'CashierController@filterForm')->name('cashier.filter.payment');
+    Route::post('payment/cashier/checkout', 'CashierController@checkoutPayment')->name('cashier.checkout.payment');
+
+    /** Location routes */
+    Route::get('location/zonals', 'LocationController@createZonals')->name('location.zonals');
+    Route::post('location/zonals', 'LocationController@saveZonals')->name('location.zonals');
+    Route::get('location/tas', 'LocationController@createTas')->name('location.tas');
+    Route::post('location/tas', 'LocationController@saveTas')->name('location.tas');
+    Route::get('location/electorals', 'LocationController@createElectorals')->name('location.electorals');
+    Route::post('location/electorals', 'LocationController@saveElectorals')->name('location.electorals');
+    Route::get('location/communities', 'LocationController@createCommunities')->name('location.communities');
+    Route::post('location/communities', 'LocationController@saveCommunities')->name('location.communities');
+    Route::get('location/constituencies', 'LocationController@createConstituencies')->name('location.constituencies');
+    Route::post('location/constituencies', 'LocationController@saveConstituencies')->name('location.constituencies');
+    Route::get('location/units', 'LocationController@createUnits')->name('location.units');
+    Route::post('location/units', 'LocationController@saveUnits')->name('location.units');
+    Route::get('location/streets', 'LocationController@createStreets')->name('location.streets');
+    Route::post('location/streets', 'LocationController@saveStreets')->name('location.streets');
+
+    /** Property routes */
+    // Route::get('properties', 'PropertyController@index')->name('property.index');
+    Route::get('property/types', 'PropertyController@addTypes')->name('property.types');
+    Route::post('property/types', 'PropertyController@saveTypes')->name('property.types');
+    Route::get('property/categories', 'PropertyController@addCategories')->name('property.categories');
+    Route::post('property/categories', 'PropertyController@saveCategories')->name('property.categories');
+    Route::get('property/owners', 'PropertyController@addOwners')->name('property.owners');
+    Route::post('property/owners', 'PropertyController@saveOwners')->name('property.owners');
+    Route::get('property/occupants', 'PropertyController@createOccupants')->name('property.occupants');
+    Route::get('property/filter', 'PropertyController@filterPropertyByColumn')->name('property.filter.column');
+    Route::resource('property', 'PropertyController');
+
+    /** */
+    Route::get('property/records/bills', 'RecordController@getBills')->name('property.records.bills');
+    Route::get('prepare/bill/{query}', 'PropertyController@prepareBill')->name('property.prepare.bill');
+    Route::get('property/payments/entry', 'RecordController@getpayments')->name('property.payments.payment');
+    Route::post('property/payments/entry', 'RecordController@savePayments')->name('property.payments.payment');
+    Route::get('property/filter/owner', 'PropertyController@filterOwner')->name('property.filter.owner');
+
+    Route::post('property/prepare/bills', 'PropertyController@preparePropertyBills')->name('property.prepare.bills');
+    Route::get('property/records/bills/preview/{query}', 'RecordController@previewBill')->name('preview.bill');
+
+    /** Business routes */
+    // Route::get('properties', 'PropertyController@index')->name('property.index');
+    Route::get('business/types', 'BusinessController@addTypes')->name('business.types');
+    Route::post('business/types', 'BusinessController@saveTypes')->name('business.types');
+    Route::get('business/categories', 'BusinessController@addCategories')->name('business.categories');
+    Route::post('business/categories', 'BusinessController@saveCategories')->name('business.categories');
+    Route::get('business/owners', 'BusinessController@addOwners')->name('business.owners');
+    Route::post('business/owners', 'BusinessController@saveOwners')->name('business.owners');
+    Route::get('business/occupants', 'BusinessController@createOccupants')->name('business.occupants');
+    Route::get('business/filter', 'BusinessController@filterBusinessByColumn')->name('business.filter.column');
+    Route::resource('business', 'BusinessController');
+
+    /** */
+    Route::get('business/records/bills', 'RecordController@getBills')->name('business.records.bills');
+    Route::get('prepare/bill/{query}', 'BusinessController@prepareBill')->name('business.prepare.bill');
+    Route::get('business/payments/entry', 'RecordController@getpayments')->name('business.payments.payment');
+    Route::post('business/payments/entry', 'RecordController@savePayments')->name('business.payments.payment');
+
+    /** */
+    Route::get('settings', 'SettingsController@index')->name('settings');
+    Route::post('settings/store', 'SettingsController@store')->name('settings.store');
+
+    Route::get('clients', 'ClientController@index')->name('clients');
+    Route::post('clients/store', 'ClientController@store')->name('clients.store');
+
+    /** */
+    Route::get('reports/generate/properties', 'ReportController@propertyIndex')->name('reports.properties');
+    Route::post('reports/generate/properties', 'ReportController@generateProperties')->name('reports.properties');
+
+    Route::get('setup/sms', 'SetupController@sms')->name('setups.sms');
+    Route::get('setup/sms/business', 'SetupController@bsms')->name('setups.sms.business');
+    Route::post('setup/sms', 'SetupController@sendNewSMS1')->name('setups.sms');
+    Route::post('setup/property/bills/sms', 'SetupController@sendBillsSMS')->name('setups.property.bills.sms');
+    Route::get('setup/filter/sms', 'SetupController@propertyFilterSMS')->name('setups.sms.filter.zonal');
+
+    Route::get('account/bills', 'BillingController@propertyBills')->name('account.bills');
+    Route::post('account/bills', 'BillingController@postBills')->name('account.bills');
+
+    Route::get('processing/response', 'BillingController@processing')->name('processing');
+
+});
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('fix/collectors', 'FixRequestsController@fixCollectorID')->name('fix.collectors');
+Route::get('fix/owners/property', 'FixRequestsController@fixOwnerID1')->name('fix.owners.property');
+Route::get('fix/owners/business', 'FixRequestsController@fixOwnerID2')->name('fix.owners.business');
+Route::get('fix/enumgcr', 'FixRequestsController@fixCollectorIDEnumGCR')->name('fix.enum');
+Route::get('fix/payment', 'FixRequestsController@fixCollectorIDPayment')->name('fix.payment');
+Route::get('fix/property/owner', 'FixRequestsController@fixPropertyOwner')->name('fix.property.owner');
+Route::get('fix/business/owner', 'FixRequestsController@fixBusinessOwner')->name('fix.business.owner');
+Route::get('fix/business/id', 'FixRequestsController@businessID')->name('fix.business.id');
+Route::get('fix/property/id', 'FixRequestsController@propertyID')->name('fix.property.id');
+
+Route::prefix('api/v1/console')->group(function () {
+    Route::get('get_data_from/{query}', 'ApiController@getFromData');
+    Route::get('get_stock_from/{query}/{id?}', 'ApiController@getFromStock');
+    Route::get('get_data_to/{query}', 'ApiController@getToData');
+    Route::get('find-gcr/{query}', 'ApiController@findPaymentGcr');
+    Route::get('get/cashier/gcr/{query}', 'ApiController@getCashierGCR');
+
+    /** */
+    Route::get('get_collectors', 'ApiController@getCollectors');
+    Route::get('get_cashiers', 'ApiController@getCashiers');
+
+    /**Location apis */
+    Route::get('get_zonals', 'ApiController@getZonals');
+    Route::get('get_tas', 'ApiController@getTas');
+    Route::get('get_electorals', 'ApiController@getElectorals');
+    Route::get('get_communities', 'ApiController@getCommunities');
+    Route::get('get_units', 'ApiController@getUnits');
+    Route::get('get_streets', 'ApiController@getStreets');
+    Route::get('get_constituencies', 'ApiController@getConstituencies');
+
+    /** */
+    Route::get('get_properties', 'ApiController@getProperties');
+    Route::get('get_properties_d', 'ApiController@getPropertiesD');
+    Route::get('get_property_types', 'ApiController@getPropertyTypes');
+    Route::get('get_property_categories', 'ApiController@getPropertyCategories');
+    Route::get('get_property_owners', 'ApiController@getPropertyOwners');
+    Route::get('get_property_owner/{id}', 'ApiController@getPropertyOwnerData');
+    Route::get('get_property_type/{id}', 'ApiController@getPropertyTypeData');
+    Route::get('get_property_category/{id}', 'ApiController@getPropertyCategoryData');
+    Route::get('get_categories_property/{id}', 'ApiController@getPropertyTC');
+
+    Route::get('get_property_type_name_2/{id}', 'ApiController@getPropertyTypeName2');
+    Route::get('get_property_type_name/{id}', 'ApiController@getPropertyTypeName');
+    Route::get('get_property_cat_name/{id}', 'ApiController@getPropertyCatName');
+    Route::get('get_property_owner_name/{id}', 'ApiController@getPropertyOwnerName');
+    Route::get('get_property_zonal/{id}', 'ApiController@getPropertyZonal');
+
+    Route::get('get_tas_location/{id}', 'ApiController@getTasLocation');
+    Route::get('get_electorals_location/{id}', 'ApiController@getElectoralsLocation');
+    Route::get('get_communities_location/{id}', 'ApiController@getCommunitiesLocation');
+
+
+    /** */
+    Route::get('get_property_bills/{query}', 'ApiController@getPropertyBills');
+    Route::get('get_account_bills/{query}', 'ApiController@getAccountBills');
+    Route::get('get_desktop_property_bills/{query}', 'ApiController@getDesktopPropertyBills');
+    Route::get('get_collectors_stock/{query}', 'ApiController@getCollectorStock');
+    Route::get('get_all_bills', 'ApiController@getAllPropertyBills');
+    Route::get('filter_bill_by_ac/{query}', 'ApiController@filterBillByAc');
+
+    /** */
+    Route::post('save_property_from_mobile', 'ApiController@savePropertyFromMobile');
+    Route::get('get_property_from_mobile/{property}', 'ApiController@getPropertyFromMobile');
+    Route::get('get_properties_from_mobile/{email}/{number?}', 'ApiController@getPropertiesFromMobile');
+    Route::put('update_property_from_mobile/{property}/{owner}', 'ApiController@updatePropertyFromMobile');
+
+
+    /** */
+    Route::get('get_businesses', 'BusinessApiController@getBusinesses');
+    Route::get('get_businesses_d', 'BusinesspiController@getBusinessesD');
+    Route::get('get_business_types', 'BusinessApiController@getBusinessTypes');
+    Route::get('get_business_categories', 'BusinessApiController@getBusinessCategories');
+    Route::get('get_business_owners', 'BusinessApiController@getBusinessOwners');
+    Route::get('get_business_owner/{id}', 'BusinessApiController@getBusinessOwnerData');
+    Route::get('get_business_type/{id}', 'BusinessApiController@getBusinessTypeData');
+    Route::get('get_business_category/{id}', 'BusinessApiController@getBusinessCategoryData');
+    Route::get('get_categories_business/{id}', 'BusinessApiController@getBusinessTC');
+
+    Route::get('get_business_type_name_2/{id}', 'BusinessApiController@getBusinessTypeName');
+    Route::get('get_business_type_name/{id}', 'BusinessApiController@getBusinessTypeName2');
+    Route::get('get_business_cat_name_2/{id}', 'BusinessApiController@getBusinessCatName2');
+    Route::get('get_business_cat_name/{id}', 'BusinessApiController@getBusinessCatName');
+    Route::get('get_business_owner_name/{id}', 'BusinessApiController@getBusinessOwnerName');
+    Route::get('get_business_zonal/{id}', 'BusinessApiController@getBusinessZonal');
+
+
+    /** */
+    Route::get('get_business_bills/{query}', 'BusinessApiController@getBusinessBills');
+    // Route::get('get_collectors_stock/{query}', 'BusinessApiController@getCollectorStock');
+
+    /** */
+    Route::post('save_business_from_mobile', 'BusinessApiController@saveBusinessFromMobile');
+    Route::get('get_business_from_mobile/{business}', 'BusinessApiController@getBusinessFromMobile');
+    Route::get('get_businesses_from_mobile/{email}/{number?}', 'BusinessApiController@getBusinessesFromMobile');
+    Route::put('update_business_from_mobile/{business}/{owner}', 'BusinessApiController@updateBusinessFromMobile');
+
+    /** */
+    Route::get('get_clients', 'ApiController@getClients');
+    Route::get('get_colectors_payment/{collector}/{type}', 'ApiController@getCollectorPaymentStatus');
+
+
+    Route::get('check_process_status', 'ApiController@checkProcessStatus');
+
+
 });
