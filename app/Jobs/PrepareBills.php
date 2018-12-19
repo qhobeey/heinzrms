@@ -36,34 +36,21 @@ class PrepareBills implements ShouldQueue
         \App\Processing::truncate();
 
         if($this->request['account'] == "property"):
-          DB::table('properties')->orderBy('id')->chunk(100, function ($properties) {
-              foreach ($properties as $property) {
-                Billing::initPropertyBill($property, $this->request['feefixing'], $this->request['year']);
-                $process = \App\Processing::first();
-                if($process->count == 0) {
-                  $process->count == $process->count += 1;
-                } else {
-                  $process->count == $process->count += 1;
-                }
-                $process->percentage = (int)(($process->count / $process->total) * 100);
-                $process->save();
-              }
-          });
-          // $properties = \App\Property::latest()->get();
-          if ($properties->count() == 0) dd('No Property data found!');
+          $properties = \App\Property::latest()->get();
+          if ($properties->count() == 0) dd('No business data found!');
           \App\Processing::create(['total' => $properties->count(), 'count' => 0, 'percentage' => 0]);
-          foreach($properties as $key => $property):
-            // Log::info("Request fired");
-
+          foreach($properties as $property):
+              Billing::initPropertyBill($property, $this->request['feefixing'], $this->request['year']);
+              $process = \App\Processing::first();
+              if($process->count == 0) {
+                $process->count == $process->count += 1;
+              } else {
+                $process->count == $process->count += 1;
+              }
+              $process->percentage = (int)(($process->count / $process->total) * 100);
+              $process->save();
           endforeach;
-          // $bills = \App\Bill::where('bill_type', 'p')->where('year', $this->request['year'])->orderBy('account_no', 'asc')->get();
-          // $resMessage = $bills->count()." bills were generated";
-          // dd($resMessage);
-          // Log::info("Request ended.......");
-          // echo '<script language="javascript">';
-          // echo 'alert("Total of: '.$resMessage.'")';
-          // echo '</script>';
-          // return redirect()->route('processing');
+          return redirect()->route('processing');
         else:
           $businesses = \App\Business::latest()->get();
           if ($businesses->count() == 0) dd('No business data found!');
@@ -79,13 +66,6 @@ class PrepareBills implements ShouldQueue
               $process->percentage = (int)(($process->count / $process->total) * 100);
               $process->save();
           endforeach;
-          // $bills = \App\Bill::where('bill_type', 'b')->where('year', $this->request['year'])->orderBy('account_no', 'asc')->get();
-          // $resMessage = $bills->count()." bills were generated";
-          // dd($resMessage);
-          // Log::info("Request ended.......");
-          // echo '<script language="javascript">';
-          // echo 'alert("Total of: '.$resMessage.'")';
-          // echo '</script>';
           return redirect()->route('processing');
         endif;
     }
