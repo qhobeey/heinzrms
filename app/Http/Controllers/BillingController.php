@@ -33,10 +33,10 @@ class BillingController extends Controller
 
     public function postBills(Request $request)
     {
-      dump($request->all());
+      // dump($request->all());
       PrepareBills::dispatch($request->all());
-      dd('p');
-      // return redirect()->route('processing');
+      // dd('p');
+      return redirect()->route('processing');
     }
 
     public static function initPropertyBill($property, $feefixing, $year)
