@@ -37,7 +37,7 @@ class PrepareBills implements ShouldQueue
 
         if($this->request['account'] == "property"):
           $properties = \App\Property::latest()->get();
-          if ($properties->count() == 0) dd('No business data found!');
+          if ($properties->count() == 0) dd('No properties data found!');
           \App\Processing::create(['total' => $properties->count(), 'count' => 0, 'percentage' => 0]);
           foreach($properties as $property):
               Billing::initPropertyBill($property, $this->request['feefixing'], $this->request['year']);
