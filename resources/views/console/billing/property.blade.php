@@ -73,63 +73,16 @@
                                   </tr>
                               </thead>
                               <tbody>
-                                @foreach($bills as $bill)
-                                <tr role="row" class="odd">
-                                    <td class="sorting_1" tabindex="0">
-                                      <input type="checkbox" name="" class="checkall" value="">
-                                    </td>
-                                    <td class="sorting_1" tabindex="0"><a href="#">{{$bill->account_no}}</a></td>
-                                    <td class="sorting_1" tabindex="0">
-                                      <a href="#">
-                                        @if($bill->property->type)
-                                        {{$bill->property->type->description}}
-                                        @else
-                                        {{$bill->property->property_type}}
-                                        @endif
-                                      </a>
-                                    </td>
-                                    <td class="sorting_1" tabindex="0">
-                                      <a href="#">
-                                        @if($bill->property->category)
-                                        {{$bill->property->category->description}}
-                                        @else
-                                        {{$bill->property->property_category}}
-                                        @endif
-                                      </a>
-                                    </td>
-                                    <td class="sorting_1" tabindex="0">
-                                      <a href="#">
-                                        @if($bill->property->owner)
-                                        {{$bill->property->owner->name}}
-                                        @else
-                                        {{$bill->property->property_owner}}
-                                        @endif
-                                      </a>
-                                    </td>
-                                    <td class="sorting_1" tabindex="0"><a href="#">{{$bill->current_amount}}</a></td>
-                                    <td class="sorting_1" tabindex="0"><a href="#">{{$bill->arrears}}</a></td>
-                                    <td class="sorting_1" tabindex="0"><a href="#">{{$bill->year}}</a></td>
-                                    <td class="sorting_1" tabindex="0">
-                                      <a href="#">
-                                        @if($bill->property->owner)
-                                        {{$bill->property->owner->phone}}
-                                        @else
-                                          -
-                                        @endif
-                                      </a>
-                                    </td>
-                                </tr>
-                                @endforeach
+
                               </tbody>
 
                           </table>
 
                       </div>
 
-                      <div class="row">
-                        {{$bills->links()}}
+                      <!-- <div class="row">
                         <p>Total Bills: <span style="color: #f24e4b;">calculating...</span> </p>
-                      </div>
+                      </div> -->
 
                       <div class="row">
                         <div class="col-md-4">
