@@ -33,7 +33,9 @@ class BillingController extends Controller
 
     public function postBills(Request $request)
     {
+      // dump($request->all());
       PrepareBills::dispatch($request->all());
+      // dd('p');
       return redirect()->route('processing');
     }
 
@@ -79,16 +81,17 @@ class BillingController extends Controller
         $params = [];
         $response;
         if(strtolower($type) == "property"):
+          // dd($model);
+          // dd($model->category);
           if (!$model->category) {
             $response = $model->property_no;
             $z = \App\PropertyCategory::where('code', 'LIKE', "%{$model->property_category}%")->first();
             if(!$z) return false;
+            if(!floatval($z->min_charge)) return false;
             $params = array_merge($params, ['min_charge' => floatval($z->min_charge),
                 'rate_pa' => floatval($z->rate_pa),
                 'rateable_value' => floatval($model->rateable_value)
             ]);
-            if(!floatval($z->min_charge)) dd('ol');
-            // dd($params);
           }else{
             $params = array_merge($params, ['min_charge' => floatval($model->category->min_charge),
                 'rate_pa' => floatval($model->category->rate_pa),
