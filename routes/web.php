@@ -99,9 +99,6 @@ Route::prefix('console')->group(function () {
     Route::post('clients/store', 'ClientController@store')->name('clients.store');
 
     /** */
-    Route::get('reports/generate/properties', 'ReportController@propertyIndex')->name('reports.properties');
-    Route::post('reports/generate/properties', 'ReportController@generateProperties')->name('reports.properties');
-
     Route::get('setup/sms', 'SetupController@sms')->name('setups.sms');
     Route::get('setup/sms/business', 'SetupController@bsms')->name('setups.sms.business');
     Route::post('setup/sms', 'SetupController@sendNewSMS1')->name('setups.sms');
@@ -112,6 +109,14 @@ Route::prefix('console')->group(function () {
     Route::post('account/bills', 'BillingController@postBills')->name('account.bills');
 
     Route::get('processing/response', 'BillingController@processing')->name('processing');
+
+    /** */
+    Route::get('reports/property/account', 'ReportController@propertyAccountIndex')->name('report.property.account');
+    Route::post('reports/property/account', 'ReportController@propertyAccountIndexPost')->name('report.property.account');
+    Route::get('reports/business/account', 'ReportController@businessAccountIndex')->name('report.business.account');
+    Route::post('reports/business/account', 'ReportController@businessAccountIndexPost')->name('report.business.account');
+    Route::get('reports/bills/account', 'ReportController@billsAccountIndex')->name('report.bills.account');
+    Route::post('reports/bills/account', 'ReportController@billsAccountIndexPost')->name('report.bills.account');
 
 });
 

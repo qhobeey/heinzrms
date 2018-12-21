@@ -14,7 +14,9 @@
         "jrm2k6/cloudder": "^0.6.0",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
-        "simplesoftwareio/simple-qrcode": "~2"
+        "league/csv": "^9.1",
+        "simplesoftwareio/simple-qrcode": "~2",
+        "usmanhalalit/laracsv": "1.*@dev"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

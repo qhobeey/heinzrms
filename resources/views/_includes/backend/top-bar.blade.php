@@ -28,16 +28,7 @@
                 </div>
                 <ul class="nav navbar-nav hidden-xs">
                     <li><a href="{{route('settings')}}" class="waves-effect waves-light">Settings</a></li>
-                    <!-- <li><a href="{{route('reports.properties')}}" class="waves-effect waves-light">Reports</a></li> -->
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown"
-                           role="button" aria-haspopup="true" aria-expanded="false">Reports <span
-                                    class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{route('reports.properties')}}">Property Reports</a></li>
-                            <li><a href="{{route('reports.properties')}}">Business Reports</a></li>
-                        </ul>
-                    </li>
+                    
                 </ul>
                 <ul class="nav navbar-nav hidden-xs">
                     <!-- <li class="dropdown">

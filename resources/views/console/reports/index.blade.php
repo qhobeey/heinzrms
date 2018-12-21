@@ -12,7 +12,7 @@
 <div class="row main-container2">
 
   <div class="row advanced-search">
-    <form class="form-horizontal" action="{{route('reports.properties')}}" method="post">
+    <form class="form-horizontal" action="" method="post">
       @csrf
       <select class="" name="properties">
         <option value="">All Properties</option>

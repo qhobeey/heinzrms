@@ -42,6 +42,7 @@
 <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 <![endif]-->
 
+@yield('links')
 <link rel="stylesheet" href="/css/dashboard/heinz.css">
 <link href="/backend/css/override.css" rel="stylesheet" type="text/css" />
 
