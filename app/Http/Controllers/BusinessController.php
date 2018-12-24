@@ -182,7 +182,7 @@ class BusinessController extends Controller
           'employee_no' => '', 'male_employed' => '', 'female_employed' => '', 'property_no' => '',
           'valuation_no' => '', 'gps_code' => '','client' => 'none'
         ]);
-        $data = array_merge($data, ['business_owner' => (string) $request->business_owner]);
+        // $data = array_merge($data, ['business_owner' => (string) $request->business_owner]);
         $business = Business::where('business_no', $id)->first();
         // dd($business);
         $business->update($data);

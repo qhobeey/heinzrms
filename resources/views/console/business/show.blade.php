@@ -132,6 +132,12 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        <label for="">Property No</label>
+                                        <input disabled="true" type="text" value="{{$business->property_no}}" name="property_no" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
                                         <label for="">Longitude</label>
                                         <input disabled="true" type="text" value="{{$business->loc_longitude}}" name="loc_longitude" class="form-control">
                                     </div>

@@ -70,7 +70,7 @@
                                           <option value="">-choose-</option>
                                           <option selected="true" value="{{$business->business_owner}}">@{{business_owner_name.firstname}} @{{business_owner_name.lastname}}</option>
                                           <template v-for="data in owners">
-                                              <option :value="data.id">@{{data.firstname}} @{{data.lastname}}</option>
+                                              <option :value="data.owner_id">@{{data.firstname}} @{{data.lastname}}</option>
                                           </template>
                                       </select>
                                   </div>
@@ -140,6 +140,12 @@
                             </div>
 
                             <div class="row">
+                              <div class="col-md-4">
+                                  <div class="form-group">
+                                      <label for="">Property No</label>
+                                      <input disabled="true" type="text" value="{{$business->property_no}}" name="property_no" class="form-control">
+                                  </div>
+                              </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Longitude</label>
@@ -165,7 +171,7 @@
                                             <option value="">-choose-</option>
                                             <option value="none">No sub metro</option>
                                             <template v-for="data in zonals">
-                                                <option :value="data.id">@{{data.description}}</option>
+                                                <option :value="data.code">@{{data.description}}</option>
                                             </template>
                                         </select>
                                     </div>
@@ -177,7 +183,7 @@
                                             <option value="">-choose-</option>
                                             <option value="none">No Town Area</option>
                                             <template v-for="data in tas">
-                                                <option :value="data.id">@{{data.description}}</option>
+                                                <option :value="data.code">@{{data.description}}</option>
                                             </template>
                                         </select>
                                     </div>
@@ -189,7 +195,7 @@
                                             <option value="">-choose-</option>
                                             <option value="none">No Electoral Area</option>
                                             <template v-for="data in electorals">
-                                                <option :value="data.id">@{{data.description}}</option>
+                                                <option :value="data.code">@{{data.description}}</option>
                                             </template>
                                         </select>
                                     </div>
@@ -204,7 +210,7 @@
                                             <option value="">-choose-</option>
                                             <option value="none">No community</option>
                                             <template v-for="data in communities">
-                                                <option :value="data.id">@{{data.description}}</option>
+                                                <option :value="data.code">@{{data.description}}</option>
                                             </template>
                                         </select>
                                     </div>
@@ -216,7 +222,7 @@
                                             <option value="">-choose-</option>
                                             <option value="none">No unit</option>
                                             <template v-for="data in units">
-                                                <option :value="data.id">@{{data.description}}</option>
+                                                <option :value="data.code">@{{data.description}}</option>
                                             </template>
                                         </select>
                                     </div>
@@ -228,7 +234,7 @@
                                             <option value="">-choose-</option>
                                             <option value="none">No street</option>
                                             <template v-for="data in streets">
-                                                <option :value="data.id">@{{data.description}}</option>
+                                                <option :value="data.code">@{{data.description}}</option>
                                             </template>
                                         </select>
                                     </div>
