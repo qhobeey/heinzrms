@@ -203,9 +203,9 @@ class ReportController extends Controller
       // endif;
 
       $csvExporter->build($properties->get(), [
-        'property_no' => 'account number', 'type.description' => 'property type', 'category.description' => 'property category',
-        'zonal.description' => 'zonal council', 'tas.description' => 'town area council', 'electoral.description' => 'electoral area',
-        'owner.name' => 'property owner', 'owner.phone' => 'phone number', 'rateable_value' => 'rateable value', 'client' => 'collector email'
+        'account_no' => 'account no', 'rate_pa' => 'rate pa', 'rateable_value' => 'rateable value', 'current_amount' => 'current amount', 'arrears' => 'arrears',
+        'rate_imposed' => 'rate impose', 'total_paid' => 'total paid', 'account_balance' => 'account balance', 'bill_type' => 'bill type', 'year' => 'bill year ',
+        'bill_date' => 'bill date'
       ])->download('propertyReport-'.$processJob->job_id.'.csv');
 
       return redirect()->back()->with(['status'=> true, 'job' => $processJob->job_id]);
