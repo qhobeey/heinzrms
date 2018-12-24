@@ -412,7 +412,7 @@ class ApiController extends Controller
             'property_category' => 'required', 'zonal_id' => '',
             'valuation_no' => '', 'house_no' => '',
             'street_id' => '', 'loc_longitude' => '', 'loc_latitude' => '',
-            'image' => '', 'client' => '', 'electoral_id' => ''
+            'image' => '', 'client' => '', 'electoral_id' => '', 'tas_id' => '', 'community_id' => ''
         ]);
         // return response()->json(['status' => 'success', 'data' => $props], 201);
 
