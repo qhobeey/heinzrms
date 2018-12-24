@@ -33,7 +33,7 @@ class ReportController extends Controller
       $todaysdate = date("Y-m-d");
       $firstdate = Property::whereNotNull('created_at')->first() ? date(Property::whereNotNull('created_at')->first()->created_at) : date("Y-m-d");
 
-      $properties = Property::with(['type', 'owner', 'category'])->latest();
+      $properties = Property::with(['type', 'owner', 'category', 'tas', 'electoral', 'zonal'])->latest();
 
       if($request->has('type') && $request->input('type') != null):
         $properties->where('property_type', $request->input('type'));
@@ -70,13 +70,22 @@ class ReportController extends Controller
 
       $csvExporter = new \Laracsv\Export();
 
-      if($request->has('fields')):
-        $csvExporter->build($properties->get(), $request->input('fields'))
-                    ->download('propertyReport-'.$processJob->job_id.'.csv');
-      else:
-        $csvExporter->build($properties->get(), ['property_no', 'property_type', 'property_category', 'zonal_id', 'tas_id', 'electoral_id', 'property_owner', 'rateable_value', 'client'])
-                    ->download('propertyReport-'.$processJob->job_id.'.csv');
-      endif;
+      // if($request->has('fields')):
+      //   $csvExporter->build($properties->get(), $request->input('fields'))
+      //               ->download('propertyReport-'.$processJob->job_id.'.csv');
+      // else:
+      //   $csvExporter->build($properties->get(), [
+      //     'property_no' => 'account number', 'type.description' => 'property type', 'category.description' => 'property category',
+      //     'zonal.description' => 'zonal council', 'tas.description' => 'town area council', 'electoral.description' => 'electoral area',
+      //     'owner.name' => 'property owner', 'owner.phone' => 'phone number', 'rateable_value' => 'rateable value', 'client' => 'collector email'
+      //   ])->download('propertyReport-'.$processJob->job_id.'.csv');
+      // endif;
+
+      $csvExporter->build($properties->get(), [
+        'property_no' => 'account number', 'type.description' => 'property type', 'category.description' => 'property category',
+        'zonal.description' => 'zonal council', 'tas.description' => 'town area council', 'electoral.description' => 'electoral area',
+        'owner.name' => 'property owner', 'owner.phone' => 'phone number', 'rateable_value' => 'rateable value', 'client' => 'collector email'
+      ])->download('propertyReport-'.$processJob->job_id.'.csv');
 
       return redirect()->back()->with(['status'=> true, 'job' => $processJob->job_id]);
     }
@@ -93,7 +102,7 @@ class ReportController extends Controller
       $todaysdate = date("Y-m-d");
       $firstdate = Business::whereNotNull('created_at')->first() ? date(Business::whereNotNull('created_at')->first()->created_at) : date("Y-m-d");
 
-      $businesses = Business::with(['type', 'owner', 'category'])->latest();
+      $businesses = Business::with(['type', 'owner', 'category', 'tas', 'electoral', 'zonal'])->latest();
 
       if($request->has('type') && $request->input('type') != null):
         $businesses->where('business_type', $request->input('type'));
@@ -130,15 +139,22 @@ class ReportController extends Controller
 
       $csvExporter = new \Laracsv\Export();
 
-      if($request->has('fields')):
-        $csvExporter->build($businesses->get(), $request->input('fields'))
-                    ->download('businessReport-'.$processJob->job_id.'.csv');
-      else:
-        $csvExporter->build($businesses->get(), [
-          'business_no', 'business_type', 'business_category', 'business_name', 'zonal_id', 'tas_id', 'electoral_id',
-          'business_owner', 'rateable_value', 'client'
-        ])->download('businessReport-'.$processJob->job_id.'.csv');
-      endif;
+      // if($request->has('fields')):
+      //   $csvExporter->build($businesses->get(), $request->input('fields'))
+      //               ->download('businessReport-'.$processJob->job_id.'.csv');
+      // else:
+      //   $csvExporter->build($businesses->get(), [
+      //     'business_no', 'business_type', 'business_category', 'business_name', 'zonal_id', 'tas_id', 'electoral_id',
+      //     'business_owner', 'rateable_value', 'client'
+      //   ])->download('businessReport-'.$processJob->job_id.'.csv');
+      // endif;
+
+      $csvExporter->build($businesses->get(), [
+        'business_no' => 'account number', 'type.description' => 'property type', 'category.description' => 'property category',
+        'zonal.description' => 'zonal council', 'tas.description' => 'town area council', 'business' => 'business name',
+        'electoral.description' => 'electoral area', 'owner.name' => 'business owner', 'owner.phone' => 'phone number',
+        'rateable_value' => 'rateable value', 'client' => 'collector email'
+      ])->download('businessReport-'.$processJob->job_id.'.csv');
 
       return redirect()->back()->with(['status'=> true, 'job' => $processJob->job_id]);
     }
@@ -176,15 +192,21 @@ class ReportController extends Controller
 
       $csvExporter = new \Laracsv\Export();
 
-      if($request->has('fields')):
-        $csvExporter->build($bills->get(), $request->input('fields'))
-                    ->download('billsReport-'.$processJob->job_id.'.csv');
-      else:
-        $csvExporter->build($bills->get(), [
-          'account_no', 'rate_pa', 'rateable_value', 'current_amount', 'arrears',
-          'rate_imposed', 'total_paid', 'account_balance', 'bill_type', 'year', 'bill_date'
-        ])->download('billsReport-'.$processJob->job_id.'.csv');
-      endif;
+      // if($request->has('fields')):
+      //   $csvExporter->build($bills->get(), $request->input('fields'))
+      //               ->download('billsReport-'.$processJob->job_id.'.csv');
+      // else:
+      //   $csvExporter->build($bills->get(), [
+      //     'account_no', 'rate_pa', 'rateable_value', 'current_amount', 'arrears',
+      //     'rate_imposed', 'total_paid', 'account_balance', 'bill_type', 'year', 'bill_date'
+      //   ])->download('billsReport-'.$processJob->job_id.'.csv');
+      // endif;
+
+      $csvExporter->build($properties->get(), [
+        'property_no' => 'account number', 'type.description' => 'property type', 'category.description' => 'property category',
+        'zonal.description' => 'zonal council', 'tas.description' => 'town area council', 'electoral.description' => 'electoral area',
+        'owner.name' => 'property owner', 'owner.phone' => 'phone number', 'rateable_value' => 'rateable value', 'client' => 'collector email'
+      ])->download('propertyReport-'.$processJob->job_id.'.csv');
 
       return redirect()->back()->with(['status'=> true, 'job' => $processJob->job_id]);
     }
