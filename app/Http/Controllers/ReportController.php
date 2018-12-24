@@ -174,7 +174,9 @@ class ReportController extends Controller
       $bills = Bill::latest();
 
       if($request->has('account') && $request->input('account') != null):
-        $bills->where('account_no', $request->input('account'));
+        if($request->input('acccount') == "property"):
+          $bills->where('account_no', $request->input('account'));
+
       endif;
       if($request->has('year') && $request->input('year') != null):
         $bills->where('year', $request->input('year'));
@@ -202,7 +204,7 @@ class ReportController extends Controller
       //   ])->download('billsReport-'.$processJob->job_id.'.csv');
       // endif;
 
-      $csvExporter->build($properties->get(), [
+      $csvExporter->build($bills->get(), [
         'account_no' => 'account no', 'rate_pa' => 'rate pa', 'rateable_value' => 'rateable value', 'current_amount' => 'current amount', 'arrears' => 'arrears',
         'rate_imposed' => 'rate impose', 'total_paid' => 'total paid', 'account_balance' => 'account balance', 'bill_type' => 'bill type', 'year' => 'bill year ',
         'bill_date' => 'bill date'
