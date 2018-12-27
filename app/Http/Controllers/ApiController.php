@@ -475,9 +475,9 @@ class ApiController extends Controller
             if($mobile[0] == '0') $mobile = ltrim($mobile, '0');
             $mobile = '233' . $mobile;
             $message = 'Dear ' . $property->owner->name . ' of PROPERTY ACC No: '. $property->property_no . ' has been successfully registered with ' .env('ASSEMBLY_SMS_FROM').' Assembly.' ;
-            if(env('contacts')):
-              $message. = 'For any enquiry, please contact us.' . env('contacts'). '.';
-            endif;
+            // if(env('contacts')):
+            //   $message. = 'For any enquiry, please contact us.' . env('contacts'). '.';
+            // endif;
             $smsRes = $this->sendSms($mobile, $message);
             // dd($smsRes, 'o');
             if ($smsRes == 'good') {

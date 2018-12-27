@@ -326,9 +326,9 @@ class BusinessApiController extends Controller
             $mobile = '233' . $mobile;
             // dd($mobile);
             $message = 'Dear ' . $business->owner->name . ' of BUSINESS ACC No: '. $business->business_no . ' has been successfully registered with ' .env('ASSEMBLY_SMS_FROM').' Assembly.' ;
-            if(env('contacts')):
-              $message. = 'For any enquiry, please contact us.' . env('contacts'). '.';
-            endif;
+            // if(env('contacts')):
+            //   $message. = 'For any enquiry, please contact us.' . env('contacts'). '.';
+            // endif;
             $smsRes = $this->sendSms($mobile, $message);
             // dd($smsRes, 'o');
             if ($smsRes == 'good') {
