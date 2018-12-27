@@ -232,26 +232,28 @@
                             </div>
 
                             <div class="row">
+                              <div class="col-md-4">
+                                  <div class="form-group">
+                                    <label for="">Property No</label>
+                                    <input type="text" name="property_no" class="form-control">
+                                  </div>
+                              </div>
+                              <div class="col-md-4">
+                                  <div class="form-group">
+                                    <label for="">Store No</label>
+                                    <input type="text" name="store_number" class="form-control">
+                                  </div>
+                              </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Valuation List No</label>
                                         <input type="text" name="valuation_no" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <div class="form-group">
-                                            <label for="">Property No</label>
-                                            <select class="form-control" name="property_no" id="">
-                                                <option value="">-choose-</option>
-                                                <option value="none">No property</option>
-                                                <template v-for="data in properties">
-                                                    <option :value="data.id">@{{data.property_no}}</option>
-                                                </template>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">GPS Code</label>
