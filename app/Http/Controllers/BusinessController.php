@@ -62,7 +62,7 @@ class BusinessController extends Controller
             'electoral_id' => '', 'tin_number' => '', 'vat_no' => '', 'industry' => '',
             'image' => '', 'reg_no' => '', 'email' => '', 'phone' => '', 'address' => '',
             'employee_no' => '', 'male_employed' => '', 'female_employed' => '', 'property_no' => '',
-            'valuation_no' => '', 'gps_code' => '','client' => ''
+            'valuation_no' => '', 'store_number' => '', 'gps_code' => '','client' => ''
         ]);
         $data = array_merge($data, ['business_owner' => (string) $request->business_owner, 'client' => 'none', 'business_no' => 'BB-'.env('ASSEMBLY_CODE').mt_rand(10000,100000)]);
 
@@ -180,7 +180,7 @@ class BusinessController extends Controller
           'electoral_id' => '', 'tin_number' => '', 'vat_no' => '', 'industry' => '',
           'image' => '', 'reg_no' => '', 'email' => '', 'phone' => '', 'address' => '',
           'employee_no' => '', 'male_employed' => '', 'female_employed' => '', 'property_no' => '',
-          'valuation_no' => '', 'gps_code' => '','client' => 'none'
+          'valuation_no' => '', 'gps_code' => '', 'store_number' => '', 'client' => 'none'
         ]);
         // $data = array_merge($data, ['business_owner' => (string) $request->business_owner]);
         $business = Business::where('business_no', $id)->first();

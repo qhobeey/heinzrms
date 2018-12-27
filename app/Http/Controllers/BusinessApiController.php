@@ -264,7 +264,7 @@ class BusinessApiController extends Controller
             'electoral_id' => '', 'tin_number' => '', 'vat_no' => '', 'industry' => '',
             'image' => '', 'reg_no' => '', 'email' => '', 'phone' => '', 'address' => '',
             'employee_no' => '', 'male_employed' => '', 'female_employed' => '', 'property_no' => '',
-            'valuation_no' => '', 'gps_code' => '','client' => '', 'community_id' => ''
+            'valuation_no' => '', 'gps_code' => '','client' => '', 'community_id' => '', 'store_number' => ''
         ]);
         // return response()->json(['status' => 'success', 'data' => $props], 201);
         $owns = array(
