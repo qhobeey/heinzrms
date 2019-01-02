@@ -142,6 +142,12 @@
                                       <input disabled="true" type="text" value="{{$business->property_no}}" name="property_no" class="form-control">
                                   </div>
                               </div>
+                              <div class="col-md-4">
+                                  <div class="form-group">
+                                      <label for="">Collector</label>
+                                      <input disabled="true" type="text" name="occupancy" value="{{$business->client}}" class="form-control">
+                                  </div>
+                              </div>
                             </div>
 
                             <div class="row">

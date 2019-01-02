@@ -18,6 +18,7 @@ class ConsoleController extends Controller
 
     public function dashboard()
     {
+        // return view('console.prints.index');
         return view('console.console');
     }
     public function back()

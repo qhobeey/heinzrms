@@ -11,9 +11,29 @@
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+// Route::get('/', function () {
+//     return view('auth.login');
+// });
+
+Route::get('/', 'HomeController@index');
+Route::get('home', 'HomeController@index');
+Route::get('home/index', 'HomeController@index');
+Route::get('home/samples', 'HomeController@samples');
+Route::get('home/printersinfo', 'HomeController@printersinfo');
+Route::get('home/printHtmlCard', 'HomeController@printHtmlCard');
+Route::get('PrintHtmlCardController', 'PrintHtmlCardController@printFile');
+Route::get('haha', 'PrintHtmlCardController@index');
+Route::post('StoreImageFileController', 'StoreImageFileController@createFile');
+Route::any('WebClientPrintController', 'WebClientPrintController@processRequest');
+
+Route::get('DemoPrintCommands', 'DemoPrintCommandsController@index');
+Route::get('DemoPrintCommandsController', 'DemoPrintCommandsController@printCommands');
+
+Route::get('DemoPrintFile', 'DemoPrintFileController@index');
+Route::get('DemoPrintFileController', 'DemoPrintFileController@printFile');
+
+Route::get('DemoPrintFilePDF', 'DemoPrintFilePDFController@index');
+Route::get('DemoPrintFilePDFController', 'DemoPrintFilePDFController@printFile');
 
 Route::get('test/sms/{to}/{text}', 'ApiController@sendSms');
 
@@ -117,6 +137,10 @@ Route::prefix('console')->group(function () {
     Route::post('reports/business/account', 'ReportController@businessAccountIndexPost')->name('report.business.account');
     Route::get('reports/bills/account', 'ReportController@billsAccountIndex')->name('report.bills.account');
     Route::post('reports/bills/account', 'ReportController@billsAccountIndexPost')->name('report.bills.account');
+
+    /** */
+    Route::get('print/bills', 'PrintingCardController@bills');
+    Route::get('print/notice', 'PrintingCardController@notice');
 
 });
 

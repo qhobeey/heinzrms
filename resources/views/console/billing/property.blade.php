@@ -73,22 +73,16 @@
                                   </tr>
                               </thead>
                               <tbody>
-
+                                <tr role="row" class="odd">
+                                  <td class="sorting_1" tabindex="0"><a href="{{route('property.show', $property->property_no)}}">{{$property->property_no}}</a></td>
+                                </tr>
                               </tbody>
 
                           </table>
 
                       </div>
 
-                      <!-- <div class="row">
-                        <p>Total Bills: <span style="color: #f24e4b;">calculating...</span> </p>
-                      </div> -->
 
-                      <div class="row">
-                        <div class="col-md-4">
-                          <button type="submit" class="btn btn-danger" name="button" style="border-radius: inherit;top: 12px;position: relative;">Send Property Bill SMS to Owners</button>
-                        </div>
-                      </div>
 
                     </form>
                 </div>

@@ -75,16 +75,22 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Occupancy</label>
                                         <input disabled="true" type="text" name="occupancy" value="{{$property->occupancy}}" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Property Owner</label>
                                         <input disabled="true" type="text" value="<?= $property->owner ? $property->owner->name : $property->property_owner ?>" name="use_code" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">Collector</label>
+                                        <input disabled="true" type="text" name="occupancy" value="{{$property->client}}" class="form-control">
                                     </div>
                                 </div>
 

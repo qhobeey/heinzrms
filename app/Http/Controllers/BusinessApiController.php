@@ -318,7 +318,7 @@ class BusinessApiController extends Controller
             'account_no' => $business->business_no,
             'account_type' => strtoupper('b')
           ]);
-          $billingResponse = \App\Http\Controllers\BillingController::initBusinessBill($business, "2018", "2018");
+          // $billingResponse = \App\Http\Controllers\BillingController::initBusinessBill($business, "2018", "2019");
 
           if ($business->owner && $business->owner->phone) {
             $mobile = $business->owner->phone;

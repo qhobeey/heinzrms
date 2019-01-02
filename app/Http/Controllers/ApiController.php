@@ -468,7 +468,7 @@ class ApiController extends Controller
             'account_no' => $property->property_no,
             'account_type' => strtoupper('p')
           ]);
-          $billingResponse = \App\Http\Controllers\BillingController::initPropertyBill($property, "2018", "2018");
+          // $billingResponse = \App\Http\Controllers\BillingController::initPropertyBill($property, "2018", "2019");
 
           if ($property->owner && $property->owner->phone) {
             $mobile = $property->owner->phone;

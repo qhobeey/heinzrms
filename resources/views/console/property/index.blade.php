@@ -58,6 +58,7 @@
                                     <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Property Category</th>
                                     <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Property Owner</th>
                                     <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Zonal</th>
+                                    <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Collector</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -94,8 +95,11 @@
                                         @endif
                                       </a>
                                     </td>
+                                    <td class="sorting_1" tabindex="0"><a href="">{{$property->client}}</a></td>
                                 </tr>
+
                                 @endforeach
+
                             </tbody>
                         </table>
                     </div>

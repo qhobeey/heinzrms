@@ -17,6 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('StoreImageFileController', 'StoreImageFileController@createFile');
+
 Route::put('re_update_property_owner/{id}', 'ApiController@updatePropertyOwnerData');
 Route::put('re_update_property_type/{id}', 'ApiController@updatePropertyTypeData');
 Route::put('re_update_property_category/{id}', 'ApiController@updatePropertyCategoryData');
