@@ -26,11 +26,14 @@ use Session;
 
 class PrintingCardController extends Controller
 {
-    public function bills(){
-
+    public function bills($account){
+      $bill = \App\Bill::with(['property', 'business'])->where('account_no', $account)->first();
+      $lastyear = \App\Bill::where('account_no', $account)->where('year', $bill->year - 1)->first();
+      $setting = \App\BillSetting::first();
+      // dd($setting);
         $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
 
-        return view('console.prints.bill-card', ['wcpScript' => $wcpScript]);
+        return view('console.prints.bill-card', ['wcpScript' => $wcpScript, 'bill' => $bill, 'lastyear' => $lastyear, 'setting' => $setting]);
     }
 
     public function notice(){
@@ -75,6 +78,42 @@ class PrintingCardController extends Controller
 
 
         }
+    }
+
+    public function formatBill()
+    {
+      $bill = \App\Bill::with(['property', 'business'])->first();
+      $lastyear = \App\Bill::where('account_no', $bill->account_no)->where('year', $bill->year - 1)->first();
+      $setting = \App\BillSetting::first();
+      // dd($setting);
+        $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
+
+        return view('console.billing.bill-format', ['wcpScript' => $wcpScript, 'bill' => $bill, 'lastyear' => $lastyear, 'setting' => $setting]);
+    }
+
+    public function updateFormatBill(Request $request)
+    {
+
+      // dd($request->all());
+
+      $setting = \App\BillSetting::first();
+      if(!is_null($request->paymet_date)):
+        $setting->paymet_date = $request->paymet_date;
+      endif;
+      if(!is_null($request->contact_info_text)):
+        $setting->contact_info_text = $request->contact_info_text;
+      endif;
+      if(!is_null($request->authority_person)):
+        $setting->authority_person = $request->authority_person;
+      endif;
+      if(!is_null($request->organization_type)):
+        $setting->organization_type = $request->organization_type;
+      endif;
+      if(!is_null($request->enforce_law_text)):
+        $setting->enforce_law_text = $request->enforce_law_text;
+      endif;
+      $setting->save();
+      return redirect()->back();
     }
 
 }

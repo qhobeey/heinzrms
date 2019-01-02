@@ -70,16 +70,90 @@
                                       <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Arrears</th>
                                       <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Bill year</th>
                                       <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Telephone</th>
+                                      <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Action</th>
                                   </tr>
                               </thead>
                               <tbody>
+                                @foreach($bills as $bill)
                                 <tr role="row" class="odd">
-                                  <td class="sorting_1" tabindex="0"><a href="{{route('property.show', $property->property_no)}}">{{$property->property_no}}</a></td>
+                                  <td class="sorting_1" tabindex="0"><a href="#"></a></td>
+                                  <td class="sorting_1" tabindex="0"><a href="#">{{$bill->account_no}}</a></td>
+                                  <td class="sorting_1" tabindex="0">
+                                    <a href="#">
+                                      <?php
+                                        if($bill->property):
+                                          echo $bill->property->type ? $bill->property->type->description : strtoupper("no relation");
+                                        elseif($bill->business):
+                                            echo $bill->business->type ? $bill->business->type->description : strtoupper("no relation");
+                                        endif;
+
+                                      ?>
+                                    </a>
+                                  </td>
+                                  <td class="sorting_1" tabindex="0">
+                                    <a href="#">
+                                      <?php
+                                        if($bill->property):
+                                          echo $bill->property->category ? $bill->property->category->description : strtoupper("no relation");
+                                        elseif($bill->business):
+                                            echo $bill->business->category ? $bill->business->category->description : strtoupper("no relation");
+                                        endif;
+
+                                      ?>
+                                    </a>
+                                  </td>
+                                  <td class="sorting_1" tabindex="0">
+                                    <a href="#">
+                                      <?php
+                                        if($bill->property):
+                                          echo $bill->property->owner ? $bill->property->owner->name : strtoupper("no relation");
+                                        elseif($bill->business):
+                                            echo $bill->business->owner ? $bill->business->owner->name : strtoupper("no relation");
+                                        endif;
+
+                                      ?>
+                                    </a>
+                                  </td>
+                                  <td class="sorting_1" tabindex="0">
+                                    <a href="#">
+                                      <?= \App\Repositories\ExpoFunction::formatMoney($bill->current_amount, true); ?>
+                                    </a>
+                                  </td>
+                                  <td class="sorting_1" tabindex="0">
+                                    <a href="#">
+                                      <?= \App\Repositories\ExpoFunction::formatMoney($bill->arrears, true); ?>
+                                    </a>
+                                  </td>
+                                  <td class="sorting_1" tabindex="0">
+                                    <a href="#">
+                                      <?= $bill->year; ?>
+                                    </a>
+                                  </td>
+                                  <td class="sorting_1" tabindex="0">
+                                    <a href="#">
+                                      <?php
+                                        if($bill->property):
+                                          echo $bill->property->owner ? $bill->property->owner->phone : strtoupper("no relation");
+                                        elseif($bill->business):
+                                            echo $bill->business->owner ? $bill->business->owner->phone : strtoupper("no relation");
+                                        endif;
+
+                                      ?>
+                                    </a>
+                                  </td>
+                                  <td class="sorting_1" tabindex="0"><a href="{{route('init.bill.print', $bill->account_no)}}" class="btn btn-danger btn-xs">print</a></td>
                                 </tr>
+                                @endforeach
+
                               </tbody>
+
 
                           </table>
 
+                      </div>
+
+                      <div class="row">
+                        {{$bills->links()}}
                       </div>
 
 

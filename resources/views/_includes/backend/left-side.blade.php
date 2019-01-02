@@ -89,6 +89,12 @@
                               <li><a href="{{route('cashiers.create')}}">{{__('Add Cashier')}}</a></li>
                           </ul>
                       </li>
+                      <li class="has_sub">
+                          <a href="javascript:void(0);" class="waves-effect"><span> {{__('Customize')}} </span> <span class="menu-arrow"></span></a>
+                          <ul class="list-unstyled">
+                              <li><a href="{{route('customize.bill.format')}}">{{__('Bill Format')}}</a></li>
+                          </ul>
+                      </li>
                     </ul>
                 </li>
 

@@ -26,7 +26,9 @@ class BillingController extends Controller
     public function propertyBills()
     {
       $bills = session()->get('bills');
-      if(!$bills) $bills = \App\Bill::with('property')->where('bill_type', 'p')->where('year', date("Y"))->orderBy('account_no', 'asc')->paginate(50);
+      // if(!$bills) $bills = \App\Bill::with(['property', 'business'])->where('bill_type', 'p')->where('year', date("Y"))->orderBy('account_no', 'asc')->paginate(50);
+      if(!$bills) $bills = \App\Bill::with(['property', 'business'])->orderBy('account_no', 'asc')->paginate(50);
+      // dd($bills);
       return view('console.billing.property', compact('bills'));
     }
 

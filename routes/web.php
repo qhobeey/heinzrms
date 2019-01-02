@@ -139,8 +139,13 @@ Route::prefix('console')->group(function () {
     Route::post('reports/bills/account', 'ReportController@billsAccountIndexPost')->name('report.bills.account');
 
     /** */
-    Route::get('print/bills', 'PrintingCardController@bills');
+    // Route::get('print/bills', 'PrintingCardController@bills');
+    Route::get('print/bills/{bill}', 'PrintingCardController@bills')->name('init.bill.print');
     Route::get('print/notice', 'PrintingCardController@notice');
+
+    /** */
+    Route::get('customize/bill/format', 'PrintingCardController@formatBill')->name('customize.bill.format');
+    Route::put('customize/bill/format', 'PrintingCardController@updateFormatBill')->name('customize.bill.format');
 
 });
 
