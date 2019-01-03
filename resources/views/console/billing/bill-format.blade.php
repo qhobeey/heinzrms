@@ -33,7 +33,8 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="">Organization Type</label>
-            <select class="form-control" name="organization_type" value="<?= $setting->organization_type; ?>">
+            <select class="form-control" name="organization_type" value="">
+              <option disabled="true" selected="true" value="<?= $setting->organization_type; ?>"><?= $setting->organization_type; ?></option>
               <option value="Metro">Metropolitan</option>
               <option value="District">District</option>
               <option value="Municipal">Municipal</option>

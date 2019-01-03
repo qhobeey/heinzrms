@@ -14,6 +14,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'smsBaseURL' => 'https://mysms.nsano.com/api/v1/sms/single',
+    'smsAPIKey' => '54342c3fbbe8a790e1da826a138a6355',
 
     /*
     |--------------------------------------------------------------------------

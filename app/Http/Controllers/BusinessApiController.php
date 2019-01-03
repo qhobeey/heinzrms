@@ -28,10 +28,10 @@ use App\Bill;
 
 use Cloudder;
 
+use App\Http\Controllers\SetupController as Setup;
+
 class BusinessApiController extends Controller
 {
-
-    protected $smsBaseURL = 'https://portals.nsano.com:4002/sms/1/text/single';
 
     public function getFromData($query)
     {
@@ -329,7 +329,7 @@ class BusinessApiController extends Controller
             // if(env('contacts')):
             //   $message. = 'For any enquiry, please contact us.' . env('contacts'). '.';
             // endif;
-            $smsRes = $this->sendSms($mobile, $message);
+            $smsRes = Setup::sendSms($mobile, $message);
             // dd($smsRes, 'o');
             if ($smsRes == 'good') {
               return response()->json(['status' => 'success', 'message' => 'Saved and SMS sent', 'business' => $business, 'owner' => $ownrs], 201);
@@ -351,26 +351,7 @@ class BusinessApiController extends Controller
       return true;
     }
 
-    private function sendSms($to, $text)
-    {
-      $client = new \GuzzleHttp\Client([
-        'headers' => [
-          'Content-Type' => 'application/x-www-form-urlencoded',
-          'Accept' => 'application/json'
-        ]
-      ]);
-      $res = $client->request('POST', $this->smsBaseURL, [
-          'auth' => ['HEINZIS', 'Ignatiusamoah647'],
-          'form_params' => [
-            'from' => env('ASSEMBLY_SMS_FROM'),
-            'to' => $to,
-            'text' => $text
-          ]
-      ]);
-      $response = json_decode($res->getBody());
-      if($response->messages[0]->status->groupName == "REJECTED") return 'bad';
-      return 'good';
-    }
+
 
     public function getBusinessFromMobile($prop)
     {

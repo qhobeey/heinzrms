@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Jobs\SendSMS;
 use App\Jobs\SendCustomSMS;
 
+use config;
+
 class SetupController extends Controller
 {
 
@@ -14,7 +16,8 @@ class SetupController extends Controller
       $this->middleware('auth');
   }
 
-  protected static $smsBaseURL = 'https://portals.nsano.com:4002/sms/1/text/single';
+  protected static $smsBaseURL = 'https://mysms.nsano.com/api/v1/sms/single';
+
 
     public function sms()
     {
@@ -85,23 +88,12 @@ class SetupController extends Controller
 
     public static function sendSms($to, $text)
     {
-      // dd($text);
-      $client = new \GuzzleHttp\Client([
-        'headers' => [
-          'Content-Type' => 'application/x-www-form-urlencoded',
-          'Accept' => 'application/json'
-        ]
-      ]);
-      $res = $client->request('POST', self::$smsBaseURL, [
-          'auth' => ['HEINZIS', 'Ignatiusamoah647'],
-          'form_params' => [
-            'from' => env('ASSEMBLY_SMS_FROM'),
-            'to' => $to,
-            'text' => $text
-          ]
-      ]);
+      $data = [ "sender" => env('ASSEMBLY_SMS_FROM'), "recipient" => $to, "message" => $text];
+      $client = new \GuzzleHttp\Client([ 'headers' => ['Content-Type' => 'application/json', 'X-SMS-Apikey' => config('app.smsBaseURL')]]);
+      $res = $client->request('POST', config('app.smsBaseURL'), ['json' => $data]);
       $response = json_decode($res->getBody());
-      if($response->messages[0]->status->groupName == "REJECTED") return 'bad';
+
+      // if($response->messages[0]->status->groupName == "REJECTED") return 'bad';
       return 'good';
     }
 }

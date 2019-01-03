@@ -53,6 +53,7 @@
                     <ul class="list-unstyled">
                         <!-- <li><a href="{{route('property.records.bills')}}">{{__('Bills')}}</a></li> -->
                         <li><a href="{{route('account.bills')}}">{{__('Bills')}}</a></li>
+                        <li><a href="{{route('print.bills')}}">{{__('Print Bills')}}</a></li>
                         <li><a href="{{route('cashiers.index')}}">{{__('Cashier Payments')}}</a></li>
                         <li><a href="{{route('property.payments.payment')}}">{{__('Individual Payments')}}</a></li>
                     </ul>

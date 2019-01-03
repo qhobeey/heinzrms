@@ -116,4 +116,9 @@ class PrintingCardController extends Controller
       return redirect()->back();
     }
 
+    public function printBills()
+    {
+      return view('console.billing.print-bills');
+    }
+
 }

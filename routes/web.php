@@ -142,6 +142,7 @@ Route::prefix('console')->group(function () {
     // Route::get('print/bills', 'PrintingCardController@bills');
     Route::get('print/bills/{bill}', 'PrintingCardController@bills')->name('init.bill.print');
     Route::get('print/notice', 'PrintingCardController@notice');
+    Route::get('auth/print/notice', 'PrintingCardController@printBills')->name('print.bills');
 
     /** */
     Route::get('customize/bill/format', 'PrintingCardController@formatBill')->name('customize.bill.format');

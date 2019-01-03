@@ -33,11 +33,10 @@ use App\Client;
 use Cloudder;
 
 use GuzzleHttp\Exception\GuzzleException;
+use App\Http\Controllers\SetupController as Setup;
 
 class ApiController extends Controller
 {
-
-    protected $smsBaseURL = 'https://portals.nsano.com:4002/sms/1/text/single';
 
     public function getFromData($query)
     {
@@ -362,7 +361,7 @@ class ApiController extends Controller
                 $mobile = '233248160008';
                 $bill = Bill::where('account_no', $payment->account_no)->first();
                 $message = 'Dear ' . $account->owner->name . ' of PROPERTY ACC: '. $payment->account_no . '. You have been credited with a payment amount of GHc' .$payment->amount_paid . ' with a GCR No '. $payment->gcr_number . ' and your current balance is GHc ' . $bill->current_amount . '.Thanks';
-                $smsRes = $this->sendSms($mobile, $message);
+                $smsRes = Setup::sendSms($mobile, $message);
                 // dd($smsRes, 'o');
                 if ($smsRes == 'good') {
                   return response()->json(['status' => 'success', 'data' => 'Saved and SMS sent', 'payment' => $payment, 'account' => $bill, 'owner' => $account->owner ? $account->owner->name : 'no owner name found']);
@@ -478,7 +477,7 @@ class ApiController extends Controller
             // if(env('contacts')):
             //   $message. = 'For any enquiry, please contact us.' . env('contacts'). '.';
             // endif;
-            $smsRes = $this->sendSms($mobile, $message);
+            $smsRes = Setup::sendSms($mobile, $message);
             // dd($smsRes, 'o');
             if ($smsRes == 'good') {
               return response()->json(['status' => 'success', 'message' => 'Saved and SMS sent', 'property' => $property, 'owner' => $ownrs], 201);
@@ -498,27 +497,6 @@ class ApiController extends Controller
       $data = array_merge($data, ['collector_id' => $collector->collector_id, 'name' => $collector->name, 'username' => $collector->username, 'paid' => 0]);
       $payment = \App\CollectorPayment::create($data);
       return true;
-    }
-
-    private function sendSms($to, $text)
-    {
-      $client = new \GuzzleHttp\Client([
-        'headers' => [
-          'Content-Type' => 'application/x-www-form-urlencoded',
-          'Accept' => 'application/json'
-        ]
-      ]);
-      $res = $client->request('POST', $this->smsBaseURL, [
-          'auth' => ['HEINZIS', 'Ignatiusamoah647'],
-          'form_params' => [
-            'from' => env('ASSEMBLY_SMS_FROM'),
-            'to' => $to,
-            'text' => $text
-          ]
-      ]);
-      $response = json_decode($res->getBody());
-      if($response->messages[0]->status->groupName == "REJECTED") return 'bad';
-      return 'good';
     }
 
     public function getPropertyFromMobile($prop)
