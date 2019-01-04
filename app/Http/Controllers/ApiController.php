@@ -38,6 +38,10 @@ use App\Http\Controllers\SetupController as Setup;
 class ApiController extends Controller
 {
 
+  public function testSMS() {
+    Setup::sendSms('233248160008', 'hello testing');
+  }
+
     public function getFromData($query)
     {
         $data = [];

@@ -35,7 +35,7 @@ Route::get('DemoPrintFileController', 'DemoPrintFileController@printFile');
 Route::get('DemoPrintFilePDF', 'DemoPrintFilePDFController@index');
 Route::get('DemoPrintFilePDFController', 'DemoPrintFilePDFController@printFile');
 
-Route::get('test/sms/{to}/{text}', 'ApiController@sendSms');
+Route::get('test/sms', 'ApiController@testSMS');
 
 Auth::routes();
 

@@ -88,10 +88,12 @@ class SetupController extends Controller
 
     public static function sendSms($to, $text)
     {
+      // dd(config('app.smsBaseURL'), config('app.smsAPIKey'), env('ASSEMBLY_SMS_FROM'));
       $data = [ "sender" => env('ASSEMBLY_SMS_FROM'), "recipient" => $to, "message" => $text];
-      $client = new \GuzzleHttp\Client([ 'headers' => ['Content-Type' => 'application/json', 'X-SMS-Apikey' => config('app.smsBaseURL')]]);
+      $client = new \GuzzleHttp\Client([ 'headers' => ['Content-Type' => 'application/json', 'X-SMS-Apikey' => config('app.smsAPIKey')]]);
       $res = $client->request('POST', config('app.smsBaseURL'), ['json' => $data]);
       $response = json_decode($res->getBody());
+      // dd($response);
 
       // if($response->messages[0]->status->groupName == "REJECTED") return 'bad';
       return 'good';
