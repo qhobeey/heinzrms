@@ -148,6 +148,12 @@ Route::prefix('console')->group(function () {
     Route::get('customize/bill/format', 'PrintingCardController@formatBill')->name('customize.bill.format');
     Route::put('customize/bill/format', 'PrintingCardController@updateFormatBill')->name('customize.bill.format');
 
+    /** */
+    Route::get('advanced/report/search/property', 'AdvancedReportController@propertyListingSearch')->name('advanced.report.search.property');
+    Route::get('advanced/report/property', 'AdvancedReportController@propertyListing')->name('advanced.report.property');
+    Route::get('advanced/report/property/{location}/{query}/{year}', 'AdvancedReportController@propertyListingDetails')->name('advanced.report.property.details');
+    Route::get('/api/advanced/report/property', 'AdvancedReportController@test');
+
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

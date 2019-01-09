@@ -57,7 +57,7 @@ return [
         //     'charset' => 'utf8mb4',
         //     'collation' => 'utf8mb4_unicode_ci',
         //     'prefix' => '',
-        //     'strict' => true,
+        //     'strict' => false,
         //     'engine' => null,
         //     'modes'       => [
         //         'ONLY_FULL_GROUP_BY',
@@ -68,7 +68,7 @@ return [
         //         'NO_ENGINE_SUBSTITUTION',
         //     ],
         //     'version'     => 8,
-        // ],
+        ],
 
         'mysql' => array(
             'driver'    => 'mysql',
@@ -91,7 +91,7 @@ return [
             ],
             'version'     => 8,
         ),
-        
+
 
         'pgsql' => [
             'driver' => 'pgsql',

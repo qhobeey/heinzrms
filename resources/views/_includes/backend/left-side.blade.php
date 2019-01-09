@@ -102,31 +102,11 @@
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="ti-notepad"></i><span> {{__('Reports')}} </span><span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
-                      <li><a href="{{route('report.property.account')}}">{{__('Property Report')}}</a></li>
+                      <!-- <li><a href="{{route('report.property.account')}}">{{__('Property Report')}}</a></li>
                       <li><a href="{{route('report.business.account')}}">{{__('Business Report')}}</a></li>
-                      <li><a href="{{route('report.bills.account')}}">{{__('Bill Report')}}</a></li>
-                      <!-- <li class="has_sub">
-                          <a href="javascript:void(0);" class="waves-effect"><span> {{__('Properties')}} </span><span class="menu-arrow"></span></a>
-                          <ul class="list-unstyled">
-                              <li><a href="{{route('report.property.account')}}">{{__('account')}}</a></li>
-                              <li><a href="#">{{__('owners')}}</a></li>
-                          </ul>
-                      </li>
-                      <li class="has_sub">
-                          <a href="javascript:void(0);" class="waves-effect"><span> {{__('Business')}} </span><span class="menu-arrow"></span></a>
-                          <ul class="list-unstyled">
-                              <li><a href="{{route('report.business.account')}}">{{__('account')}}</a></li>
-                              <li><a href="#">{{__('owners')}}</a></li>
-                          </ul>
-                      </li>
-                      <li class="has_sub">
-                          <a href="javascript:void(0);" class="waves-effect"><span> {{__('Billing')}} </span><span class="menu-arrow"></span></a>
-                          <ul class="list-unstyled">
-                              <li><a href="{{route('report.bills.account')}}">{{__('account')}}</a></li>
-                              <li><a href="#">{{__('property')}}</a></li>
-                              <li><a href="#">{{__('business')}}</a></li>
-                          </ul>
-                      </li> -->
+                      <li><a href="{{route('report.bills.account')}}">{{__('Bill Report')}}</a></li> -->
+
+                      <li><a href="{{route('advanced.report.search.property')}}">{{__('Property Listings')}}</a></li>
                     </ul>
                 </li>
 

@@ -38,3 +38,6 @@ Route::delete('re_delete_business_type/{id}', 'BusinessApiController@deleteBusin
 Route::post('save_business_from_mobile', 'BusinessApiController@saveBusinessFromMobile');
 Route::put('update_business_from_mobile/{business}/{owner}', 'BusinessApiController@updateBusinessFromMobile');
 Route::post('check_auth_system', 'ApiController@checkMobileAuth');
+
+
+Route::get('get/bill/count', 'ApiController@getBilCount');

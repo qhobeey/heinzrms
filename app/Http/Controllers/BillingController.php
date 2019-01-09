@@ -180,7 +180,7 @@ class BillingController extends Controller
       $arrears = $previousBill ? floatval($previousBill->arrears) : floatval(0);
 
       $bill = array_merge($params, ['account_no' => $account,
-          'account_balance' => $ans, 'arrears' => $arrears, 'current_amount' => $ans, 'bill_type' => $type, 'prepared_by' => 'Heinz', 'year' => $year,
+          'account_balance' => $ans, 'arrears' => $arrears, 'current_amount' => $ans, 'bill_type' => $type, 'prepared_by' => 'admin', 'year' => $year,
           'bill_date' => Carbon::now()->toDateString()
       ]);
       unset($bill['min_charge']);

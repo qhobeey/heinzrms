@@ -21,5 +21,9 @@ class Business extends Model
   {
       return $this->belongsTo('App\Models\Location\Zonal', 'zonal_id', 'code');
   }
+  public function tas()
+  {
+      return $this->belongsTo('App\Models\Location\Ta', 'tas_id', 'code');
+  }
 
 }

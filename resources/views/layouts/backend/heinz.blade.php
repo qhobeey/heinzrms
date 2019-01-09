@@ -124,14 +124,7 @@
 
   gtag('config', 'UA-110183437-1');
 </script>
-
-
-                <script>
-    $(document).ready(function () {
-
-
-
-             })
+   })
 </script>
 <script src="/js/app.js"></script>
 @yield('scripts')

@@ -619,4 +619,21 @@ class ApiController extends Controller
        $data = \App\Processing::first();
        return response()->json(['status' => 'success', 'data' => $data], 201);
      }
+
+     public function getBilCount(Request $request)
+     {
+       if($request->isFilter == "true"):
+         $bills = \App\Bill::with(['property', 'business'])->where('year', $request->year)->latest()->get();
+         foreach ($bills as $bill) {
+           if(strtolower($bill->bill_type) == strtolower('p')):
+             // TODO::create
+           endif;
+         }
+         dd($bills);
+       else:
+         $billCount = \App\Bill::where('year', $request->year)->latest()->count();
+         return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($billCount, false)], 201);
+       endif;
+       dd($request->isFilter);
+     }
 }

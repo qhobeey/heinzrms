@@ -271,3 +271,67 @@ border-radius: 7px;
   height: 300px;
   padding-top: 90px;
 }
+table.dataTable thead th.sorting:after, table.dataTable thead th.sorting_asc:after, table.dataTable thead th.sorting_desc:after{
+  display: none;
+}
+#fBill1 tr{
+  font-size: 11px;
+  color: black;
+  text-transform: uppercase;
+}
+#fBill1 tr img,
+#fBill2 tr img{
+  width: 11px;
+  object-fit: contain;
+}
+table.dataTable.stripe tbody tr.odd.even2,
+table.dataTable.display tbody tr.odd.even2{
+  background-color: white;
+}
+table.dataTable.stripe tbody tr.odd.odd2,
+table.dataTable.display tbody tr.odd.odd2{
+  background-color: #f5f5dc;
+  font-size: 12px!important;
+}
+table.dataTable.stripe tbody tr.heyy,
+table.dataTable.display tbody tr.heyy{
+  background-color: #fff;
+  font-size: 12px!important;
+}
+table.dataTable.display .bull{
+  display: none;
+}
+table.dataTable.display tfoot.foot{
+  background: brown;
+  color: aliceblue;
+  font-weight: 500;
+}
+table.dataTable.display tfoot.foot > tr{
+  color: aliceblue!important;
+  font-weight: 500;
+}
+#fBill2 tr{
+  font-size: 11px;
+  color: black;
+  text-transform: uppercase;
+}
+.search-card{
+  width: 45%;
+background: white;
+margin: auto;
+min-height: 140px;
+}
+.search-card .search-cont{
+  background: #ebeff2;
+width: 75%;
+margin: auto;
+padding-top: 10px;
+padding-bottom: 26px;
+box-shadow: inset 0px 0px 13px 1px #ccc;
+}
+.search-card .search-cont button[type=submit]{
+  background: burlywood;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+}

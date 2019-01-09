@@ -12,7 +12,7 @@
       <div style="background-color:white; width:800px; display: flex; flex-direction: row;">
         <img src="<?= $setting->logo; ?>" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
         <div style="width: 640px; border: 2px solid black; height: 100%; margin: auto;">
-          <h3 style="text-align: center; font-size: 25px; font-weight: 600; color: black; text-transform: uppercase;"><?= env('ASSEMBLY_NAME') ?></h3>
+          <h3 style="text-align: center; font-size: 25px; font-weight: 600; color: black; text-transform: uppercase;"><?= env('ASSEMBLY_SMS_NAME'); ?></h3>
         </div>
         <img src="/images/assemblies/ghanacoatofarms.jpg" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
       </div>
