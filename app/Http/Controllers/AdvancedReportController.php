@@ -72,7 +72,7 @@ class AdvancedReportController extends Controller
       // dd($location, $year);
       $url = url('/').'/console/advanced/report/property/'.$data['location'].'/'.$data['loc'];
       $electoral = $this->electoral->with(['properties.bills'])->where('code', $data['loc'])->withCount('properties')->first();
-      $bills = $this->paginate($electoral->bills_array, $perPage = 100, $page = null, $baseUrl = $url.'/', $options = []);
+      $bills = $this->paginate($electoral->bills_array, $perPage = 50, $page = null, $baseUrl = $url.'/', $options = []);
 
       // return ['result'=>$bills];
       return view('advanced.report.property.property-listing-details', compact('electoral', 'bills', 'year', 'location'));
@@ -86,7 +86,7 @@ class AdvancedReportController extends Controller
     {
       // dd($location, $query, $year);
       $electoral = $this->electoral->with(['properties.bills'])->where('code', $query)->withCount('properties')->first();
-      $bills = $this->paginate($electoral->bills_array, $perPage = 100, $page = null, $baseUrl = $request->url().'/', $options = []);
+      $bills = $this->paginate($electoral->bills_array, $perPage = 50, $page = null, $baseUrl = $request->url().'/', $options = []);
 
       // return ['result'=>$bills];
       return view('advanced.report.property.property-listing-details', compact('electoral', 'bills', 'year', 'location'));
