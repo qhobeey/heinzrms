@@ -88,16 +88,28 @@
 .fixed-issue-container label > span{
     color: #e02929;
 }
+.heinz-dashboard-nav-cards .card-box > .text-center{
+  background: #36404a;
+    opacity: 0.9;
+    height: 100%;
+}
 .heinz-dashboard-nav-cards .card-box{
-    /* background: #2b3c51;
-    height: 380px;
-    padding-top: 45px;
-    border-radius: 30px; */
-    background: #2b3c51;
-height: 325px;
-padding-top: 0px;
-/* border-radius: 30px; */
-margin-top: 30px;
+    /* background: #2b3c51; */
+    opacity: 1;
+    background-color: #36404a;
+    background-image: url('../../images/app/background1.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  height: 325px;
+  padding-top: 0px;
+  margin-top: 30px;
+  padding-left: 0px;
+padding-right: 0px;
+margin-top: 0px;
+margin-bottom: 0px;
+padding: 0px;
+border: none;
 }
 .t-align-right{
   text-align: right;
@@ -119,16 +131,20 @@ margin-top: 30px;
     /* color: orangered; */
     font-size: 14px;
 }
+.heinz-dashboard-nav-cards .card-box h3.text-white{
+  font-size: 23px;
+  padding-top: 10px;
+}
 .heinz-dashboard-nav-cards .card-box button{
   border-radius: 50%;
   width: 125px;
   height: 125px;
-  color: white;
+  color: #36404a;
   font-size: 30px;
   font-weight: 400;
-  background: #2c3c50;
+  background: #fff;
   border: none;
-  box-shadow: inset 3px 5px 1px 0px #ccbfbfc9;
+  box-shadow: inset 3px 5px 1px 0px #fff;
 }
 .stats-form fieldset{
   border: 1px solid #969b9e;

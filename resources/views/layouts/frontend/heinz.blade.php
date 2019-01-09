@@ -11,7 +11,7 @@
     <title>Heinz Management</title>
 
 
-    
+
 <link rel="stylesheet" href="/css/dashboard/bootstrap.min.css">
 <link rel="stylesheet" href="/css/dashboard/core.css">
 <link rel="stylesheet" href="/css/dashboard/components.css">
@@ -42,30 +42,32 @@
 
 <script src="/js/dashboard/modernizr.min.js"></script>
 
+<link href="/backend/css/override.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body class="fixed-left">
 <div id="wrapper">
-    
+
     <!-- Top Bar Start -->
 <div class="topbar">
 
     <!-- LOGO -->
-    <div class="topbar-left">
+    <div class="topbar-left" style="display: none;">
         <div class="text-center">
             <a href="#" class="logo">
                 <i class="icon-c-logo my-logo">H</i>
                 <span class="my-logo">Heinz RMS</span>
             </a>
             <!-- Image Logo here -->
-            
-            
-            
-            
+
+
+
+
         </div>
     </div>
 
     <!-- Button mobile view to collapse sidebar menu -->
-    <div class="navbar navbar-default" role="navigation">
+    <div class="navbar navbar-default" role="navigation" style="display: none;">
         <div class="container">
             <div class="">
                 <div class="pull-left">
@@ -85,7 +87,7 @@
 <!-- Top Bar End -->
 
 
-        
+
     <style>
         .btn-orange{
             background-color: orangered!important;
@@ -95,13 +97,15 @@
         }
     </style>
 
-<div class="account-pages"></div>
+<div class="account-pages overlay">
+  <div class="dark-acount-pages"></div>
+</div>
 <div class="clearfix"></div>
 @yield('content')
 
-    
 
-        
+
+
 <script>
     var resizefunc = [];
 </script>
@@ -160,7 +164,7 @@
         cluster: 'ap2',
         encrypted: 1
     });
-   
+
 
 </script>
 
@@ -177,16 +181,18 @@
 
                 <script>
     $(document).ready(function () {
-        
-        
-        
+
+
+
              })
 </script>
 
 </div>
 
-<footer class="footer">
-    HeinMS © 2018. All rights reserved <a href="#" target="_blank">Qhobeey Martison</a>
+<footer class="footer" style="font-size: 12px;color: white;background: #36404a;border: none; left: 0px; text-align: center!important;">
+    Revenue Management System © 2018. All rights reserved
+    <a href="" style="color: #d66c0c;font-size: 11px;">Heinz Integrated System</a>
+    Powered by <a href="https://www.marvalinks.com" target="_blank" style="color: #d66c0c;font-size: 11px;">Marvalinks Digital Media Agency.</a>
 </footer>
 </body>
 </html>

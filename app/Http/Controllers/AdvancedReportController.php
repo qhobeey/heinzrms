@@ -25,6 +25,8 @@ class AdvancedReportController extends Controller
       $this->property = $property;
       $this->electoral = $electoral;
       $this->bill = $bill;
+
+      $this->middleware('auth');
     }
 
 
@@ -50,12 +52,12 @@ class AdvancedReportController extends Controller
 
     public function propertyListing(Request $request)
     {
-      
+
       //$electorals = $this->electoral->with(['properties','properties.bills'])->withCount('properties')->paginate(5);
 
        // dd($request->all());
        if($request->loc != "a") return $this->propertySearchListingDetails($request->all());
-       
+
        $electorals = $this->electoral->with(['properties.bills'])->withCount('properties')->paginate(10);
        $location = $request['location'];
        $year = $request['year'];

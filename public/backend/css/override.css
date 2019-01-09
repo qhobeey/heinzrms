@@ -4,8 +4,43 @@
 .accountbg {
     background: #0a1832;
 }
+.account-pages{
+  opacity: 1;
+  background-color: #36404a;
+  background-image: url('../../images/app/background1.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+#sidebar-menu > ul > li > a,
+#sidebar-menu ul ul a{
+  font-size: 13px;
+}
+.dark-acount-pages{
+  position: absolute;
+  background: #36404a;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+}
+
+.account-pages.overlay:before{
+  position: absolute;
+  content:" ";
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  display: none;
+  z-index:0;
+}
 .logo-img{
   width: 81px;
+}
+.ass-name{
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
 }
 .email-rightbar {
   margin-left: 0px;
@@ -29,7 +64,7 @@
   top: -12px;
 }
 .heinz-dashboard-nav-cards{
-  background: url('../images/small/img-2.jpg');
+  /* background: url('../images/small/img-2.jpg'); */
 }
 #topnav .topbar-main .logo {
   color: #ffffff !important;

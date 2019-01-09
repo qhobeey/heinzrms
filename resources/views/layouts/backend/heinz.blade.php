@@ -131,8 +131,10 @@
 
 </div>
 
-<footer class="footer">
-    HeinMS © 2018. All rights reserved <a href="#" target="_blank">Qhobeey Martison</a>
+<footer class="footer" style="font-size: 12px;color: white;background: #36404a;border: none; left: 0px; text-align: center!important;">
+    Revenue Management System © 2018. All rights reserved
+    <a href="" style="color: #d66c0c;font-size: 11px;">Heinz Integrated System</a>
+    Powered by <a href="https://www.marvalinks.com" target="_blank" style="color: #d66c0c;font-size: 11px;">Marvalinks Digital Media Agency.</a>
 </footer>
 </body>
 </html>
