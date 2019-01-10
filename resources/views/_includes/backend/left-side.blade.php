@@ -49,6 +49,13 @@
                 </li>
 
                 <li class="has_sub">
+                    <a href="{{route('console.construction')}}" class="waves-effect"><i class="ti-direction-alt"></i> <span> {{__('Marriage')}} </span> </a>
+                </li>
+                <li class="has_sub">
+                    <a href="{{route('console.construction')}}" class="waves-effect"><i class="ti-direction-alt"></i> <span> {{__('Others')}} </span> </a>
+                </li>
+
+                <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="ti-notepad"></i><span> {{__('Records')}} </span><span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <!-- <li><a href="{{route('property.records.bills')}}">{{__('Bills')}}</a></li> -->

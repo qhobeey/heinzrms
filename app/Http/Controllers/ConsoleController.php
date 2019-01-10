@@ -25,4 +25,9 @@ class ConsoleController extends Controller
     {
         return redirect()->back();
     }
+
+    public function construction()
+    {
+        return view('console.construction');
+    }
 }

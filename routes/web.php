@@ -43,6 +43,7 @@ Route::prefix('console')->group(function () {
     Route::get('/', 'ConsoleController@index');
     Route::get('back/response', 'ConsoleController@back')->name('console.back');
     Route::get('dashboard', 'ConsoleController@dashboard')->name('console.dashboard');
+    Route::get('constuction', 'ConsoleController@construction')->name('console.construction');
     Route::resource('accountants', 'AccountantController');
     Route::resource('supervisors', 'SupervisorController');
     Route::resource('collectors', 'CollectorController');

@@ -67,7 +67,7 @@
     </tfoot>
 
 </table>
-{{$electorals->links()}}
+{{$electorals->appends(request()->query())->links()}}
 </div>
 
 
