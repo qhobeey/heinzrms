@@ -11,10 +11,13 @@ class Electoral extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
-    protected $appends = ['count_bills', 'bills_arrears', 'current_bills', 'total_paid_bills', 'bills_array'];
+    public $filterKey = '';
+
+    protected $appends = ['count_bills', 'bills_arrears', 'current_bills', 'total_paid_bills', 'bills_array', 'blabla'];
 
     public function properties()
     {
+    	// dd($this->query);
       return $this->hasMany('App\Property','electoral_id');
     }
     public function getCountBillsAttribute()
@@ -64,6 +67,7 @@ class Electoral extends Model
     }
     public function getBillsArrayAttribute()
     {
+    	// dd($this->filterKey);
     	$props = Property::where('electoral_id',$this->code)->has('bills')->with('bills')->get();
     	$array = [];
 
@@ -77,6 +81,16 @@ class Electoral extends Model
 
     	return $array;
     }
+    public static function blabla($value)
+    {
+    	return $this->electorals;
+    }
+
+ //    public function scopeStatus (Builder $query, $name) {
+	//     return $query->whereHas('status', function ($q) use ($name) {
+	//             $q->where('name', $name);
+	//     });
+	// }
 
     //define the inverse relation for zonal here
     // public function zonals()

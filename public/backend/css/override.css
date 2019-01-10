@@ -357,16 +357,120 @@ margin: auto;
 min-height: 140px;
 }
 .search-card .search-cont{
-  background: #ebeff2;
+  background: #36404a;
 width: 75%;
 margin: auto;
 padding-top: 10px;
 padding-bottom: 26px;
-box-shadow: inset 0px 0px 13px 1px #ccc;
+box-shadow: 0px 0px 13px 1px #ccc;
+}
+.search-card .search-cont label{
+  color: white;
+  font-size: 12px;
+
+}
+.search-card .search-cont select{
+  border-radius: 0;
+  font-size: 13px;
+  font-family: monospace;
+  width: 91%;
+  margin: auto;
 }
 .search-card .search-cont button[type=submit]{
-  background: burlywood;
+  background: #F44336;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  border: none;
+}
+.search-card .nav.nav-tabs > li > a{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.collector-cards img{
+  width: 85%;
+object-fit: contain;
+border: 2px solid #36404a;
+}
+.collector-cards h4#name{
+  font-size: 20px;
+text-transform: uppercase;
+font-weight: 600;
+}
+.data-title{
+  border-top: 1px dashed #ccc;
+    padding-top: 8px;
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 8px;
     font-size: 15px;
     font-weight: 600;
-    color: white;
+    color: #048888;
+    background: #ebeff2;
+}
+.collector-cards .card-box{
+  height: 385px;
+}
+.collector-cards p{
+  font-size: 13px;
+font-weight: 600;
+font-family: monospace;
+}
+.collector-cards p > span{
+  font-size: 20px;
+  color: #a52a2a;
+}
+.collector-pay-btn > a.btn{
+  background: antiquewhite;
+    width: 100%;
+    height: 40px;
+    padding-top: 10px;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: brown;
+}
+.collector-pay{
+  width: 45%;
+  margin: auto;
+}
+.collector-pay h3#name{
+  border-top: 1px dashed #ccc;
+  padding-top: 8px;
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 8px;
+  font-size: 21px;
+  font-weight: 600;
+  color: #36404a;
+  background: #ebeff2;
+  text-align: center;
+}
+.collector-pay table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+.collector-pay .text-left{
+  width: 100%;
+margin: auto;
+}
+.collector-pay td, .collector-pay th {
+  text-align: left;
+  padding: 8px;
+}
+.collector-pay td{
+  font-size: 15px;
+    color: #36404a;
+    font-weight: 600;
+}
+.collector-pay tr:nth-child(even) {
+}
+.collector-pay button[type=submit],
+.collector-pay a.btn{
+  width: 100%;
+  margin-top: 10px;
+  /* float: right; */
+  background: #36404a;
+  font-size: 15px;
+  color: aliceblue;
+  border: none;
 }

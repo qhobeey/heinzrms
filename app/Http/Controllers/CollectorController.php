@@ -53,6 +53,57 @@ class CollectorController extends Controller
         return redirect()->route('collectors.create');
     }
 
+    public function payment()
+    {
+      $collectors = Collector::latest()->paginate(9);
+      return view('console.collector.collector-payment', compact('collectors'));
+    }
+
+    public function makePayment($id)
+    {
+      $collector = Collector::where('collector_id', $id)->first();
+      return view('console.collector.make-payment', compact('collector'));
+    }
+    public function makePaymentPost(Request $request, $id)
+    {
+      $collector = Collector::where('collector_id', $id)->first();
+
+      switch ($request->account) {
+        case 'p':
+          $prop = \App\Property::where('client', '!=', '')->where('client', $collector->email)->where('paid_collector', 0);
+          if($request->quantity > $prop->count()):
+            return redirect()->back()->with('error', 'Your payment quantity is greater than the available data!');
+          endif;
+          $properties = $prop->limit($request->quantity)->get();
+          foreach ($properties  as $data) {
+            $data->paid_collector = 1;
+            $data->save();
+          }
+
+          break;
+        case 'b':
+          $prop = \App\Property::where('client', '!=', '')->where('client', $collector->email)->where('paid_collector', 0);
+          if($request->quantity > $prop->count()):
+            return redirect()->back()->with('error', 'Your payment quantity is greater than the available data!');
+          endif;
+          $properties = $prop->limit($request->quantity)->get();
+          foreach ($properties  as $data) {
+            $data->paid_collector = 1;
+            $data->save();
+          }
+
+          break;
+
+        default:
+          return redirect()->back()->with('error', 'No account found!');
+          break;
+      }
+
+      return redirect()->back()->with('sucess', 'Payment sucessfully completed!');
+
+
+    }
+
     /**
      * Display the specified resource.
      *

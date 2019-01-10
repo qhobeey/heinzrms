@@ -63,6 +63,7 @@
                         <li><a href="{{route('print.bills')}}">{{__('Print Bills')}}</a></li>
                         <li><a href="{{route('cashiers.index')}}">{{__('Cashier Payments')}}</a></li>
                         <li><a href="{{route('property.payments.payment')}}">{{__('Individual Payments')}}</a></li>
+                        <li><a href="{{route('collectors.payment')}}">{{__('Collectors Payments')}}</a></li>
                     </ul>
                 </li>
 

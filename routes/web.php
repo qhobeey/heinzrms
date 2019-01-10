@@ -55,6 +55,9 @@ Route::prefix('console')->group(function () {
     Route::get('return/gcr', 'StockController@returnStock')->name('stock.return');
     Route::get('filter/cashier/form', 'CashierController@filterForm')->name('cashier.filter.payment');
     Route::post('payment/cashier/checkout', 'CashierController@checkoutPayment')->name('cashier.checkout.payment');
+    Route::get('m/collectors/payment', 'CollectorController@payment')->name('collectors.payment');
+    Route::get('p/collectors/payment/{collector}', 'CollectorController@makePayment')->name('collectors.payment.pay');
+    Route::post('p/collectors/payment/{collector}', 'CollectorController@makePaymentPost')->name('collectors.payment.pay');
 
     /** Location routes */
     Route::get('location/zonals', 'LocationController@createZonals')->name('location.zonals');
