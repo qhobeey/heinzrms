@@ -74,12 +74,22 @@ class AdvancedReportController extends Controller
        if($request->loc != "a") return $this->propertySearchListingDetails($request->all());
 
        $location = $request['location'];
-       $year = intval($request['year']);
+       $year = $request['year'];
 
-       $electorals = $this->electoral->with(['properties.bills'])->withCount('properties')->paginate(10)->appends(request()->query());
+       // $electorals = \App\Bill::where('year', $year)->get();
+
+       // dd($year);
+
+       $electorals = $this->electoral->with(['properties.bills'])->withCount('properties')->paginate(1)->appends(request()->query());
        // dd(intval($year));
-       // $electorals = $this->electoral::blabla()->with(['properties.bills'])->paginate(5);
+       // $electorals = $this->electoral->with(['properties.bills'])->withCount('properties')->paginate(1);
+       // $electorals = $this->electoral->retreiveTrack(true)->paginate(1);
 
+       // $electorals = $this->electoral->with(['properties.bills'=>function($query) use ($year) {
+       //    $query->where('year', $year);
+       // }])->withCount('properties')->paginate(1);
+       // dump($year);
+       // $electorals = $this->bill->where('year',$year)->first();
        // dd($electorals);
       // return ['result'=>$electorals];
 

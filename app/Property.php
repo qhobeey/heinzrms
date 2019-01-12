@@ -50,7 +50,6 @@ class Property extends Model
     }
     public function bills()
     {
-        // dd($this->year);
         return $this->hasMany('App\Bill', 'account_no');
     }
     

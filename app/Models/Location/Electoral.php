@@ -11,18 +11,35 @@ class Electoral extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
-    public $filterKey = '';
 
-    protected $appends = ['count_bills', 'bills_arrears', 'current_bills', 'total_paid_bills', 'bills_array', 'blabla'];
+
+    protected $appends = ['count_bills', 'bills_arrears', 'current_bills', 'total_paid_bills', 'bills_array'];
 
     public function properties()
     {
-    	// dd($this->query);
       return $this->hasMany('App\Property','electoral_id');
+    }
+    public function businesses()
+    {
+      return $this->hasMany('App\Business','electoral_id');
     }
     public function getCountBillsAttribute()
     {
     	$props = Property::where('electoral_id',$this->code)->with('bills')->get();
+    	$total = 0;
+
+    	foreach ($props as $key => $value) {
+    		$total = $total + $value->bills->count();
+    	}
+
+    	return $total;
+    	
+    }
+    public function countBillsEl($year)
+    {
+    	$props = Property::where('electoral_id',$this->code)->with(['bills' => function($query) use ($year) {
+    		$query->where('year', $year);
+    	}])->get();
     	$total = 0;
 
     	foreach ($props as $key => $value) {
@@ -67,7 +84,6 @@ class Electoral extends Model
     }
     public function getBillsArrayAttribute()
     {
-    	// dd($this->filterKey);
     	$props = Property::where('electoral_id',$this->code)->has('bills')->with('bills')->get();
     	$array = [];
 
@@ -76,26 +92,9 @@ class Electoral extends Model
     		$value->billArray()->address = $value->owner ? ($value->owner->address ?: 'NA') : ('no address');
     		$value->billArray()->category = $value->category ? ($value->category->code ?: $value->category->code) : ('no cat');
     		array_push($array, $value->billArray());
-    		// dump($value->billArray());
     	}
 
     	return $array;
     }
-    public static function blabla($value)
-    {
-    	return $this->electorals;
-    }
-
- //    public function scopeStatus (Builder $query, $name) {
-	//     return $query->whereHas('status', function ($q) use ($name) {
-	//             $q->where('name', $name);
-	//     });
-	// }
-
-    //define the inverse relation for zonal here
-    // public function zonals()
-    // {
-    // 	return $this->belongsTo('App\Models\Location\Zonal', 'zonal_id', 'code');
-    // }
 
 }
