@@ -134,7 +134,7 @@ class BillingController extends Controller
           if (!$category) {
             $response = $model->property_no;
             $z = \App\PropertyFeefixingCategory::where('code', 'LIKE', "%{$model->property_category}%")->where('year', $feefixing)->first();
-            if(!$z) return dd("sorry fee fixing for year " .$feefixing." no found in database");
+            if(!$z) return false;
             $params = array_merge($params, ['min_charge' => floatval($z->min_charge),
                 'rate_pa' => floatval($z->rate_pa),
                 'rateable_value' => floatval($model->rateable_value)
@@ -154,7 +154,7 @@ class BillingController extends Controller
           if (!$category) {
             $response = $model->property_no;
             $z = \App\PropertyFeefixingCategory::where('code', 'LIKE', "%{$model->business_category}%")->where('year', $feefixing)->first();
-            if(!$z) return dd("sorry fee fixing for year " .$feefixing." no found in database");
+            if(!$z) return false;
             $params = array_merge($params, ['min_charge' => floatval($z->min_charge),
                 'rate_pa' => floatval($z->rate_pa),
                 'rateable_value' => floatval($model->rateable_value)

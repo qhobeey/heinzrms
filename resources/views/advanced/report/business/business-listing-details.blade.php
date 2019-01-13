@@ -11,7 +11,7 @@
     <h1 style="font-weight: 600; text-align: center; text-transform: uppercase; color: black; font-size: 28px;"><?= env('ASSEMBLY_SMS_NAME'); ?></h1>
   </div>
   <div class="row" style="border-bottom: 2px solid black;">
-    <h4 style="text-align: center; font-size: 14px; color: black; font-weight: 600;">Property Listing Grouped by <?= ucwords($electoral->description); ?> <?= ucwords($location); ?> for <?= ucwords($year); ?></h4>
+    <h4 style="text-align: center; font-size: 14px; color: black; font-weight: 600;">Business Listing Grouped by <?= ucwords($electoral->description); ?> <?= ucwords($location); ?> for <?= ucwords($year); ?></h4>
   </div>
 <table id="fBill2" class="display" cellspacing="0" width="100%">
     <thead>
@@ -20,8 +20,9 @@
           <th style="font-size: 10px;color: black;">Electoral Area</th>
           <th style="font-size: 10px;color: black;">Account No</th>
           <th style="font-size: 10px;color: black;">Owner Name</th>
-          <th style="font-size: 10px;color: black;">Property Address</th>
-          <th style="font-size: 10px;color: black;">Property cat</th>
+          <th style="font-size: 10px;color: black;">Business Address</th>
+          <th style="font-size: 10px;color: black;">Business cat</th>
+          <th style="font-size: 10px;color: black;">Store No</th>
           <th style="font-size: 10px;color: black;">Arrears</th>
           <th style="font-size: 10px;color: black;">Current Bill</th>
           <th style="font-size: 10px;color: black;">Total Bill</th>
@@ -34,6 +35,7 @@
         <tr class="odd2 heyy">
             <td><a href="{{ URL::previous() }}"><img src="/advanced/1/minus-sign.png"></a></td>
             <td><a style="color:brown; font-weight: 600;" href="{{ URL::previous() }}"><?= $electoral->description; ?>&nbsp; [<?= $electoral->count_bills; ?>]</a></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -57,6 +59,7 @@
               <td><?= $bill->owner; ?></td>
               <td><?= $bill->address; ?></td>
               <td><?= $bill->category; ?></td>
+              <td><?= $bill->store; ?></td>
               <td><?= \App\Repositories\ExpoFunction::formatMoney($bill->arrears, true); ?></td>
               <td><?= \App\Repositories\ExpoFunction::formatMoney($bill->current_amount, true); ?></td>
               <td><?= \App\Repositories\ExpoFunction::formatMoney(($bill->arrears + $bill->current_amount), true); ?></td>

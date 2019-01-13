@@ -114,7 +114,8 @@
                       <li><a href="{{route('report.business.account')}}">{{__('Business Report')}}</a></li>
                       <li><a href="{{route('report.bills.account')}}">{{__('Bill Report')}}</a></li> -->
 
-                      <!-- <li><a href="{{route('advanced.report.search.property')}}">{{__('Property Listings')}}</a></li> -->
+                      <li><a href="{{route('advanced.report.search.property')}}">{{__('Property Listings')}}</a></li>
+                      <li><a href="{{route('advanced.report.search.business')}}">{{__('Business Listings')}}</a></li>
                     </ul>
                 </li>
 

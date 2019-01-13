@@ -31,12 +31,12 @@
 
                 </ul> -->
                 <ul class="nav navbar-nav hidden-xs">
-                    <!-- <li class="dropdown">
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown"
                            role="button" aria-haspopup="true" aria-expanded="false">Fix <span
                                     class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{route('fix.collectors')}}">Collectors</a></li>
+                            <!-- <li><a href="{{route('fix.collectors')}}">Collectors</a></li>
                             <li><a href="{{route('fix.owners.property')}}">P Owners</a></li>
                             <li><a href="{{route('fix.owners.business')}}">B Owners</a></li>
                             <li><a href="{{route('fix.enum')}}">enum</a></li>
@@ -44,9 +44,11 @@
                             <li><a href="{{route('fix.property.owner')}}">property owner</a></li>
                             <li><a href="{{route('fix.business.owner')}}">business owner</a></li>
                             <li><a href="{{route('fix.business.id')}}">business id</a></li>
-                            <li><a href="{{route('fix.property.id')}}">property id</a></li>
+                            <li><a href="{{route('fix.property.id')}}">property id</a></li> -->
+                            <!-- <li><a href="{{route('fix.feefixing.property')}}">roll over fee fixing property</a></li>
+                            <li><a href="{{route('fix.feefixing.business')}}">roll over fee fixing business</a></li> -->
                         </ul>
-                    </li> -->
+                    </li>
                     <li><a href="{{route('console.dashboard')}}" class="waves-effect waves-light ass-name">{{env('ASSEMBLY_SMS_NAME')}}</a></li>
                 </ul>
 

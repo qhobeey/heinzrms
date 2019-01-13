@@ -12,6 +12,7 @@ class Electoral extends Model
     public $incrementing = false;
 
 
+    protected $appends = [];
 
     // protected $appends = ['count_bills', 'bills_arrears', 'current_bills', 'total_paid_bills', 'bills_array'];
 
@@ -25,6 +26,7 @@ class Electoral extends Model
     }
     // public function getCountBillsAttribute()
     // {
+    // 	dd('oo');
     // 	$props = Property::where('electoral_id',$this->code)->with('bills')->get();
     // 	$total = 0;
 

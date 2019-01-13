@@ -1,15 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Reports;
+
 use App\PropertyOwner;
 
-class Property extends Model
+class PropertyReport extends Model
 {
-    protected $table = 'properties';
+	protected $table = 'properties';
     protected $primaryKey = 'property_no';
     protected $keyType = 'string';
     public $incrementing = false;
-    
+
+    protected $appends = ['arrears'];
 
     public function type()
     {
@@ -51,5 +53,34 @@ class Property extends Model
         return $this->hasMany('App\Bill', 'account_no');
     }
     
-    
+    public function totalBills()
+    {
+        return $this->bills->count();
+    }
+    public function billArrears()
+    {
+        return $this->bills->sum('arrears');
+    }
+    public function currentBills()
+    {
+        return $this->bills->sum('current_amount');
+    }
+    public function totalPaid()
+    {
+        return $this->bills->sum('total_paid');
+    }
+    public function billArray()
+    {
+        // dd($this->bills[0]);
+        return $this->bills[0];
+    }
+    public function getArrearsAttribute()
+     {
+         // $bill = (new Bill)->where('account_no',$this->property_no)->where('year', date('Y') - 1)->orderBy('id', 'desc')->first();
+         // if ($bill) {
+         //     return $bill->arrears;
+         // }
+         return 0.0;
+     }
+
 }

@@ -18,12 +18,4 @@ class Bill extends Model
     {
         return $this->belongsTo(Business::class, 'account_no', 'business_no');
     }
-    public function getElectoralNameAttribute()
-    {
-      if(is_null($this->property->electoral)){
-        return 'unknown';
-      }else{
-        return $this->property->electoral->pluck('description')->flatten()->toArray();
-      }
-    }
 }

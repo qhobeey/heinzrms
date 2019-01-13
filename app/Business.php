@@ -10,8 +10,6 @@ class Business extends Model
   protected $keyType = 'string';
   public $incrementing = false;
 
-  protected $appends = ['arrears'];
-
 
   public function type()
   {
@@ -45,28 +43,6 @@ class Business extends Model
   public function bills()
   {
       return $this->hasMany('App\Bill', 'account_no');
-  }
-  
-  public function totalBills()
-  {
-      return $this->bills->count();
-  }
-  public function billArrears()
-  {
-      return $this->bills->sum('arrears');
-  }
-  public function currentBills()
-  {
-      return $this->bills->sum('current_amount');
-  }
-  public function totalPaid()
-  {
-      return $this->bills->sum('total_paid');
-  }
-  public function billArray()
-  {
-      // dd($this->bills[0]);
-      return $this->bills[0];
   }
 
 }

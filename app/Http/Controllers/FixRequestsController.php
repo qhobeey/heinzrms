@@ -137,4 +137,35 @@ class FixRequestsController extends Controller
       endforeach;
       dd('done');
     }
+
+    public function feeFixingProperty()
+    {
+      $categories = \App\PropertyCategory::orderBy('id', 'asc')->get();
+      foreach ($categories as $category) {
+        $feefixing = new \App\PropertyFeefixingCategory();
+        $feefixing->code = $category->code;
+        $feefixing->description = $category->description;
+        $feefixing->rate_pa = $category->rate_pa;
+        $feefixing->type_id = $category->type_id;
+        $feefixing->min_charge = $category->min_charge;
+        $feefixing->year = strval(date('Y') - 1);
+        $feefixing->save();
+      }
+      dd('completed');
+    }
+    public function feeFixingBusiness()
+    {
+      $categories = \App\BusinessCategory::orderBy('id', 'asc')->get();
+      foreach ($categories as $category) {
+        $feefixing = new \App\PropertyFeefixingCategory();
+        $feefixing->code = $category->code;
+        $feefixing->description = $category->description;
+        $feefixing->rate_pa = $category->rate_pa;
+        $feefixing->type_id = $category->type_id;
+        $feefixing->min_charge = $category->min_charge;
+        $feefixing->year = strval(date('Y') - 1);
+        $feefixing->save();
+      }
+      dd('completed');
+    }
 }

@@ -158,6 +158,10 @@ Route::prefix('console')->group(function () {
     Route::get('advanced/report/property/{location}/{query}/{year}', 'AdvancedReportController@propertyListingDetails')->name('advanced.report.property.details');
     Route::get('/api/advanced/report/property', 'AdvancedReportController@test');
 
+    Route::get('advanced/report/search/business', 'AdvancedReportController@businessListingSearch')->name('advanced.report.search.business');
+    Route::get('advanced/report/business', 'AdvancedReportController@businessListing')->name('advanced.report.business');
+    Route::get('advanced/report/business/{location}/{query}/{year}', 'AdvancedReportController@businessListingDetails')->name('advanced.report.business.details');
+
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -171,6 +175,8 @@ Route::get('fix/property/owner', 'FixRequestsController@fixPropertyOwner')->name
 Route::get('fix/business/owner', 'FixRequestsController@fixBusinessOwner')->name('fix.business.owner');
 Route::get('fix/business/id', 'FixRequestsController@businessID')->name('fix.business.id');
 Route::get('fix/property/id', 'FixRequestsController@propertyID')->name('fix.property.id');
+Route::get('fix/feefixing/property', 'FixRequestsController@feeFixingProperty')->name('fix.feefixing.property');
+Route::get('fix/feefixing/business', 'FixRequestsController@feeFixingBusiness')->name('fix.feefixing.business');
 
 Route::prefix('api/v1/console')->group(function () {
     Route::get('get_data_from/{query}', 'ApiController@getFromData');
