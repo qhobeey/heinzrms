@@ -474,3 +474,17 @@ margin: auto;
   color: aliceblue;
   border: none;
 }
+table.fixed { table-layout:fixed; }
+table.fixed td { overflow: hidden; }
+table.dataTable.feefixing tbody th, table.dataTable tbody td {
+    padding: 5px 10px;
+    border-left: 1px solid #3e3b3b;
+    /* border-bottom: 1px solid #3e3b3b; */
+}
+table.dataTable.feefixing thead th, table.dataTable thead td {
+    padding: 3px 18px;
+    background: #b1c4dd;
+    border-bottom: 1px solid #111;
+    text-transform: capitalize;
+    border-left: 1px solid #3e3b3b;
+}

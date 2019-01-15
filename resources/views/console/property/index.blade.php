@@ -6,14 +6,9 @@
         <div class="card-box table-responsive">
             <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                 <div class="row">
-                    <form class="" action="{{route('property.prepare.bills')}}" method="post">
-                      @csrf
-                      <div class="col-sm-6">
-                          <div class="dataTables_length" id="datatable-responsive_length">
-                              <!-- <button type="submit" style="width: 100%; height: 30px;" class="btn btn-primary btn-xs form-control">Prepare Bills</button> -->
-                          </div>
-                      </div>
-                    </form>
+                    <div class="col-sm-6">
+                      <h3 style="color: brown; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Property Enquiry</h3>
+                    </div>
                     <div class="col-sm-6">
                       <form class="" action="{{route('property.filter.column')}}" method="get">
                         @csrf
@@ -50,49 +45,33 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" cellspacing="0" width="100%" role="grid" aria-describedby="datatable-responsive_info" style="width: 100%;">
-                            <thead>
+                        <table class="table table-striped table-bordered dt-responsive fixed">
+                            <thead style="font-size: 12px;">
                                 <tr role="row">
                                     <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending" style="width: 91px;">Property No</th>
-                                    <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Property Type</th>
-                                    <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Property Category</th>
-                                    <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Property Owner</th>
-                                    <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Zonal</th>
-                                    <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Collector</th>
+                                    <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Property Type</th>
+                                    <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Property Category</th>
+                                    <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Property Owner</th>
+                                    <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Zonal</th>
+                                    <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Collector</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody style="font-size: 11px;">
                                 @foreach($properties as $property)
                                 <tr role="row" class="odd">
                                     <td class="sorting_1" tabindex="0"><a href="{{route('property.show', $property->property_no)}}">{{$property->property_no}}</a></td>
                                     <td class="sorting_1" tabindex="0"><a href="{{route('property.show', $property->property_no)}}">
-                                      @if($property->type)
-                                      {{$property->type->description}}
-                                      @else
-                                      {{$property->property_type}}
-                                      @endif
+                                      <?= $property->type ? ($property->type->description ?: 'NA') : $property->property_type; ?>
                                     </a></td>
                                     <td class="sorting_1" tabindex="0"><a href="{{route('property.show', $property->property_no)}}">
-                                      @if($property->category)
-                                      {{$property->category->description}}
-                                      @else
-                                      {{$property->property_category}}
-                                      @endif
+                                      <?= $property->category ? ($property->category->description ?: 'NA') : $property->property_category; ?>
                                     </a></td>
                                     <td class="sorting_1" tabindex="0"><a href="{{route('property.show', $property->property_no)}}">
-                                      @if($property->owner)
-                                      {{$property->owner->name}}
-                                      @else
-                                      {{$property->property_owner}}
-                                      @endif
+                                      <?= $property->owner ? ($property->owner->name ?: 'NA') : $property->property_owner; ?>
                                     </a></td>
                                     <td class="sorting_1" tabindex="0">
                                       <a href="{{route('property.show', $property->property_no)}}">
-                                        @if($property->zonal)
-                                        {{$property->zonal->description}}
-                                        @else
-                                        {{$property->zonal_id}}
-                                        @endif
+                                        <?= $property->zonal ? ($property->zonal->description ?: 'NA') : $property->zonal_id; ?>
                                       </a>
                                     </td>
                                     <td class="sorting_1" tabindex="0"><a href="">{{$property->client}}</a></td>

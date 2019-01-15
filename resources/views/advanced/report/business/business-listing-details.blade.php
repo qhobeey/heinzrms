@@ -34,9 +34,7 @@
       <div class="tableInner">
         <tr class="odd2 heyy">
             <td><a href="{{ URL::previous() }}"><img src="/advanced/1/minus-sign.png"></a></td>
-            <td><a style="color:brown; font-weight: 600;" href="{{ URL::previous() }}"><?= $electoral->description; ?>&nbsp; [<?= $electoral->count_bills; ?>]</a></td>
-            <td></td>
-            <td></td>
+            <td colspan="3"><a style="color:brown; font-weight: 600;" href="{{ URL::previous() }}"><?= $electoral->description; ?>&nbsp; [<?= $electoral->count_bills; ?>]</a></td>
             <td></td>
             <td></td>
             <td></td>
@@ -54,7 +52,7 @@
         <div class="tableInner">
           <tr class="odd2 heyy">
               <td></td>
-              <td><?= $key; ?></td>
+              <td><?= $key+1; ?></td>
               <td><?= $bill->account_no; ?></td>
               <td><?= $bill->owner; ?></td>
               <td><?= $bill->address; ?></td>

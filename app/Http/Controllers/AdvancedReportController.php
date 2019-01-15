@@ -299,6 +299,41 @@ class AdvancedReportController extends Controller
       return response()->json(['data' => $data]);
     }
 
+
+
+
+
+
+
+    /** Feefixing Listings */
+
+    public function feefixingListingSearch()
+    {
+      return view('advanced.report.feefixing.search');
+    }
+
+    public function feefixingListing(Request $request)
+    {
+        $year = $request->year;
+        $account = $request->account;
+        if($account == 'property'):
+          $feefixing = \App\PropertyType::with('categories')->latest()->get();
+          return view('advanced.report.feefixing.listing', compact('feefixing', 'year', 'account'));
+        endif;
+        if($account == 'business'):
+          $feefixing = \App\BusinessType::with('categories')->latest()->get();
+          return view('advanced.report.feefixing.listing', compact('feefixing', 'year', 'account'));
+        endif;
+        
+        return redirect()->back();
+    }
+
+
+
+
+
+
+
     public function paginate($items, $perPage = 15, $page = null, $baseUrl = null, $options = [])
     {
 

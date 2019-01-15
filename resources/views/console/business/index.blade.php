@@ -8,17 +8,7 @@
             <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                 <div class="row">
                     <div class="col-sm-6">
-                        <!-- <div class="dataTables_length" id="datatable-responsive_length">
-                            <label>Show
-                                <select name="datatable-responsive_length" aria-controls="datatable-responsive" class="form-control input-sm">
-                                    <option value="10">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>
-                                entries
-                            </label>
-                        </div> -->
+                        <h3 style="color: brown; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Business Enquiry</h3>
                     </div>
                     <div class="col-sm-6">
                       <form class="" action="{{route('business.filter.column')}}" method="get">
@@ -38,6 +28,7 @@
                                     <option value="business_owner">Business Owner</option>
                                     <option value="zonal_id">Zonal</option>
                                     <option value="electoral_id">Electoral</option>
+                                    <option value="store_number">Store Number</option>
                                   </select>
                                 </div>
                               </div>
@@ -56,19 +47,20 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" cellspacing="0" width="100%" role="grid" aria-describedby="datatable-responsive_info" style="width: 100%;">
-                            <thead>
+                        <table class="table table-striped table-bordered dt-responsive fixed">
+                            <thead style="font-size: 12px;">
                                 <tr role="row">
                                     <th class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending" style="width: 91px;">Business No</th>
-                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Business Name</th>
-                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">B. Type</th>
-                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">B. Category</th>
-                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">B. Owner</th>
-                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Zonal</th>
-                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Collector</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Business Name</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">B. Type</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">B. Category</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Store No</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">B. Owner</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Zonal</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Collector</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody style="font-size: 11px;">
                                 @foreach($businesses as $business)
                                 <tr role="row" class="odd">
                                     <td class="sorting_1" tabindex="0"><a href="{{route('business.show', $business->business_no)}}">{{$business->business_no}}</a></td>
@@ -91,6 +83,7 @@
                                         @endif
                                       </a>
                                     </td>
+                                    <td class="sorting_1" tabindex="0"><a href="">{{$business->store_number}}</a></td>
                                     <td class="sorting_1" tabindex="0">
                                       <a href="{{route('business.show', $business->business_no)}}">
                                         @if($business->owner)

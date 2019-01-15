@@ -162,6 +162,9 @@ Route::prefix('console')->group(function () {
     Route::get('advanced/report/business', 'AdvancedReportController@businessListing')->name('advanced.report.business');
     Route::get('advanced/report/business/{location}/{query}/{year}', 'AdvancedReportController@businessListingDetails')->name('advanced.report.business.details');
 
+    Route::get('advanced/report/search/feefixing', 'AdvancedReportController@feefixingListingSearch')->name('advanced.report.search.feefixing');
+    Route::get('advanced/report/feefixing', 'AdvancedReportController@feefixingListing')->name('advanced.report.feefixing');
+
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

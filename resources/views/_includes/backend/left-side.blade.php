@@ -51,9 +51,9 @@
                 <li class="has_sub">
                     <a href="{{route('console.construction')}}" class="waves-effect"><i class="ti-direction-alt"></i> <span> {{__('Marriage')}} </span> </a>
                 </li>
-                <li class="has_sub">
+                <!-- <li class="has_sub">
                     <a href="{{route('console.construction')}}" class="waves-effect"><i class="ti-direction-alt"></i> <span> {{__('Others')}} </span> </a>
-                </li>
+                </li> -->
 
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="ti-notepad"></i><span> {{__('Records')}} </span><span class="menu-arrow"></span></a>
@@ -116,6 +116,7 @@
 
                       <li><a href="{{route('advanced.report.search.property')}}">{{__('Property Listings')}}</a></li>
                       <li><a href="{{route('advanced.report.search.business')}}">{{__('Business Listings')}}</a></li>
+                      <li><a href="{{route('advanced.report.search.feefixing')}}">{{__('Feefixing Listings')}}</a></li>
                     </ul>
                 </li>
 
