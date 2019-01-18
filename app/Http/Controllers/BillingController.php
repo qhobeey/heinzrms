@@ -32,6 +32,47 @@ class BillingController extends Controller
       return view('console.billing.property', compact('bills'));
     }
 
+    public function filterBillsByColumn(Request $request)
+    {
+
+      $query = '';
+      $queryArray = [];
+      $businesses = [];
+      $array = null;
+      $reqs = $request->validate(['column' => 'required', 'query' => '']);
+
+      switch ($request->column) {
+        case 'account_no':
+          $query = $reqs['query'];
+          break;
+        case 'owner_name':
+          $query = $reqs['query'];
+          break;
+        case 'phone_number':
+          $queryArray = \App\PropertyOwner::where('phone', 'LIKE', "%{$reqs['query']}%")->pluck('code');
+          break;
+        case 'account_type':
+          $query = $reqs['query'];
+          break;
+        case 'account_category':
+          $query = $reqs['query'];
+          break;
+        case 'year':
+          $query = $reqs['query'];
+          break;
+
+        default:
+          $query = '';
+          break;
+      }
+
+
+
+      $bills = \App\Bill::with(['property', 'business'])->where($request->column, 'LIKE', "%{$query}%")->paginate(50);
+
+      return view('console.billing.property', compact('bills'));
+    }
+
 
     public function postBills(Request $request)
     {

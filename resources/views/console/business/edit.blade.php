@@ -66,13 +66,7 @@
                                 <div class="col-md-4">
                                   <div class="form-group">
                                       <label for="">Business Owner</label>
-                                      <select class="form-control" required="required" name="business_owner" id="">
-                                          <option value="">-choose-</option>
-                                          <option selected="true" value="{{$business->business_owner}}">@{{business_owner_name.firstname}} @{{business_owner_name.lastname}}</option>
-                                          <template v-for="data in owners">
-                                              <option :value="data.owner_id">@{{data.firstname}} @{{data.lastname}}</option>
-                                          </template>
-                                      </select>
+                                      <input disabled="true" type="text" value="<?= $business->owner ? $business->owner->name : $business->business_owner; ?>" name="business_owner" class="form-control">
                                   </div>
                                 </div>
                             </div>
@@ -107,7 +101,7 @@
                                 <div class="col-md-4">
                                   <div class="form-group">
                                       <label for="">Phone</label>
-                                      <input type="text" value="{{$business->phone}}" name="phone" class="form-control">
+                                      <input type="text" value="<?= $business->owner ? $business->owner->phone : ''; ?>" name="phone_number" class="form-control">
                                   </div>
                                 </div>
                                 <div class="col-md-4">
@@ -117,6 +111,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <input type="hidden" name="owner_id" value="<?= $business->owner ? $business->owner->owner_id : '' ?>">
 
                             <div class="row">
                                 <div class="col-md-4">

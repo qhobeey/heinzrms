@@ -182,10 +182,25 @@ class BusinessController extends Controller
           'employee_no' => '', 'male_employed' => '', 'female_employed' => '', 'property_no' => '',
           'valuation_no' => '', 'gps_code' => '', 'store_number' => '', 'client' => 'none'
         ]);
-        // $data = array_merge($data, ['business_owner' => (string) $request->business_owner]);
+
         $business = Business::where('business_no', $id)->first();
-        // dd($business);
+        $owner = \App\BusinessOwner::where('owner_id', $request->owner_id)->first();
+
+        if($owner):
+          if($request->phone_number) {
+            $owner->phone = $request->phone_number;
+          }
+          if($request->business_owner) {
+            $owner->name = $request->business_owner;
+          }
+
+          $owner->save();
+        endif;
         $business->update($data);
+
+
+        // dd($business);
+
         // if ($truesave) $this->initBusinessBill($truesave);
         return redirect()->route('business.index');
     }

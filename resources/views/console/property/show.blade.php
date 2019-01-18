@@ -50,6 +50,12 @@
                                         <input type="text" disabled="true" value="{{$property->serial_no}}" name="serial_no" class="form-control">
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">Occupancy</label>
+                                        <input disabled="true" type="text" name="occupancy" value="{{$property->occupancy}}" class="form-control">
+                                    </div>
+                                </div>
 
                             </div>
 
@@ -77,8 +83,8 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="">Occupancy</label>
-                                        <input disabled="true" type="text" name="occupancy" value="{{$property->occupancy}}" class="form-control">
+                                        <label for="">Telephone Number</label>
+                                        <input disabled="true" type="text" name="occupancy" value="<?= $property->owner ? $property->owner->phone : 'NA' ?>" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-4">

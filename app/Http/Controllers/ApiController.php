@@ -362,9 +362,9 @@ class ApiController extends Controller
                 $mobile = $account->owner->phone;
                 if($mobile[0] == '0') $mobile = ltrim($mobile, '0');
                 $mobile = '233' . $mobile;
-                $mobile = '233248160008';
+                // $mobile = '233248160008';
                 $bill = Bill::where('account_no', $payment->account_no)->first();
-                $message = 'Dear ' . $account->owner->name . ' of PROPERTY ACC: '. $payment->account_no . '. You have been credited with a payment amount of GHc' .$payment->amount_paid . ' with a GCR No '. $payment->gcr_number . ' and your current balance is GHc ' . $bill->current_amount . '.Thanks';
+                $message = 'Dear ' . $account->owner ? $account->owner->name : 'sir/madma' . ' of PROPERTY ACC: '. $payment->account_no . '. You have been credited with a payment amount of GHc' .$payment->amount_paid . ' with a GCR No '. $payment->gcr_number . ' and your current balance is GHc ' . $bill->current_amount . '.Thanks';
                 $smsRes = Setup::sendSms($mobile, $message);
                 // dd($smsRes, 'o');
                 if ($smsRes == 'good') {

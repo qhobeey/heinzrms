@@ -57,7 +57,6 @@
                                     <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Store No</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">B. Owner</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Zonal</th>
-                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Collector</th>
                                 </tr>
                             </thead>
                             <tbody style="font-size: 11px;">
@@ -102,7 +101,6 @@
                                         @endif
                                       </a>
                                     </td>
-                                    <td class="sorting_1" tabindex="0"><a href="">{{$business->client}}</a></td>
                                 </tr>
 
                                 @endforeach

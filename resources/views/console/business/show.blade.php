@@ -97,7 +97,7 @@
                                 <div class="col-md-4">
                                   <div class="form-group">
                                       <label for="">Phone</label>
-                                      <input disabled="true" type="text" value="{{$business->phone}}" name="phone" class="form-control">
+                                      <input disabled="true" type="text" value="<?= $business->owner ? $business->owner->phone : 'NA'; ?>" name="phone" class="form-control">
                                   </div>
                                 </div>
                                 <div class="col-md-4">

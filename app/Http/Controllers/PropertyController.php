@@ -305,14 +305,27 @@ class PropertyController extends Controller
      */
      public function update(Request $request, $id)
       {
+
           $data = $request->validate([
               'building_permit_no' => '', 'zonal_id' => '', 'serial_no' => '',
               'property_type' => '', 'property_category' => '',
-              'valuation_no' => '', 'house_no' => '', 'division' => '', 'property_owner' => '',
+              'valuation_no' => '', 'house_no' => '', 'division' => '', 'property_owner' => 'required',
               'street_id' => '', 'loc_longitude' => '', 'loc_latitude' => '',
               'image' => '', 'electoral_id' => '', 'tas_id' => '', 'community_id' => ''
           ]);
+
+          $owner = \App\PropertyOwner::where('owner_id', $request->owner_id)->first();
           $property = Property::where('property_no', $id)->first();
+          if($owner):
+            if($request->phone_number) {
+              $owner->phone = $request->phone_number;
+            }
+            if($request->property_owner) {
+              $owner->name = $request->property_owner;
+            }
+
+            $owner->save();
+          endif;
           $property->update($data);
           // if ($truesave) $this->initPropertyBill($truesave);
           return redirect()->route('property.index');

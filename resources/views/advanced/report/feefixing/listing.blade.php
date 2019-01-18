@@ -6,43 +6,48 @@
 
 @section('content')
 
-<div class="content">
-  <div class="row">
-    <h1 style="font-weight: 600; text-align: center; text-transform: uppercase; color: black; font-size: 28px;"><?= env('ASSEMBLY_SMS_NAME'); ?></h1>
-    <h4 style="text-align: center; font-size: 14px; color: black; font-weight: 600;"><?php echo ucwords($account); ?> Fee fixing for <?php echo $year; ?></h4>
+<div  class="content">
+  <div class="row" style="background: #36404a; padding: 14px; text-align: right;">
+    <button type="button" onclick="printDiv('printableArea')" class="btn btn-xs btn-danger" style="font-size: 16px; margin-right: 10px;">Print Page</button>
   </div>
-<table id="fBill1" class="display feefixing fixed" cellspacing="0" width="100%">
-    <thead>
-        <tr>
-          <th style="font-size: 11px;color: black;"><?php echo ucwords($account); ?> Type Code</th>
-          <th style="font-size: 11px;color: black;">Category Code</th>
-          <th style="font-size: 11px;color: black;">Category</th>
-          <th style="font-size: 11px;color: black;">Rate PA</th>
-          <th style="font-size: 11px;color: black;">Min Charge</th>
-        </tr>
-    </thead>
-    <tbody>
-      @foreach($feefixing as $type)
-      <tr>
-        <td rowspan="<?php echo $type->categories->count() + 1; ?>" style="font-weight: 600;"><?php echo $type->code; ?></td>
-        <td colspan="2" style="font-weight: 600;text-align: center;"><?php echo $type->description; ?></td>
-        <td></td>
-        <td></td>
-      </tr>
-        @foreach($type->categories as $category)
-        <tr>
-          <td><?php echo $category->code; ?></td>
-          <td><?php echo $category->description; ?></td>
-          <td><?php echo $category->rate_pa; ?></td>
-          <td><?php echo $category->min_charge; ?></td>
-        </tr>
-        @endforeach
-      @endforeach
-    </tbody>
+  <div id="printableArea">
+    <div class="row">
+      <h1 style="font-weight: 600; text-align: center; text-transform: uppercase; color: black; font-size: 28px;"><?= env('ASSEMBLY_SMS_NAME'); ?></h1>
+      <h4 style="text-align: center; font-size: 14px; color: black; font-weight: 600;"><?php echo ucwords($account); ?> Fee fixing for <?php echo $year; ?></h4>
+    </div>
+    <table id="fBill1" class="display feefixing fixed" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+              <th style="font-size: 11px;color: black;"><?php echo ucwords($account); ?> Type Code</th>
+              <th style="font-size: 11px;color: black;">Category Code</th>
+              <th style="font-size: 11px;color: black;">Category</th>
+              <th style="font-size: 11px;color: black;">Rate PA</th>
+              <th style="font-size: 11px;color: black;">Min Charge</th>
+            </tr>
+        </thead>
+        <tbody>
+          @foreach($feefixing as $type)
+          <tr>
+            <td rowspan="<?php echo $type->categories->count() + 1; ?>" style="font-weight: 600;"><?php echo $type->code; ?></td>
+            <td colspan="2" style="font-weight: 600;text-align: center;"><?php echo $type->description; ?></td>
+            <td></td>
+            <td></td>
+          </tr>
+            @foreach($type->categories as $category)
+            <tr>
+              <td><?php echo $category->code; ?></td>
+              <td><?php echo $category->description; ?></td>
+              <td><?php echo $category->rate_pa; ?></td>
+              <td><?php echo $category->min_charge; ?></td>
+            </tr>
+            @endforeach
+          @endforeach
+        </tbody>
 
-</table>
-
+    </table>
+  </div>
 </div>
+
 
 
 @endsection
@@ -106,7 +111,22 @@ $(document).ready(function() {
         });
     });
 
+    // // Handle click on "Collapse All" button
+    // $('#btn-hide-all-children').on('click', function(){
+    //     // Enumerate all rows
+    //     table.rows().every(function(){
+    //         // If row has details expanded
+    //         if(this.child.isShown()){
+    //             // Collapse row details
+    //             this.child.hide();
+    //             $(this.node()).removeClass('shown');
+    //         }
+    //     });
+    // });
+
     document.querySelector('.back').style.display = "none";
+
+
 });
 </script>
 @endsection

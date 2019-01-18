@@ -115,24 +115,25 @@
 
 <script src="/js/dashboard/parsley.min.js"></script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110183437-1"></script> -->
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-110183437-1');
-</script>
-   })
-</script>
 <script src="/js/app.js"></script>
+<script type="text/javascript">
+function printDiv(divName) {
+   var printContents = document.getElementById(divName).innerHTML;
+   var originalContents = document.body.innerHTML;
+
+   document.body.innerHTML = printContents;
+
+   window.print();
+
+   document.body.innerHTML = originalContents;
+}
+</script>
 @yield('scripts')
 
 </div>
 
 <footer class="footer" style="font-size: 12px;color: white;background: #36404a;border: none; left: 0px; text-align: center!important;">
-    Revenue Management System © 2018. All rights reserved
+    Revenue Management System © <?php echo date('Y'); ?>. All rights reserved
     <a href="" style="color: #d66c0c;font-size: 11px;">Heinz Integrated System</a>
     Powered by <a href="https://www.marvalinks.com" target="_blank" style="color: #d66c0c;font-size: 11px;">Marvalinks Digital Media Agency.</a>
 </footer>

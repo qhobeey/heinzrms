@@ -6,6 +6,11 @@
 
         <div class="card-box table-responsive">
             <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+              <div class="row">
+                <div class="col-sm-6">
+                    <h3 style="color: brown; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Generate Bills Module</h3>
+                </div>
+              </div>
                 <div class="row">
                     <div class="col-sm-8">
                         <form class="" action="{{route('account.bills')}}" method="post">
@@ -56,11 +61,50 @@
                     </div>
 
                 </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-6">
+                      <h3 style="color: brown; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Bills LIST</h3>
+                  </div>
+                  <div class="col-sm-6">
+                    <form class="" action="{{route('bills.filter.column')}}" method="get">
+                      @csrf
+                      <div id="datatable-responsive_filter" class="dataTables_filter">
+                          <div class="row">
+                            <div class="col-md-1">
+                              <h6>Search By: </h6>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                <select class="form-control" name="column">
+                                  <option value="account_no">Account Number</option>
+                                  <!-- <option value="owner_name">Account Owner</option> -->
+                                  <!-- <option value="phone_number">Phone Number</option> -->
+                                  <!-- <option value="account_type">Account Type</option> -->
+                                  <!-- <option value="account_category">Account Category</option> -->
+                                  <option value="year">Bill Year</option>
+
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                <input type="text" name="query" class="form-control" value="" placeholder="enter your search parameters here">
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <button type="submit" class="form-control">Search</button>
+                            </div>
+                          </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
                 <div class="row">
                     <form class="" action="{{route('setups.property.bills.sms')}}" method="post">
                       @csrf
                       <div class="col-sm-12" style="height: 296px; overflow: auto;">
-                          <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" cellspacing="0" width="100%" role="grid" aria-describedby="datatable-responsive_info" style="width: 100%;">
+                          <table class="table table-striped table-bordered dt-responsive">
                               <thead style="font-size: 12px;">
                                   <tr role="row">
                                       <th class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending" style="width: 91px;">Account no</th>
@@ -76,7 +120,7 @@
                               <tbody style="font-size: 12px;">
                                 @foreach($bills as $bill)
                                 <tr role="row" class="odd">
-                                  
+
                                   <td class="sorting_1" tabindex="0"><a href="#">{{$bill->account_no}}</a></td>
                                   <td class="sorting_1" tabindex="0">
                                     <a href="#">
@@ -129,7 +173,7 @@
                                       <?= $bill->year; ?>
                                     </a>
                                   </td>
-                                  
+
                                   <td class="sorting_1" tabindex="0"><a href="{{route('init.bill.print', $bill->account_no)}}" class="btn btn-danger btn-xs">print</a></td>
                                 </tr>
                                 @endforeach

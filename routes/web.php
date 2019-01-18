@@ -130,6 +130,7 @@ Route::prefix('console')->group(function () {
     Route::get('setup/filter/sms', 'SetupController@propertyFilterSMS')->name('setups.sms.filter.zonal');
 
     Route::get('account/bills', 'BillingController@propertyBills')->name('account.bills');
+    Route::get('account/bills/filter', 'BillingController@filterBillsByColumn')->name('bills.filter.column');
     Route::post('account/bills', 'BillingController@postBills')->name('account.bills');
 
     Route::get('processing/response', 'BillingController@processing')->name('processing');

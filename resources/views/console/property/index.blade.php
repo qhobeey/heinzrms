@@ -53,7 +53,6 @@
                                     <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Property Category</th>
                                     <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Property Owner</th>
                                     <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Zonal</th>
-                                    <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Collector</th>
                                 </tr>
                             </thead>
                             <tbody style="font-size: 11px;">
@@ -74,7 +73,7 @@
                                         <?= $property->zonal ? ($property->zonal->description ?: 'NA') : $property->zonal_id; ?>
                                       </a>
                                     </td>
-                                    <td class="sorting_1" tabindex="0"><a href="">{{$property->client}}</a></td>
+
                                 </tr>
 
                                 @endforeach
