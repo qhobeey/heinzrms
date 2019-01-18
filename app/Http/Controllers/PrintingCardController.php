@@ -23,6 +23,7 @@ use App\WebClientPrint\PrintFile;
 use App\WebClientPrint\ClientPrintJob;
 
 use Session;
+use Cloudder;
 
 class PrintingCardController extends Controller
 {
@@ -112,6 +113,21 @@ class PrintingCardController extends Controller
       if(!is_null($request->enforce_law_text)):
         $setting->enforce_law_text = $request->enforce_law_text;
       endif;
+
+      if($request->assembly_logo):
+        Cloudder::upload(request('assembly_logo'), null);
+        list($width, $height) = getimagesize($request->assembly_logo);
+        $image_url= Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height"=>$height]);
+        $setting->logo = $image_url;
+      endif;
+
+      if($request->assembly_signature):
+        Cloudder::upload(request('assembly_signature'), null);
+        list($width, $height) = getimagesize($request->assembly_logo);
+        $image_url= Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height"=>$height]);
+        $setting->signature = $image_url;
+      endif;
+
       $setting->save();
       return redirect()->back();
     }

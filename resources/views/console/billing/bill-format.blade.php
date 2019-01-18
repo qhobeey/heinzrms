@@ -4,7 +4,7 @@
 
 <div id="card" style="width: 70%; margin:auto; height: 100%; padding-top: 50px; padding-bottom: 20px; border-radius: 0px; background-color:white; margin-top: 100px; margin-bottom: 100px;">
   <div class="row" style="width:90%; margin:auto;">
-    <form class="" action="{{route('customize.bill.format')}}" method="post">
+    <form class="" action="{{route('customize.bill.format')}}" enctype="multipart/form-data" method="post">
       @csrf
       @method('PUT')
       <div class="row">
@@ -42,6 +42,28 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="">Assembly Logo</label>
+            <input type="file" class="form-control" name="assembly_logo">
+            <div style="margin: auto; width: 30%; margin-top:10px;">
+              <img src="<?= $setting->logo ?: '/images/assemblies/OFFINSOLOGO.jpg'; ?>" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="">Assembly Signature</label>
+            <input type="file" class="form-control" name="assembly_signature">
+            <div style="margin: auto; width: 30%; margin-top:10px;">
+              <img src="<?= $setting->signature ?: '/images/assemblies/bdasign.jpg'; ?>" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-md-12">
           <div class="form-group">
