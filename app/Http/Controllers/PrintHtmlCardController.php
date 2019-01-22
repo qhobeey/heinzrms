@@ -41,7 +41,7 @@ class PrintHtmlCardController extends Controller
             $printerName = urldecode($request->input('printerName'));
 
             // $filePath = $request->input('imageFileName');
-            $filePath = public_path().'/bills/images/' . $request->input('imageFileName');
+            $filePath = public_path('images/kbills/'). $request->input('imageFileName');
 
             //create a temp file name for our image file...
 

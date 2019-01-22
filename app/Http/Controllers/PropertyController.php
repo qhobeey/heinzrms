@@ -27,6 +27,7 @@ class PropertyController extends Controller
      */
     public function index($array=null)
     {
+      // dd(public_path());
         $properties = Property::with(['type', 'category', 'owner'])->latest()->paginate(30);
         // dd($properties);
         return view('console.property.index', compact('properties', 'array'));

@@ -25,7 +25,7 @@ class StoreImageFileController extends Controller
     public function createImageFromBase64($image){
       // dd($image);
         $filename = 'image_'.time().'.png'; //generating unique file name;
-        $path = public_path().'/bills/images/' . $filename;
+        $path = public_path('images/kbills')."/". $filename;
 
         Image::make(file_get_contents($image))->save($path);
          return $filename;
