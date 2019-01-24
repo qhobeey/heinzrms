@@ -27,7 +27,7 @@ class CreateBillsTable extends Migration
             $table->boolean('printed')->default(0);
             $table->unsignedInteger('year');
             $table->float('account_balance')->nullable();
-            $table->dateTime('bill_date');
+            $table->dateTime('bill_date')->nullable($value = true);
             $table->boolean('is_current')->default(0);
             $table->timestamps();
 
