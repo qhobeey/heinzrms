@@ -28,6 +28,7 @@ class PropertyController extends Controller
     public function index($array=null)
     {
       // dd(public_path());
+      // http://res.cloudinary.com/dzsvcvdes/image/upload/c_fit,h_640,w_640/omxlufmmebxhtu3xr7ap.png
         $properties = Property::with(['type', 'category', 'owner'])->latest()->paginate(30);
         // dd($properties);
         return view('console.property.index', compact('properties', 'array'));
