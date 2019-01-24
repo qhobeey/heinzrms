@@ -14,7 +14,7 @@ class AlterBillsAddAdjustArrears extends Migration
     public function up()
     {
         Schema::table('bills', function (Blueprint $table) {
-            $table->string('adjust_arrears')->after('bill_date')->nullable();
+            $table->string('adjust_arrears')->after('is_current')->nullable();
         });
     }
 
