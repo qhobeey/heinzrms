@@ -23,14 +23,7 @@ class CleanBillsTable implements ShouldQueue
     {
         //
     }
-    // DB::table('users')->where('active', false)
-    //     ->chunkById(100, function ($users) {
-    //         foreach ($users as $user) {
-    //             DB::table('users')
-    //                 ->where('id', $user->id)
-    //                 ->update(['active' => true]);
-    //         }
-    //     });
+
     /**
      * Execute the job.
      *
@@ -40,8 +33,10 @@ class CleanBillsTable implements ShouldQueue
     {
       \App\Processing::truncate();
 
+
+
       DB::table('properties')->orderBy('id')->chunk(500, function ($properties) {
-        App\Processing::create(['total' => \App\Bill::latest()->count(), 'count' => 0, 'percentage' => 0]);
+        \App\Processing::create(['total' => \App\Property::latest()->count(), 'count' => 0, 'percentage' => 0]);
         foreach ($properties as $key => $property) {
           $bills = DB::table('bills')->where('account_no', $property->property_no)->whereBetween('year', [2007, 2015])->get();
 
@@ -83,6 +78,5 @@ class CleanBillsTable implements ShouldQueue
           $process->save();
         }
       });
-      return redirect()->route('processing');
     }
 }

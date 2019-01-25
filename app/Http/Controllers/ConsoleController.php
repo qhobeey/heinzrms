@@ -68,6 +68,9 @@ class ConsoleController extends Controller
         // endif;
       // });
 
+
+
+
       CleanBillsTable::dispatch();
       // dd('p');
       return redirect()->route('processing');
