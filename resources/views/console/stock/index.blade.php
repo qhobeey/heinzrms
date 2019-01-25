@@ -9,13 +9,13 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="dataTables_length" id="datatable-responsive_length">
-                            <label>Show 
+                            <label>Show
                                 <select name="datatable-responsive_length" aria-controls="datatable-responsive" class="form-control input-sm">
                                     <option value="10">10</option>
                                     <option value="25">25</option>
                                     <option value="50">50</option>
                                     <option value="100">100</option>
-                                </select> 
+                                </select>
                                 entries
                             </label>
                         </div>
@@ -39,7 +39,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($stocks as $stock)  
+                                @foreach($stocks as $stock)
                                 <tr role="row" class="odd">
                                     <td class="sorting_1" tabindex="0">{{$stock->id}}</td>
                                     <td>{{$stock->min_serial}}</td>
