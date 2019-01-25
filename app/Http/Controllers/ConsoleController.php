@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\Jobs\CleanBillsTable;
 
 class ConsoleController extends Controller
 {
@@ -67,48 +68,9 @@ class ConsoleController extends Controller
         // endif;
       // });
 
-      DB::table('properties')->orderBy('id')->chunk(500, function ($properties) {
-
-        foreach ($properties as $key => $property) {
-          $bills = DB::table('bills')->where('account_no', $property->property_no)->whereBetween('year', [2007, 2015])->get();
-          // dd($bills);
-          // dd($bills->where('year', $bills->max('year'))->first());
-
-          // if ($bills->count() == 0) dd($property->property_no);
-          if($bills->count() > 0 ):
-
-            $billArrayInsert = [
-              'account_no' => $property->property_no, 'rate_pa' => $bills->where('year', $bills->max('year'))->first()->rate_pa,
-              'rateable_value' => $bills->where('year', $bills->max('year'))->first()->rateable_value,
-              'current_amount' => $bills->where('year', $bills->max('year'))->first()->current_amount,
-              'arrears' => $bills->where('year', $bills->max('year'))->first()->arrears,
-              'rate_imposed' => $bills->where('year', $bills->max('year'))->first()->rate_imposed,
-              'total_paid' => $bills->where('year', $bills->max('year'))->first()->total_paid,
-              'bill_type' => $bills->where('year', $bills->max('year'))->first()->bill_type,
-              'year' => $bills->where('year', $bills->max('year'))->first()->year,
-              'account_balance' => $bills->where('year', $bills->max('year'))->first()->account_balance,
-              'bill_date' => $bills->where('year', $bills->max('year'))->first()->bill_date,
-              'adjust_arrears' => $bills->where('year', $bills->max('year'))->first()->adjust_arrears,
-              'prepared_by' => 'ADMINISTRATOR',
-              'accumulated_current_amount' => $bills->sum('current_amount'),
-              'accumulated_arrears' => $bills->sum('arrears'),
-              'accumulated_account_balance' => $bills->sum('account_balance'),
-              'accumulated_adjust_arrears' => $bills->sum('adjust_arrears'),
-              'accumulated_total_paid' => $bills->sum('total_paid'),
-            ];
-
-            // dd($bills->pluck('id'));
-
-             // dd($billArrayInsert);
-            $isCreated = \App\Bill::create($billArrayInsert);
-            if($isCreated):
-              $delete = DB::table('bills')->whereIn('id', $bills->pluck('id'))->delete();
-              // dd($delete);
-            endif;
-          endif;
-        }
-      });
-      dd('completed');
+      CleanBillsTable::dispatch();
+      // dd('p');
+      return redirect()->route('processing');
         // return view('console.construction');
     }
 }
