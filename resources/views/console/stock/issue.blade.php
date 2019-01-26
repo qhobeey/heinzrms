@@ -24,8 +24,10 @@
                                 <div class="col-md-6" v-if="issue_from == 'supervisor'">
                                     <div class="form-group">
                                         <label for="">Name of person</label>
-                                        <select class="form-control" v-model="from_id"  @blur="from_stock(issue_from);" v-for="data in froms" name="from_id" id="">
-                                            <option :value="data.id">@{{data.name}}</option>
+                                        <select class="form-control" v-model="from_id"  @blur="from_stock(issue_from);" name="from_id" id="">
+                                            <template v-for="data in froms">
+                                              <option :value="data.id">@{{data.name}}</option>
+                                            </template>
                                         </select>
                                     </div>
                                 </div>
