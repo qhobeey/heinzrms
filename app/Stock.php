@@ -11,8 +11,8 @@ class Stock extends Model
     {
         $id = '';
         if(!empty($this->accountant_id)):
-            $accountant = Accountant::find($this->accountant_id)->first();
-            $id = $accountant->name;
+            // $accountant = Accountant::find($this->accountant_id)->first();
+            $id = "In Stock";
         endif;
         if(!empty($this->collector_id)):
             $collector = Collector::where('collector_id', $this->collector_id)->first();
