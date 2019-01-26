@@ -19,8 +19,8 @@ class Stock extends Model
             $id = $collector ? $collector->name : 'NA';
         endif;
         if(!empty($this->supervisor_id)):
-            $supervisor = Supervisor::find($this->supervisor_id)->first();
-            $id = $supervisor->name;
+            $supervisor = Supervisor::where('supervisor_id', $this->supervisor_id)->first();
+            $id = $supervisor ? $supervisor->name : 'NA';
         endif;
 
         return $id;
