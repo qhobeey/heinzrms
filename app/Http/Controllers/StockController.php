@@ -25,8 +25,9 @@ class StockController extends Controller
      */
     public function index()
     {
-        $stocks = Stock::latest()->get();
-        return view('console.stock.index', compact('stocks'));
+        $stocks = Stock::latest()->paginate(50);
+        $count = Stock::latest()->count();
+        return view('console.stock.index', compact('stocks', 'count'));
     }
 
     /**

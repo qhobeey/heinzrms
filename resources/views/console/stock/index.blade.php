@@ -31,7 +31,7 @@
                         <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" cellspacing="0" width="100%" role="grid" aria-describedby="datatable-responsive_info" style="width: 100%;">
                             <thead>
                                 <tr role="row">
-                                    <th class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending" style="width: 91px;">#</th>
+                                    <!-- <th class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending" style="width: 91px;">#</th> -->
                                     <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 229px;">Start Serial</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Capacity: activate to sort column ascending" style="width: 227px;">End Serial</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 186px;">Quantity</th>
@@ -41,7 +41,7 @@
                             <tbody>
                                 @foreach($stocks as $stock)
                                 <tr role="row" class="odd">
-                                    <td class="sorting_1" tabindex="0">{{$stock->id}}</td>
+                                    <!-- <td class="sorting_1" tabindex="0">{{$stock->id}}</td> -->
                                     <td>{{$stock->min_serial}}</td>
                                     <td>{{$stock->max_serial}}</td>
                                     <td>{{$stock->quantity}}</td>
@@ -53,22 +53,10 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class="dataTables_info" id="datatable-responsive_info" role="status" aria-live="polite">Showing 1 to 5 of 5 entries</div>
+                        <div class="dataTables_info" id="datatable-responsive_info" role="status" aria-live="polite">Total: <span style="color:red;">{{$count}}</span> </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="dataTables_paginate paging_simple_numbers" id="datatable-responsive_paginate">
-                            <ul class="pagination">
-                                <li class="paginate_button previous disabled" aria-controls="datatable-responsive" tabindex="0" id="datatable-responsive_previous">
-                                    <a href="#">Previous</a>
-                                </li>
-                                <li class="paginate_button active" aria-controls="datatable-responsive" tabindex="0">
-                                    <a href="#">1</a>
-                                </li>
-                                <li class="paginate_button next disabled" aria-controls="datatable-responsive" tabindex="0" id="datatable-responsive_next">
-                                    <a href="#">Next</a>
-                                </li>
-                            </ul>
-                        </div>
+                        {{$stocks->links()}}
                     </div>
                 </div>
             </div>
