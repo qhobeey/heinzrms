@@ -17,9 +17,9 @@
                     <div class="col-xs-12">
                         <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" required placeholder="Email Address" name="email" value="{{ old('email') }}">
                         @if ($errors->has('email'))
-                            <span class="invalid-feedback">
-                                <strong>{{ $errors->first('email') }}</strong>
-                            </span>
+                            <small class="invalid-feedback">
+                                <strong style="color:red;">{{ $errors->first('email') }}</strong>
+                            </small>
                         @endif
                     </div>
                 </div>
@@ -28,9 +28,9 @@
                     <div class="col-xs-12">
                         <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" type="password" required name="password" placeholder="Password">
                         @if ($errors->has('email'))
-                            <span class="invalid-feedback">
-                                <strong>{{ $errors->first('email') }}</strong>
-                            </span>
+                            <small class="invalid-feedback">
+                                <strong style="color:red;">{{ $errors->first('email') }}</strong>
+                            </small>
                         @endif
                     </div>
                 </div>

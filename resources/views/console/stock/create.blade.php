@@ -32,7 +32,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="">Start Serial #</label>
-                                        <input type="number" name="min_serial" v-model="start_serial" placeholder="Start serial number" @blur="calcEndSerial();" class="form-control" required>
+                                        <input type="number" name="min_serial" v-model="start_serial" placeholder="Start serial number" @blur="calcEndSerial();" class="form-control{{ $errors->has('min_serial') ? ' is-invalid' : '' }}" required>
+                                        @if ($errors->has('min_serial'))
+                                            <small class="invalid-feedback">
+                                                <strong style="color: red;">{{ $errors->first('min_serial') }}</strong>
+                                            </small>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -75,7 +80,7 @@
 
 @section('scripts')
 <script>
-    
+
     var app = new Vue({
       el: '#heinz',
       data: {
@@ -88,7 +93,7 @@
             this.end_serial = parseInt(this.start_serial) + 99
         },
       }
-        
+
 
     });
 </script>

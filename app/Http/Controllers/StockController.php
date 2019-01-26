@@ -8,6 +8,7 @@ use App\IssueStock;
 use App\EnumGcr;
 use App\Accountant;
 use App\Collector;
+use App\Supervisor;
 use App\Cashier;
 
 class StockController extends Controller
@@ -49,7 +50,7 @@ class StockController extends Controller
         $data = $request->validate([
             'stock_type' => 'required',
             'voucher' => 'required',
-            'min_serial' => 'required',
+            'min_serial' => 'required|unique:stocks',
             'max_serial' => 'required',
             'date' => 'required',
             'quantity' => 'required'
@@ -92,16 +93,27 @@ class StockController extends Controller
                 $issue = IssueStock::create($data);
                 if($issue):
                     $stock = Stock::whereNotNull('accountant_id')->where('accountant_id', $data['from_id'])->first();
+
                     if($data['to_name'] === 'supervisor'):
+
+                      $supervisor = Supervisor::where('id', $data['to_id'])->first();
+
+                      $issue->to_id = $supervisor->supervisor_id;
+                      $issue->save();
+
                         $stock->update([
                             'accountant_id' => null,
                             'collector_id' => null,
-                            'supervisor_id' => $data['to_id'],
+                            'supervisor_id' => $supervisor->supervisor_id,
                             'status' => 'issued'
                         ]);
                     endif;
                     if($data['to_name'] === 'collector'):
                       $collector = Collector::where('id', $data['to_id'])->first();
+
+                      $issue->to_id = $collector->collector_id;
+                      $issue->save();
+
                         $stock->update([
                             'accountant_id' => null,
                             'supervisor_id' => null,
@@ -117,6 +129,10 @@ class StockController extends Controller
                     endif;
                     if($data['to_name'] === 'cashier'):
                       $cashier = Cashier::where('id', $data['to_id'])->first();
+
+                      $issue->to_id = $cashier->cashier_id;
+                      $issue->save();
+
                         $stock->update([
                             'accountant_id' => null,
                             'supervisor_id' => null,
@@ -136,6 +152,7 @@ class StockController extends Controller
         endif;
 
         if($data['from_name'] === 'supervisor'):
+          // dd('o');
             foreach($request->stock_id as $id):
                 $data = array_merge($data, [
                     'from_id' => $request->from_id,
@@ -144,17 +161,31 @@ class StockController extends Controller
                 // dd($data);
                 $issue = IssueStock::create($data);
                 if($issue):
-                    $stock = Stock::whereNotNull('supervisor_id')->where('supervisor_id', $data['from_id'])->first();
+                    $sup = Supervisor::where('id', $data['from_id'])->first();
+                    $issue->from_id = $sup->supervisor_id;
+                    $issue->save();
+                    $stock = Stock::whereNotNull('supervisor_id')->where('supervisor_id', $sup->supervisor_id)->first();
+                    // dd($stock);
                     if($data['to_name'] === 'supervisor'):
+
+                        $supervisor = Supervisor::where('id', $data['to_id'])->first();
+
+                        $issue->to_id = $supervisor->supervisor_id;
+                        $issue->save();
+
                         $stock->update([
                             'accountant_id' => null,
                             'collector_id' => null,
-                            'supervisor_id' => $data['to_id'],
+                            'supervisor_id' => $supervisor->supervisor_id,
                             'status' => 'issued'
                         ]);
                     endif;
                     if($data['to_name'] === 'collector'):
                       $collector = Collector::where('id', $data['to_id'])->first();
+
+                      $issue->to_id = $collector->collector_id;
+                      $issue->save();
+
                         $stock->update([
                             'accountant_id' => null,
                             'supervisor_id' => null,

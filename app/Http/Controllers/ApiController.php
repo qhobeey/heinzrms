@@ -59,7 +59,8 @@ class ApiController extends Controller
     {
         $data = [];
         if($query === 'supervisor'):
-            $data = DB::table('stocks')->where('supervisor_id', $id)->get();
+            $supervisor = Supervisor::where('id', $id)->first();
+            $data = DB::table('stocks')->where('supervisor_id', $supervisor->supervisor_id)->get();
         endif;
         if($query === 'stock'):
             $data = DB::table('stocks')->where('status', 'free')->get();
@@ -75,6 +76,9 @@ class ApiController extends Controller
         endif;
         if($query === 'collector'):
             $data = Collector::latest()->get();
+        endif;
+        if($query === 'supervisor'):
+            $data = Supervisor::latest()->get();
         endif;
         return response()->json(['status' => 'success', 'data' => $data]);
     }

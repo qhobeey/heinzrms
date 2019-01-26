@@ -41,7 +41,12 @@ class SupervisorController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate(['name' => 'required', 'email' => 'required']);
-        Supervisor::create($data);
+        $res = Supervisor::create($data);
+        if($res) {
+          $supervisors = Supervisor::latest()->count();
+          $res->supervisor_id = strtoupper(env('ASSEMBLY_CODE')[0].$res->name[0].sprintf('%03d', $supervisors));
+          $res->save();
+        }
         return redirect()->route('supervisors.create');
     }
 

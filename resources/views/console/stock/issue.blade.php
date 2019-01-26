@@ -17,7 +17,7 @@
                                         <label for="">Issue From</label>
                                         <select class="form-control" v-model="issue_from" @blur="from_data(issue_from);" name="from_name" id="">
                                             <option selected value="stock">Stock</option>
-                                            <!-- <option value="supervisor">Supervisor</option> -->
+                                            <option value="supervisor">Supervisor</option>
                                         </select>
                                     </div>
                                 </div>
@@ -45,6 +45,7 @@
                                     <div class="form-group">
                                         <label for="">Issue To</label>
                                         <select class="form-control" v-model="issue_to" @blur="to_data(issue_to);" name="to_name" id="">
+                                            <option value="supervisor">Supervisor</option>
                                             <option value="collector">Collector</option>
                                             <option value="cashier">Cashier</option>
                                         </select>
