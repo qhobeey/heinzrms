@@ -51,12 +51,18 @@
                                       <td class="sorting_1" tabindex="0"><a href="#">{{$payment->amount_paid}}</a></td>
                                       <td class="sorting_1" tabindex="0"><a href="#">{{$payment->gcr_number}}</a></td>
                                       <td class="sorting_1" tabindex="0"><a href="#">{{$payment->payment_mode}}</a></td>
-                                      <td class="sorting_1" tabindex="0"><a href="#">{{$payment->collector_name}}</a></td>
+                                      <td class="sorting_1" tabindex="0"><a href="#">{{$payment->collector_name ?: 'NA'}}</a></td>
                                       <td class="sorting_1" tabindex="0"><a href="#">{{ \Carbon\Carbon::parse($payment->payment_date)->toFormattedDateString() }}</a></td>
                                   </tr>
                                   @endforeach
                                 </tbody>
                             </table>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                          {{$payments->links()}}
                         </div>
                       </div>
                       <div class="row" style="padding-top: 9px; padding-bottom: 7px; box-shadow: inset 0px 0px 3px #ccc;">
