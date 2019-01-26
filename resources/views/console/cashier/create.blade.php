@@ -5,7 +5,7 @@
     <div class="container">
 
         <div class="col-sm-12">
-            <div class="card-box">
+            <div class="card-box" style="width: 50%; margin:auto;">
                 <div class="row">
                     <div class="col-md-12">
                         <form class="form-horizontal heiz-dashboard-forms" role="form" action="{{route('cashiers.store')}}" id="addTable" method="post" enctype="multipart/form-data" data-parsley-validate="" novalidate="">

@@ -9,13 +9,13 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="dataTables_length" id="datatable-responsive_length">
-                            <label>Show 
+                            <label>Show
                                 <select name="datatable-responsive_length" aria-controls="datatable-responsive" class="form-control input-sm">
                                     <option value="10">10</option>
                                     <option value="25">25</option>
                                     <option value="50">50</option>
                                     <option value="100">100</option>
-                                </select> 
+                                </select>
                                 entries
                             </label>
                         </div>
@@ -39,16 +39,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($supervisors as $supervisor)  
+                                @foreach($supervisors as $supervisor)
                                 <tr role="row" class="odd">
-                                    <td class="sorting_1" tabindex="0">{{$supervisor->id}}</td>
+                                    <td class="sorting_1" tabindex="0">{{$supervisor->supervisor_id}}</td>
                                     <td>{{$supervisor->name}}</td>
                                     <td>{{$supervisor->email}}</td>
                                     <td>Active</td>
 
                                     <td>
                                         <div class="btn-group">
-                                            <a href="#" class="btn btn-success waves-effect waves-light">
+                                            <a href="{{route('supervisors.edit', $supervisor->supervisor_id)}}" class="btn btn-success waves-effect waves-light">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
                                             <a href="#" onclick="$(this).confirmDelete('/delete-table/'+37)" class="btn btn-danger waves-effect waves-light">
@@ -64,21 +64,11 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class="dataTables_info" id="datatable-responsive_info" role="status" aria-live="polite">Showing 1 to 5 of 5 entries</div>
+
                     </div>
                     <div class="col-sm-6">
                         <div class="dataTables_paginate paging_simple_numbers" id="datatable-responsive_paginate">
-                            <ul class="pagination">
-                                <li class="paginate_button previous disabled" aria-controls="datatable-responsive" tabindex="0" id="datatable-responsive_previous">
-                                    <a href="#">Previous</a>
-                                </li>
-                                <li class="paginate_button active" aria-controls="datatable-responsive" tabindex="0">
-                                    <a href="#">1</a>
-                                </li>
-                                <li class="paginate_button next disabled" aria-controls="datatable-responsive" tabindex="0" id="datatable-responsive_next">
-                                    <a href="#">Next</a>
-                                </li>
-                            </ul>
+                            {{$supervisors->links()}}
                         </div>
                     </div>
                 </div>

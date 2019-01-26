@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Jobs\CleanBillsTable;
+use App\Jobs\FloatCleanBills;
 
 class ConsoleController extends Controller
 {
@@ -71,7 +72,7 @@ class ConsoleController extends Controller
 
 
 
-      CleanBillsTable::dispatch();
+      FloatCleanBills::dispatch();
       // dd('p');
       return redirect()->route('processing');
         // return view('console.construction');

@@ -41,14 +41,14 @@
                             <tbody>
                                 @foreach($collectors as $collector)
                                 <tr role="row" class="odd">
-                                    <td class="sorting_1" tabindex="0">{{$collector->id}}</td>
+                                    <td class="sorting_1" tabindex="0">{{$collector->collector_id}}</td>
                                     <td>{{$collector->name}}</td>
                                     <td>{{$collector->email}}</td>
                                     <td>Active</td>
 
                                     <td>
                                         <div class="btn-group">
-                                            <a href="#" class="btn btn-success waves-effect waves-light">
+                                            <a href="{{route('collectors.edit', $collector->collector_id)}}" class="btn btn-success waves-effect waves-light">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
                                             <a href="#" onclick="$(this).confirmDelete('/delete-table/'+37)" class="btn btn-danger waves-effect waves-light">
@@ -64,7 +64,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class="dataTables_info" id="datatable-responsive_info" role="status" aria-live="polite">Showing 1 to 5 of 5 entries</div>
+                        <!-- <div class="dataTables_info" id="datatable-responsive_info" role="status" aria-live="polite">Showing 1 to 5 of 5 entries</div> -->
                     </div>
                     <div class="col-sm-6">
                         {{$collectors->links()}}

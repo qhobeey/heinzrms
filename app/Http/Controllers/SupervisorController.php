@@ -69,7 +69,8 @@ class SupervisorController extends Controller
      */
     public function edit($id)
     {
-        //
+      $supervisor = Supervisor::where('supervisor_id', $id)->first();
+      return view('console.supervisor.edit', compact('supervisor'));
     }
 
     /**
@@ -81,7 +82,12 @@ class SupervisorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $supervisor = Supervisor::where('supervisor_id', $id)->first();
+      // dd($request->all());
+      $data = $request->validate(['name' => 'required', 'email' => 'required']);
+
+      $res = $supervisor->update($data);
+      return view('console.supervisor.edit', compact('supervisor'));
     }
 
     /**

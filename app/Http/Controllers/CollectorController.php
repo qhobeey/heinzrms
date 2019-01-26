@@ -123,7 +123,8 @@ class CollectorController extends Controller
      */
     public function edit($id)
     {
-        //
+      $collector = Collector::where('collector_id', $id)->first();
+      return view('console.collector.edit', compact('collector'));
     }
 
     /**
@@ -135,7 +136,14 @@ class CollectorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $collector = Collector::where('collector_id', $id)->first();
+      // dd($request->all());
+      $data = $request->validate(['name' => 'required', 'email' => 'required', 'username' => 'required']);
+      if($request->password):
+        $data = array_merge($data, ['password' => Hash::make($request->password)]);
+      endif;
+      $res = $collector->update($data);
+      return view('console.collector.edit', compact('collector'));
     }
 
     /**
