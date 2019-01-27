@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Jobs\CleanBillsTable;
 use App\Jobs\FloatCleanBills;
+use App\Jobs\SetBillLocation;
 
 class ConsoleController extends Controller
 {
@@ -70,7 +71,7 @@ class ConsoleController extends Controller
       // });
 
 
-      FloatCleanBills::dispatch();
+      SetBillLocation::dispatch();
       // FloatCleanBills::dispatch();
       // dd('p');
       return redirect()->route('processing');
