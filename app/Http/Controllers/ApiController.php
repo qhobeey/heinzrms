@@ -282,20 +282,24 @@ class ApiController extends Controller
     }
     public function getAccountBills($query)
     {
-      $bill = Bill::where('account_no', $query)->first();
+      $max = Bill::where('account_no', $query)->max('year');
+      $bill = Bill::where('account_no', $query)->where('year', $max)->first();
+      // dd($bill);
       $owner;
-      if ($bill->bill_type == 'p') {
-        $bill = Bill::with('property')->where('account_no', $query)->first();
-        $owner = ($bill) ? $bill->property : 'no owner found';
+      if (strtoupper($bill->bill_type) == strtoupper('p')) {
+        $bill = Bill::with('property')->where('account_no', $query)->where('year', $max)->first();
+        $own = $bill ? ($bill->property ?: 'NA') : 'NA';
+        $owner = ($own == 'NA') ? 'NA' : $own->owner;
       }else{
-        $bill = Bill::with('business')->where('account_no', $query)->first();
-        $owner = ($bill) ? $bill->business : 'no owner found';
+        $bill = Bill::with('business')->where('account_no', $query)->where('year', $max)->first();
+        $own = $bill ? ($bill->business ?: 'NA') : 'NA';
+        $owner = ($own == 'NA') ? 'NA' : $own->owner;
       }
 
       // $bill = Bill::where('account_no', $query)->first() ?: 'no data found';
-      // dd($bill);
+      // dd($owner);
 
-      return response()->json(['status' => 'success', 'data' => $bill, 'owner' => $owner->owner]);
+      return response()->json(['status' => 'success', 'data' => $bill, 'owner' => $owner]);
     }
     public function getDesktopPropertyBills($query)
     {

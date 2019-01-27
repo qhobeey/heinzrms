@@ -70,9 +70,8 @@ class ConsoleController extends Controller
       // });
 
 
-
-
       FloatCleanBills::dispatch();
+      // FloatCleanBills::dispatch();
       // dd('p');
       return redirect()->route('processing');
         // return view('console.construction');
