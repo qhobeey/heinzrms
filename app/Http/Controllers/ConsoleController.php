@@ -36,8 +36,8 @@ class ConsoleController extends Controller
         \App\Processing::create(['total' => \App\Bill::whereNull('zonal_id')->latest()->count(), 'count' => 0, 'percentage' => 0]);
         foreach ($bills as $key => $bill):
           $property = \App\Property::where('property_no', $bill->account_no)->first();
-          if(!$property) dd($property, 'bad');
-          dd($property, 'good');
+          if(!$property) return;
+          // dd($property, 'good');
           $bill->zonal_id = $property->zonal_id;
           $bill->electoral_id = $property->electoral_id;
           $bill->tas_id = $property->tas_id;
@@ -45,14 +45,14 @@ class ConsoleController extends Controller
 
           $bill->save();
 
-          $process = \App\Processing::first();
-          if($process->count == 0) {
-            $process->count == $process->count += 1;
-          } else {
-            $process->count == $process->count += 1;
-          }
-          $process->percentage = (int)(($process->count / $process->total) * 100);
-          $process->save();
+          // $process = \App\Processing::first();
+          // if($process->count == 0) {
+          //   $process->count == $process->count += 1;
+          // } else {
+          //   $process->count == $process->count += 1;
+          // }
+          // $process->percentage = (int)(($process->count / $process->total) * 100);
+          // $process->save();
 
         endforeach;
       });
