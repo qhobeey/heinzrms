@@ -72,7 +72,7 @@
             </article>
             <article style="width:100%; display:flex; justify-content: space-between; margin-top: 15px;">
               <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Rate Imposed:</p>
-              <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><?= $bill->rate_pa ?>&nbsp;&nbsp;</p>
+              <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><?= $bill->rate_imposed == 'NULL' ? 'NA' : $bill->rate_imposed; ?>&nbsp;&nbsp;</p>
             </article>
           </div>
           <div style="background-color:white; display:block; width: 100%;">
