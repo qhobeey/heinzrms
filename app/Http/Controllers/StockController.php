@@ -112,7 +112,7 @@ class StockController extends Controller
                             'supervisor_id' => $supervisor->supervisor_id,
                             'status' => 'issued'
                         ]);
-                        dd($issue, $stock);
+                        // dd($issue, $stock);
 
                     endif;
                     if($data['to_name'] === 'collector'):
