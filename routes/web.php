@@ -90,7 +90,7 @@ Route::prefix('console')->group(function () {
     /** */
     Route::get('property/records/bills', 'RecordController@getBills')->name('property.records.bills');
     Route::get('prepare/bill/{query}', 'PropertyController@prepareBill')->name('property.prepare.bill');
-    Route::get('property/payments/entry', 'RecordController@getpayments')->name('property.payments.payment');
+    Route::get('property/payments/entry', 'RecordController@getpaymentsProperty')->name('property.payments.payment');
     Route::post('property/payments/entry', 'RecordController@savePayments')->name('property.payments.payment');
     Route::get('property/filter/owner', 'PropertyController@filterOwner')->name('property.filter.owner');
 
@@ -112,7 +112,7 @@ Route::prefix('console')->group(function () {
     /** */
     Route::get('business/records/bills', 'RecordController@getBills')->name('business.records.bills');
     Route::get('prepare/bill/{query}', 'BusinessController@prepareBill')->name('business.prepare.bill');
-    Route::get('business/payments/entry', 'RecordController@getpayments')->name('business.payments.payment');
+    Route::get('business/payments/entry', 'RecordController@getpaymentsBusiness')->name('business.payments.payment');
     Route::post('business/payments/entry', 'RecordController@savePayments')->name('business.payments.payment');
 
     /** */
@@ -230,7 +230,7 @@ Route::prefix('api/v1/console')->group(function () {
     Route::get('get_desktop_property_bills/{query}', 'ApiController@getDesktopPropertyBills');
     Route::get('get_collectors_stock/{query}', 'ApiController@getCollectorStock');
     Route::get('get_all_bills', 'ApiController@getAllPropertyBills');
-    Route::get('filter_bill_by_ac/{query}', 'ApiController@filterBillByAc');
+    Route::get('filter_bill_by_ac/{query}/{account?}', 'ApiController@filterBillByAc');
 
     /** */
     Route::post('save_property_from_mobile', 'ApiController@savePropertyFromMobile');

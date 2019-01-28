@@ -32,6 +32,7 @@
                         <li><a href="{{route('property.categories')}}">{{__('Property Category')}}</a></li>
                         <!-- <li><a href="{{route('stock.return')}}">{{__('Fee Fixing')}}</a></li> -->
                         <li><a href="{{route('property.owners')}}">{{__('Property Owners')}}</a></li>
+                        <li><a href="{{route('property.payments.payment')}}">{{__('Property Payments')}}</a></li>
                     </ul>
                 </li>
 
@@ -45,6 +46,7 @@
                         <li><a href="{{route('business.categories')}}">{{__('Business Category')}}</a></li>
                         <!-- <li><a href="{{route('stock.return')}}">{{__('Fee Fixing')}}</a></li> -->
                         <li><a href="{{route('business.owners')}}">{{__('Business Owners')}}</a></li>
+                        <li><a href="{{route('business.payments.payment')}}">{{__('Business Payments')}}</a></li>
                     </ul>
                 </li>
 
@@ -62,7 +64,7 @@
                         <li><a href="{{route('account.bills')}}">{{__('Bills')}}</a></li>
                         <li><a href="{{route('print.bills')}}">{{__('Print Bills')}}</a></li>
                         <li><a href="{{route('cashiers.index')}}">{{__('Cashier Payments')}}</a></li>
-                        <li><a href="{{route('property.payments.payment')}}">{{__('Individual Payments')}}</a></li>
+
                         <li><a href="{{route('collectors.payment')}}">{{__('Collectors Payments')}}</a></li>
                     </ul>
                 </li>

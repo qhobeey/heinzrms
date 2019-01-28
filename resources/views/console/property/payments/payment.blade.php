@@ -4,8 +4,16 @@
 <div class="content">
     <div class="container">
 
+
+
         <div class="col-sm-12">
             <div class="card-box">
+              <div class="row">
+                  <div class="col-sm-6">
+                    <h3 style="color: brown; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Property Payment</h3>
+                  </div>
+                  <div class="col-sm-6"></div>
+              </div>
                 <div class="row">
                     <div class="col-md-12">
                         <form class="form-horizontal heiz-dashboard-forms" role="form" action="{{route('property.payments.payment')}}" id="addTable" method="post" enctype="multipart/form-data" data-parsley-validate="" novalidate="">
@@ -27,7 +35,7 @@
                                     <template v-for="data in filterList" v-if="account_no.length > 4">
                                       <tr>
                                         <td class="label-cell">
-                                          <a href="#" @click.prevent="updateSearchField(data.account_no)">@{{data.account_no}}</a>
+                                          <a href="#" @click.prevent="updateSearchField(data.property_no)"><span style="color:red;" v-text="data.property_no"></span>&nbsp; - @{{data.owner.name}}</a>
                                         </td>
                                       </tr>
                                     </template>
@@ -36,21 +44,50 @@
                               </div>
                             </div>
 
+                            <h4 class="form-desc">Account Details</h4>
                             <div class="row">
                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">Account No</label>
+                                        <input type="text" id="acc_no" disabled class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">Account Owner</label>
+                                        <input type="text" id="acc_owner" disabled class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">Zonal</label>
+                                        <input type="text" id="acc_zonal" disabled class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h4 class="form-desc">Bill Details</h4>
+                            <div class="row">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Arrears</label>
                                         <input type="text" id="payment_arrears" disabled class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Current Amount</label>
                                         <input type="text" v-if="bill.current_amount == 0.0" :value="f_message" disabled class="form-control">
                                         <input type="text" id="payment_current_amount" disabled class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="">Last bill year</label>
+                                        <input type="text" id="payment_year" disabled class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Net Balance</label>
                                         <input type="text" disabled class="form-control">
@@ -193,7 +230,7 @@
           filteredList () {
             if(this.account_no.length > 4){
               this.showFilter = true
-              axios.get(`/api/v1/console/filter_bill_by_ac/${this.account_no.toUpperCase()}`)
+              axios.get(`/api/v1/console/filter_bill_by_ac/${this.account_no.toUpperCase()}/p`)
               .then(response => {this.filterList = response.data.data})
               .catch(error => {console.error(error)});
             }
@@ -208,6 +245,10 @@
             // console.log(response.data.data)
             document.getElementById('payment_arrears').value = response.data.data.arrears
             document.getElementById('payment_current_amount').value = response.data.data.current_amount
+            document.getElementById('payment_year').value = response.data.data.year
+            document.getElementById('acc_no').value = response.data.data.account_no
+            document.getElementById('acc_owner').value = response.data.owner.name
+            document.getElementById('acc_zonal').value = response.data.zonal.description
             // this.bill = response.data.bill
             // this.owner = response.data.owner
           }

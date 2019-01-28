@@ -31,10 +31,15 @@ class RecordController extends Controller
         // dd($bills);
         return view('console.property.records.bills', compact('bills'));
     }
-    public function getPayments()
+    public function getPaymentsProperty()
     {
-        $bills = \App\Bill::latest()->get();
-        return view('console.property.payments.payment', compact('bills'));
+        // $bills = \App\Bill::latest()->get();
+        return view('console.property.payments.payment');
+    }
+    public function getpaymentsBusiness()
+    {
+        // $bills = \App\Bill::latest()->get();
+        return view('console.business.payments.payment');
     }
     public function savePayments(Request $request)
     {

@@ -290,16 +290,18 @@ class ApiController extends Controller
         $bill = Bill::with('property')->where('account_no', $query)->where('year', $max)->first();
         $own = $bill ? ($bill->property ?: 'NA') : 'NA';
         $owner = ($own == 'NA') ? 'NA' : $own->owner;
+        $zonal = ($own == 'NA') ? 'NA' : $own->zonal;
       }else{
         $bill = Bill::with('business')->where('account_no', $query)->where('year', $max)->first();
         $own = $bill ? ($bill->business ?: 'NA') : 'NA';
         $owner = ($own == 'NA') ? 'NA' : $own->owner;
+        $zonal = ($own == 'NA') ? 'NA' : $own->zonal;
       }
 
       // $bill = Bill::where('account_no', $query)->first() ?: 'no data found';
       // dd($owner);
 
-      return response()->json(['status' => 'success', 'data' => $bill, 'owner' => $owner]);
+      return response()->json(['status' => 'success', 'data' => $bill, 'owner' => $owner, 'zonal' => $zonal]);
     }
     public function getDesktopPropertyBills($query)
     {
@@ -315,9 +317,13 @@ class ApiController extends Controller
         // dd($bills);
         return response()->json(['status' => 'success', 'data' => $bills]);
     }
-    public function filterBillByAc($query)
+    public function filterBillByAc($query, $account = 'p')
     {
-      $bills = Bill::where('account_no', 'LIKE', "%{$query}%")->get();
+      if(strtoupper($account) == strtoupper('p')):
+        $bills = Property::with(['owner'])->where('property_no', 'LIKE', "%{$query}%")->get();
+        return response()->json(['status' => 'success', 'data' => $bills]);
+      endif;
+      $bills = Business::with(['owner'])->where('business_no', 'LIKE', "%{$query}%")->get();
       return response()->json(['status' => 'success', 'data' => $bills]);
     }
     public function getCollectors()
