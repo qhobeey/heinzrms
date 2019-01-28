@@ -104,7 +104,7 @@ class StockController extends Controller
 
                       $issue->to_id = $supervisor->supervisor_id;
                       $issue->save();
-                      dd($issue);
+                      // dd($issue);
 
                         $stock->update([
                             'accountant_id' => null,
@@ -112,6 +112,7 @@ class StockController extends Controller
                             'supervisor_id' => $supervisor->supervisor_id,
                             'status' => 'issued'
                         ]);
+                        dd($issue, $stock);
 
                     endif;
                     if($data['to_name'] === 'collector'):
