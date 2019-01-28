@@ -41,33 +41,84 @@ class RecordController extends Controller
         // $bills = \App\Bill::latest()->get();
         return view('console.business.payments.payment');
     }
-    public function savePayments(Request $request)
+    public function savePaymentProperty(Request $request)
     {
+      // dd($request->all());
         $payment = $request->validate([
-            'property_id' => 'required',
+            'account_no' => 'required',
             'collector_id' => 'required',
-            'cashier_id' => 'required',
+            'cashier_id' => '',
             'amount_paid' => 'required',
             'payment_mode' => 'required',
             'gcr_number' => 'required',
             'payment_date' => 'required',
-            'cprn' => 'required',
+            'cprn' => '',
         ]);
 
-        $payment = array_merge($payment, ['payment_year' => Carbon::now()->year,
-            'payment_type' => 'P', 'account_no' => 'empty',
-            'amount_paid' => floatval($payment['amount_paid'])
-        ]);
+        $collector = \App\Collector::where('id', $payment['collector_id'])->first();
+        unset($payment[1]);
+        // $payment = array_merge($payment, ['payment_year' => Carbon::now()->year,
+        //     'payment_type' => 'P', 'account_no' => 'empty',
+        //     'amount_paid' => floatval($payment['amount_paid']),
+        //     'collector_id' => $collector->collector_id
+        // ]);
 
-        $truesave = Payment::create($payment);
-        $bill = Bill::where('property_id', $truesave['property_id'])->first();
-        $c_amt_paid = $truesave['amount_paid'];
-        $o_amt_paid = $bill->current_amount;
-        $a_amount = $o_amt_paid - $c_amt_paid;
-        // add column to database and set to full payment if current - new == 0
-        $bill->update(['current_amount' => $a_amount]);
+        // dd($payment);
+
+        $dateArray = explode('-', $payment['payment_date']);
+        $payment = array_merge($payment, ['payment_year' => current($dateArray), 'collector_id' => $collector->collector_id, 'data_type' => 'P']);
+        // unset($info['date']);
+        if($this->recalculateGCR($payment['gcr_number'], $payment['collector_id'])):
+            if($this->recalculateBill($payment['account_no'], $payment['amount_paid'])):
+              $paymentR = Payment::create($payment);
+              // if($paymentR) {
+              //   $account = (strtoupper($paymentR->data_type) == strtoupper('p'))
+              //               ? Property::with(['type', 'category', 'owner'])->where('property_no', $payment->account_no)->first()
+              //               : Business::with(['type', 'category', 'owner'])->where('business_no', $payment->account_no)->first();
+              //   // dd($account->owner);
+              //   if ($account->owner && $account->owner->phone) {
+              //     $mobile = $account->owner->phone;
+              //     if($mobile[0] == '0') $mobile = ltrim($mobile, '0');
+              //     $mobile = '233' . $mobile;
+              //     // $mobile = '233248160008';
+              //     $bill = Bill::where('account_no', $payment->account_no)->first();
+              //     $message = 'Dear ' . $account->owner ? $account->owner->name : 'sir/madma' . ' of PROPERTY ACC: '. $payment->account_no . '. You have been credited with a payment amount of GHc' .$payment->amount_paid . ' with a GCR No '. $payment->gcr_number . ' and your current balance is GHc ' . $bill->current_amount . '.Thanks';
+              //     $smsRes = Setup::sendSms($mobile, $message);
+              //     // dd($smsRes, 'o');
+              //     if ($smsRes == 'good') {
+              //       return response()->json(['status' => 'success', 'data' => 'Saved and SMS sent', 'payment' => $payment, 'account' => $bill, 'owner' => $account->owner ? $account->owner->name : 'no owner name found']);
+              //     }else{
+              //       return response()->json(['status' => 'success', 'data' => 'Saved..Sending message error']);
+              //     }
+              //   }else {
+              //     return response()->json(['status' => 'success', 'data' => 'Saved with no owner number']);
+              //   }
+              //
+              // }
+            endif;
+
+        endif;
 
         return redirect()->route('property.payments.payment');
+    }
+
+    protected function recalculateBill($account, $amount)
+    {
+      $bill = Bill::where('account_no', $account)->first();
+      $totalPayment = floatval($bill->total_paid) + floatval($amount);
+      $checkBal = floatval($bill->current_amount) - floatval($amount);
+      $balance = $checkBal == floatval(0) ? floatval(0): $checkBal;
+      $bill->update(['current_amount' => $balance, 'total_paid' => $totalPayment]);
+      return true;
+    }
+
+    protected function recalculateGCR($gcr, $collector)
+    {
+      // dd($gcr, $collector);
+      $data = \App\EnumGcr::where('id_collector', $collector)->where('gcr_number', $gcr)->first();
+      // dd($data);
+      $data->update(['is_used' => 1]);
+      return true;
     }
 
     public function previewBill($query)

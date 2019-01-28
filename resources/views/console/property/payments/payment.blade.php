@@ -103,7 +103,7 @@
                                                 <label style="margin-top: 10px;" for="">Collector</label>
                                             </div>
                                             <div class="col-md-10">
-                                                <select name="collector_id" v-model="collector_id" id="" @blur="getCStocks(collector_id);" class="form-control">
+                                                <select name="collector_id" v-model="collector_id" id="" @blur="getCStocks(collector_id);" class="form-control" required>
                                                     <option value="">-choose-</option>
                                                     <template v-for="data in collectors">
                                                         <option :value="data.id">@{{data.name}}</option>
@@ -138,15 +138,15 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Amount Paid</label>
-                                        <input type="text" name="amount_paid" class="form-control">
+                                        <input type="text" name="amount_paid" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">GCR No</label>
-                                        <select name="gcr_number" name="gcr_number" id="" class="form-control">
+                                        <select name="gcr_number" id="" class="form-control" required>
                                             <template v-for="data in gcrs">
-                                                <option :value="data.id">@{{data.gcr_number}}</option>
+                                                <option :value="data.gcr_number">@{{data.gcr_number}}</option>
                                             </template>
                                         </select>
                                     </div>
@@ -154,7 +154,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Payment Mode</label>
-                                        <select name="payment_mode" id="" class="form-control">
+                                        <select name="payment_mode" id="" class="form-control" required>
                                             <option value="">-select-</option>
                                             <option value="cash">Cash</option>
                                             <option value="cheque">Cheque</option>
@@ -173,11 +173,7 @@
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="">Collectors Payment Receipt No</label>
-                                        <select name="gcr_number" name="cprn" id="" class="form-control">
-                                            <template v-for="data in gcrs">
-                                                <option :value="data.id">@{{data.gcr_number}}</option>
-                                            </template>
-                                        </select>
+                                        <input type="text" name="cprn" id="" class="form-control" required>
                                     </div>
                                 </div>
                             </div>

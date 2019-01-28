@@ -98,7 +98,7 @@
                                                 <select name="collector_id" v-model="collector_id" id="" @blur="getCStocks(collector_id);" class="form-control">
                                                     <option value="">-choose-</option>
                                                     <template v-for="data in collectors">
-                                                        <option :value="data.id">@{{data.name}}</option>
+                                                        <option :value="data.collector_id">@{{data.name}}</option>
                                                     </template>
                                                 </select>
                                             </div>

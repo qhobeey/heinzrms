@@ -91,7 +91,7 @@ Route::prefix('console')->group(function () {
     Route::get('property/records/bills', 'RecordController@getBills')->name('property.records.bills');
     Route::get('prepare/bill/{query}', 'PropertyController@prepareBill')->name('property.prepare.bill');
     Route::get('property/payments/entry', 'RecordController@getpaymentsProperty')->name('property.payments.payment');
-    Route::post('property/payments/entry', 'RecordController@savePayments')->name('property.payments.payment');
+    Route::post('property/payments/entry', 'RecordController@savePaymentProperty')->name('property.payments.payment');
     Route::get('property/filter/owner', 'PropertyController@filterOwner')->name('property.filter.owner');
 
     Route::post('property/prepare/bills', 'PropertyController@preparePropertyBills')->name('property.prepare.bills');
