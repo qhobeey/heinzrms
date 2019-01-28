@@ -96,7 +96,7 @@ class StockController extends Controller
                 $issue = IssueStock::create($data);
                 // dd($issue);
                 if($issue):
-                    $stock = Stock::whereNotNull('accountant_id')->where('accountant_id', $data['from_id'])->first();
+                    $stock = Stock::whereNotNull('accountant_id')->where('id', $issue->stock_id)->first();
 
                     if($data['to_name'] === 'supervisor'):
 
