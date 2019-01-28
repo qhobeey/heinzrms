@@ -488,3 +488,15 @@ table.dataTable.feefixing thead th, table.dataTable thead td {
     text-transform: capitalize;
     border-left: 1px solid #3e3b3b;
 }
+[v-cloak] > * { display:none; }
+[v-cloak]::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background-image: url('../images/25.gif');
+  background-size: cover;
+  left: 50%;
+  top: 50%;
+}

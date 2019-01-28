@@ -83,7 +83,8 @@ class StockController extends Controller
             'to_id' => 'required',
             'date' => 'required'
         ]);
-        // dd($request->stock_id);
+        if(count($request->stock_id) < 1) return redirect()->back()->with('error', 'No stock GCR submitted');
+        // dd(count($request->stock_id));
         if($data['from_name'] === 'stock'):
             foreach($request->stock_id as $id):
                 $data = array_merge($data, [

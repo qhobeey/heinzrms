@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="col-md-6" v-if="issue_from == 'supervisor'">
                                     <div class="form-group">
-                                        <label for="">Name of person</label>
+                                        <label for="">Name of <span v-text="issue_from"></span> </label>
                                         <select class="form-control" v-model="from_id"  @blur="from_stock(issue_from);" name="from_id" id="">
                                             <template v-for="data in froms">
                                               <option :value="data.id">@{{data.name}}</option>
@@ -33,11 +33,18 @@
                                 </div>
                             </div>
 
-                            <div class="row fixed-issue-container" v-if="stocks.length > 0">
-                                <div class="col-md-4" v-for="stock in stocks">
+                            <div class="row fixed-issue-container">
+                              @if (\Session::has('error'))
+                                  <div class="alert alert-danger">
+                                      <ul>
+                                          <li>{!! \Session::get('error') !!}</li>
+                                      </ul>
+                                  </div>
+                              @endif
+                                <div class="col-md-4" v-for="stock in stocks" v-cloak>
                                     <div class="form-group">
-                                        <label :for="stock.id">[GCR] start serial[ <span>@{{stock.min_serial}}</span> ] & End serial[ <span>@{{stock.max_serial}}</span> ]</label>
-                                        <input type="checkbox" :value="stock.id" :id="stock.id" name="stock_id[]">
+                                        <label :for="stock.id">[GCR] start serial[ <span v-cloak>@{{stock.min_serial}}</span> ] & End serial[ <span v-cloak>@{{stock.max_serial}}</span> ]</label>
+                                        <input type="checkbox" :value="stock.id" :id="stock.id" name="stock_id[]" required>
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +62,7 @@
                                 </div>
                                 <div class="col-md-6" v-if="tos.length > 0">
                                     <div class="form-group">
-                                        <label for="">Name of person</label>
+                                        <label for="">Name of <span v-text="issue_to"></span> </label>
                                         <select class="form-control" v-model="to_id" name="to_id" id="">
                                           <template v-for="data in tos">
                                             <option :value="data.id">@{{data.name}}</option>
@@ -81,8 +88,8 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <button type="submit" class="form-control btn btn-primary">Add Entry</button>
+                            <div class="row" style="text-align:center;">
+                                <button type="submit" style="width:50%; margin:auto;" class="form-control btn btn-primary">Issue GCR</button>
                             </div>
                         </form>
                     </div>

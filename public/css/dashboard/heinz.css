@@ -67,8 +67,8 @@
 }
 .fixed-issue-container{
     background: #eceff2;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     padding-left: 10px;
     max-height: 290px;
     overflow-y: scroll;

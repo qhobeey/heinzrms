@@ -65,8 +65,8 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <button type="submit" class="form-control btn btn-primary">Add Entry</button>
+                            <div class="row" style="text-align:center;">
+                                <button type="submit" style="width:50%; margin:auto;" class="form-control btn btn-primary">save stock</button>
                             </div>
                         </form>
                     </div>
