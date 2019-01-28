@@ -35,10 +35,10 @@ class ConsoleController extends Controller
 
 
 
-      SetBillLocation::dispatch();
+      // SetBillLocation::dispatch();
       // FloatCleanBills::dispatch();
       // dd('p');
-      return redirect()->route('processing');
-        // return view('console.construction');
+      // return redirect()->route('processing');
+        return view('console.construction');
     }
 }
