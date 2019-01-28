@@ -60,10 +60,10 @@ class ApiController extends Controller
         $data = [];
         if($query === 'supervisor'):
             $supervisor = Supervisor::where('id', $id)->first();
-            $data = DB::table('stocks')->where('supervisor_id', $supervisor->supervisor_id)->get();
+            $data = \App\Stock::where('supervisor_id', $supervisor->supervisor_id)->orderBy('min_serial', 'asc')->get();
         endif;
         if($query === 'stock'):
-            $data = DB::table('stocks')->where('status', 'free')->get();
+            $data = \App\Stock::where('status', 'free')->orderBy('min_serial', 'asc')->get();
         endif;
         return response()->json(['status' => 'success', 'data' => $data]);
     }
