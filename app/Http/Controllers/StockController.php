@@ -92,7 +92,7 @@ class StockController extends Controller
                     'from_id' => auth()->user()->id,
                     'stock_id' => $id
                 ]);
-                // dd($data);
+                dd($data);
                 $issue = IssueStock::create($data);
                 if($issue):
                     $stock = Stock::whereNotNull('accountant_id')->where('accountant_id', $data['from_id'])->first();
