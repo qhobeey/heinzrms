@@ -94,7 +94,7 @@ class StockController extends Controller
                 ]);
                 // dd($data);
                 $issue = IssueStock::create($data);
-                dd($issue);
+                // dd($issue);
                 if($issue):
                     $stock = Stock::whereNotNull('accountant_id')->where('accountant_id', $data['from_id'])->first();
 
@@ -104,6 +104,7 @@ class StockController extends Controller
 
                       $issue->to_id = $supervisor->supervisor_id;
                       $issue->save();
+                      dd($stock);
 
                         $stock->update([
                             'accountant_id' => null,
