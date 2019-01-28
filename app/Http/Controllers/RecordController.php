@@ -104,7 +104,9 @@ class RecordController extends Controller
 
     protected function recalculateBill($account, $amount)
     {
-      $bill = Bill::where('account_no', $account)->first();
+      $max = Bill::where('account_no', $account)->max('year');
+      $bill = Bill::where('account_no', $account)->where('year', $max)->first();
+      // $bill = Bill::where('account_no', $account)->first();
       $totalPayment = floatval($bill->total_paid) + floatval($amount);
       $checkBal = floatval($bill->current_amount) - floatval($amount);
       $balance = $checkBal == floatval(0) ? floatval(0): $checkBal;
