@@ -36,7 +36,7 @@ class SetBillLocation implements ShouldQueue
         \App\Processing::create(['total' => \App\Bill::whereNull('zonal_id')->latest()->count(), 'count' => 0, 'percentage' => 0]);
         foreach ($bills as $key => $bill):
           $property = \App\Property::where('property_no', $bill->account_no)->first();
-          if(!$property) return;
+          if(!$property) continue;
           $bill->zonal_id = $property->zonal_id;
           $bill->electoral_id = $property->electoral_id;
           $bill->tas_id = $property->tas_id;

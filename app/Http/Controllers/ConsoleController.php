@@ -32,37 +32,13 @@ class ConsoleController extends Controller
 
     public function construction()
     {
-      \App\Bill::whereNull('zonal_id')->latest()->chunk(1000, function ($bills) {
-        \App\Processing::create(['total' => \App\Bill::whereNull('zonal_id')->latest()->count(), 'count' => 0, 'percentage' => 0]);
-        foreach ($bills as $key => $bill):
-          $property = \App\Property::where('property_no', $bill->account_no)->first();
-          if(!$property) dd('bad');
-          // dd($property, 'good');
-          $bill->zonal_id = $property->zonal_id;
-          $bill->electoral_id = $property->electoral_id;
-          $bill->tas_id = $property->tas_id;
-          $bill->community_id = $property->community_id;
-
-          $bill->save();
-
-          // $process = \App\Processing::first();
-          // if($process->count == 0) {
-          //   $process->count == $process->count += 1;
-          // } else {
-          //   $process->count == $process->count += 1;
-          // }
-          // $process->percentage = (int)(($process->count / $process->total) * 100);
-          // $process->save();
-
-        endforeach;
-      });
-      dd('ok');
 
 
-      // SetBillLocation::dispatch();
+
+      SetBillLocation::dispatch();
       // FloatCleanBills::dispatch();
       // dd('p');
       // return redirect()->route('processing');
-        // return view('console.construction');
+        return view('console.construction');
     }
 }
