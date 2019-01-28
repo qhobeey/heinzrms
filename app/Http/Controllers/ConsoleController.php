@@ -32,43 +32,30 @@ class ConsoleController extends Controller
 
     public function construction()
     {
-      // DB::table('bills')->whereBetween('year', [2007, 2015])->latest()->chunk(500, function ($bills) {
-      //   if ($bills->count() == 0) dd('No bills data found!');
-      //
-      //   foreach ($bills as $key => $value) {
-      //     dump($bills->count());
-      //     unset($bills[0]);
-      //   };
-      //   dd($bills->count());
+      \App\Bill::whereNull('zonal_id')->latest()->chunk(1000, function ($bills) {
+        \App\Processing::create(['total' => \App\Bill::whereNull('zonal_id')->latest()->count(), 'count' => 0, 'percentage' => 0]);
+        foreach ($bills as $key => $bill):
+          $property = \App\Property::where('property_no', $bill->account_no)->first();
+          if(!$property) dd($property);
+          dd($property);
+          $bill->zonal_id = $property->zonal_id;
+          $bill->electoral_id = $property->electoral_id;
+          $bill->tas_id = $property->tas_id;
+          $bill->community_id = $property->community_id;
 
-        // $filterAccount = $bills[0]->account_no;
-        // $billSet = $bills->where('account_no', $filterAccount);
-        //
-        // $billArrayInsert = [
-        //   'account_no' => $filterAccount, 'rate_pa' => $billSet->where('year', $billSet->max('year'))->first()->rate_pa,
-        //   'rateable_value' => $billSet->where('year', $billSet->max('year'))->first()->rateable_value,
-        //   'current_amount' => $billSet->where('year', $billSet->max('year'))->first()->current_amount,
-        //   'arrears' => $billSet->where('year', $billSet->max('year'))->first()->arrears,
-        //   'rate_imposed' => $billSet->where('year', $billSet->max('year'))->first()->rate_imposed,
-        //   'total_paid' => $billSet->where('year', $billSet->max('year'))->first()->total_paid,
-        //   'bill_type' => $billSet->where('year', $billSet->max('year'))->first()->bill_type,
-        //   'year' => $billSet->where('year', $billSet->max('year'))->first()->year,
-        //   'account_balance' => $billSet->where('year', $billSet->max('year'))->first()->account_balance,
-        //   'bill_date' => $billSet->where('year', $billSet->max('year'))->first()->bill_date,
-        //   'adjust_arrears' => $billSet->where('year', $billSet->max('year'))->first()->adjust_arrears,
-        //   'prepared_by' => 'ADMINISTRATOR',
-        //   'accumulated_current_amount' => $billSet->max('current_amount'),
-        //   'accumulated_arrears' => $billSet->max('arrears'),
-        //   'accumulated_account_balance' => $billSet->max('account_balance'),
-        //   'accumulated_adjust_arrears' => $billSet->max('adjust_arrears'),
-        //   'accumulated_total_paid' => $billSet->max('total_paid'),
-        // ];
-        // dd($billArrayInsert);
-        // $isCreated = \App\Bill::create($billArrayInsert);
-        // if($isCreated):
-        //   \App\Bill::where('account_no', $filterAccount)->first()->delete();
-        // endif;
-      // });
+          $bill->save();
+
+          $process = \App\Processing::first();
+          if($process->count == 0) {
+            $process->count == $process->count += 1;
+          } else {
+            $process->count == $process->count += 1;
+          }
+          $process->percentage = (int)(($process->count / $process->total) * 100);
+          $process->save();
+
+        endforeach;
+      });
 
 
       SetBillLocation::dispatch();
