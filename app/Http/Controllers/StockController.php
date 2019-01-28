@@ -86,6 +86,7 @@ class StockController extends Controller
         if(count($request->stock_id) < 1) return redirect()->back()->with('error', 'No stock GCR submitted');
         // dd(count($request->stock_id));
         if($data['from_name'] === 'stock'):
+          // dd($request->stock_id);
             foreach($request->stock_id as $id):
                 $data = array_merge($data, [
                     'from_id' => auth()->user()->id,
@@ -109,6 +110,7 @@ class StockController extends Controller
                             'supervisor_id' => $supervisor->supervisor_id,
                             'status' => 'issued'
                         ]);
+
                     endif;
                     if($data['to_name'] === 'collector'):
                       $collector = Collector::where('id', $data['to_id'])->first();
@@ -181,6 +183,7 @@ class StockController extends Controller
                             'supervisor_id' => $supervisor->supervisor_id,
                             'status' => 'issued'
                         ]);
+
                     endif;
                     if($data['to_name'] === 'collector'):
                       $collector = Collector::where('id', $data['to_id'])->first();
