@@ -32,8 +32,8 @@ class SetBillLocation implements ShouldQueue
     {
       \App\Processing::truncate();
 
-      \App\Bill::->whereNull('zonal_id')->orderBy('account_no', 'asc')->chunk(1000, function ($bills) {
-        \App\Processing::create(['total' => \App\Bill::latest()->count(), 'count' => 0, 'percentage' => 0]);
+      \App\Bill::whereNull('zonal_id')->orderBy('account_no', 'asc')->chunk(1000, function ($bills) {
+        \App\Processing::create(['total' => \App\Bill::whereNull('zonal_id')->latest()->count(), 'count' => 0, 'percentage' => 0]);
         foreach ($bills as $key => $bill):
           $property = \App\Property::where('property_no', $bill->account_no)->first();
           if(!$property) return;
