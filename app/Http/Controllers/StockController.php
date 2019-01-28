@@ -104,7 +104,7 @@ class StockController extends Controller
 
                       $issue->to_id = $supervisor->supervisor_id;
                       $issue->save();
-                      dd($stock);
+                      dd($issue);
 
                         $stock->update([
                             'accountant_id' => null,
