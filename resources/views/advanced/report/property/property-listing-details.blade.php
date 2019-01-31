@@ -6,67 +6,98 @@
 
 @section('content')
 
+<?php
+    session_start();
+    use App\WebClientPrint\WebClientPrint;
+?>
+
 <div class="content">
-  <div class="row" style="border-bottom: 2px solid black;">
-    <h1 style="font-weight: 600; text-align: center; text-transform: uppercase; color: black; font-size: 28px;"><?= env('ASSEMBLY_SMS_NAME'); ?></h1>
-  </div>
-  <div class="row" style="border-bottom: 2px solid black;">
-    <h4 style="text-align: center; font-size: 14px; color: black; font-weight: 600;">Property Listing Grouped by <?= ucwords($electoral->description); ?> <?= ucwords($location); ?> for <?= ucwords($year); ?></h4>
-  </div>
-<table id="fBill2" class="display" cellspacing="0" width="100%">
-    <thead>
-        <tr>
-          <th></th>
-          <th style="font-size: 10px;color: black;">Electoral Area</th>
-          <th style="font-size: 10px;color: black;">Account No</th>
-          <th style="font-size: 10px;color: black;">Owner Name</th>
-          <th style="font-size: 10px;color: black;">Property Address</th>
-          <th style="font-size: 10px;color: black;">Property cat</th>
-          <th style="font-size: 10px;color: black;">Arrears</th>
-          <th style="font-size: 10px;color: black;">Current Bill</th>
-          <th style="font-size: 10px;color: black;">Total Bill</th>
-          <th style="font-size: 10px;color: black;">Total Payment</th>
-          <th style="font-size: 10px;color: black;">Outstanding Arrears</th>
-        </tr>
-    </thead>
-    <tbody>
-      <div class="tableInner">
-        <tr class="odd2 heyy" style="background: #f5f5dc;">
-            <td><a href="{{ URL::previous() }}"><img src="/advanced/1/minus-sign.png"></a></td>
-            <td colspan="3"><a style="color:brown; font-weight: 600;" href="{{ URL::previous() }}"><?= $electoral->description; ?>&nbsp; [<?= $electoral->count_bills; ?>]</a></td>
-            <td></td>
-            <td></td>
-            <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills_arrears, true); ?></td>
-            <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral->current_bills, true); ?></td>
-            <td><?= \App\Repositories\ExpoFunction::formatMoney(($electoral->bills_arrears + $electoral->current_bills), true); ?></td>
-            <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral->total_paid_bills, true); ?></td>
-            <td><?= \App\Repositories\ExpoFunction::formatMoney(($electoral->bills_arrears + $electoral->current_bills) - $electoral->total_paid_bills, true); ?></td>
+  <div id="card">
+    <div class="row" style="border-bottom: 2px solid black;">
+      <h1 style="font-weight: 600; text-align: center; text-transform: uppercase; color: black; font-size: 28px;"><?= env('ASSEMBLY_SMS_NAME'); ?></h1>
+    </div>
+    <div class="row" style="border-bottom: 2px solid black;">
+      <h4 style="text-align: center; font-size: 14px; color: black; font-weight: 600;">Property Listing Grouped by <?= ucwords($electoral[0]->description); ?> <?= ucwords($location); ?> for <?= ucwords($year); ?></h4>
+    </div>
+    <table id="fBill2" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+              <th></th>
+              <th style="font-size: 10px;color: black;">Electoral Area</th>
+              <th style="font-size: 10px;color: black;">Account No</th>
+              <th style="font-size: 10px;color: black;">Owner Name</th>
+              <th style="font-size: 10px;color: black;">Property Address</th>
+              <th style="font-size: 10px;color: black;">Property cat</th>
+              <th style="font-size: 10px;color: black;">Arrears</th>
+              <th style="font-size: 10px;color: black;">Current Bill</th>
+              <th style="font-size: 10px;color: black;">Total Bill</th>
+              <th style="font-size: 10px;color: black;">Total Payment</th>
+              <th style="font-size: 10px;color: black;">Outstanding Arrears</th>
+            </tr>
+        </thead>
 
-        </tr>
+        <tbody>
+          <div class="tableInner">
+            <tr class="odd2 heyy" style="background: #f5f5dc;">
+                <td><a href="{{ URL::previous() }}"><img src="/advanced/1/minus-sign.png"></a></td>
+                <td colspan="3"><a style="color:brown; font-weight: 600;" href="{{ URL::previous() }}"><?= $electoral[0]->description; ?>&nbsp; [<?= $electoral[0]->bills->count(); ?>]</a></td>
+                <td></td>
+                <td></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral[0]->bills->sum('arrears'), true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral[0]->bills->sum('current_amount'), true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney(($electoral[0]->bills->sum('arrears') + $electoral[0]->bills->sum('current_amount')), true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral[0]->bills->sum('total_paid'), true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney(($electoral[0]->bills->sum('arrears') + $electoral[0]->bills->sum('current_amount')) - $electoral[0]->bills->sum('total_paid'), true); ?></td>
+
+            </tr>
+          </div>
+        </tbody>
+        <tbody>
+          @foreach($electoral[0]->bills as $key => $bill)
+            <tr class="odd2 heyy">
+                <td></td>
+                <td><?= $key+1; ?></td>
+                <td><?= $bill->account_no; ?></td>
+                <td><?= $bill->owner; ?></td>
+                <td><?= $bill->address; ?></td>
+                <td><?= $bill->category; ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney($bill->arrears, true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney($bill->current_amount, true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney(($bill->arrears + $bill->current_amount), true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney($bill->total_paid, true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney(($bill->arrears + $bill->current_amount) - $bill->total_paid, true); ?></td>
+
+            </tr>
+          @endforeach
+        </tbody>
+
+    </table>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <button type="button" onclick="javascript:showRsp()" id="repPrintBtn" class="btn btn-xs" style="background: black; color: white;">Print Report</button>
+    </div>
+    <div class="col-md-6">
+      <div class="row"  style="width: 84%; margin: auto;">
+
+        <div id="repPrint" class="col-md-6" style="display:none;">
+          <div id="loadPrinters">
+            <button type="button" class="btn btn-xs btn-danger" onclick="javascript:jsWebClientPrint.getPrinters();">Load installed printers...</button>
+          </div>
+          <div id="installedPrinters" style="visibility:hidden">
+
+              <select name="installedPrinterName" class="form-control" style="width: 100%; height: 30px; font-size: 10px;" id="installedPrinterName"></select>
+          </div>
+        </div>
+        <div class="col-md-6" id="repPrint2" style="display:none;">
+          <div id="printDevice">
+            <button type="button" onclick="javascript:issuePrint()" class="btn btn-xs btn-success" id="printBtn">Issue Print Command</button>
+          </div>
+        </div>
       </div>
-    </tbody>
-    <tbody>
-        @foreach($bills as $key => $bill)
-          <tr class="odd2 heyy">
-              <td></td>
-              <td><?= $key+1; ?></td>
-              <td><?= $bill->account_no; ?></td>
-              <td><?= $bill->owner; ?></td>
-              <td><?= $bill->address; ?></td>
-              <td><?= $bill->category; ?></td>
-              <td><?= \App\Repositories\ExpoFunction::formatMoney($bill->arrears, true); ?></td>
-              <td><?= \App\Repositories\ExpoFunction::formatMoney($bill->current_amount, true); ?></td>
-              <td><?= \App\Repositories\ExpoFunction::formatMoney(($bill->arrears + $bill->current_amount), true); ?></td>
-              <td><?= \App\Repositories\ExpoFunction::formatMoney($bill->total_paid, true); ?></td>
-              <td><?= \App\Repositories\ExpoFunction::formatMoney(($bill->arrears + $bill->current_amount) - $bill->total_paid, true); ?></td>
-
-          </tr>
-        @endforeach
-    </tbody>
-
-
-</table>
-{{$bills->links()}}
+    </div>
+  </div>
 </div>
 
 
@@ -75,6 +106,7 @@
 @section('scripts')
 
 <script src="/advanced/2/datables.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
 <script>
 
@@ -90,7 +122,7 @@ $(document).ready(function() {
     });
 
     // Add event listener for opening and closing details
-    $('#fBill1 tbody').on('click', 'td.details-control', function(){
+    $('#fBill2 tbody').on('click', 'td.details-control', function(){
         var tr = $(this).closest('tr');
         var row = table.row( tr );
 
@@ -134,4 +166,86 @@ $(document).ready(function() {
     document.querySelector('.back').style.display = "none";
 });
 </script>
+
+{!! $wcpScript; !!}
+<script type="text/javascript">
+    var wcppGetPrintersTimeout_ms = 10000; //10 sec
+    var wcppGetPrintersTimeoutStep_ms = 500; //0.5 sec
+
+    function showRsp() {
+      document.getElementById('repPrint').style.display = "block"
+      document.getElementById('repPrint2').style.display = "block"
+    }
+
+    function issuePrint() {
+      html2canvas($('#card'), {
+        onrendered: function(canvas)
+        {
+          var b64Prefix = "data:image/png;base64,";
+          var imgBase64DataUri = canvas.toDataURL("image/jpg");
+          var imgBase64Content = imgBase64DataUri.substring(b64Prefix.length, imgBase64DataUri.length);
+
+          //2. save image base64 content to server-side Application Cache
+          $.ajax({
+              type: "POST",
+              url: "/api/StoreImageFileController",
+              data: { base64ImageContent : imgBase64DataUri},
+              success: function (imgFileName) {
+                  //alert("The image file: " + imgFileName + " was created at server side. Continue printing it...");
+
+                  //2. Print the stored image file specifying the created file name
+                  jsWebClientPrint.print('useDefaultPrinter=' + $('#useDefaultPrinter').attr('checked') + '&printerName=' + $('#installedPrinterName').val() + '&imageFileName=' + imgFileName);
+              }
+          });
+        }
+       });
+    }
+
+    function wcpGetPrintersOnSuccess() {
+        // Display client installed printers
+        if (arguments[0].length > 0) {
+            var p = arguments[0].split("|");
+            var options = '';
+            for (var i = 0; i < p.length; i++) {
+                options += '<option>' + p[i] + '</option>';
+            }
+            $('#installedPrinters').css('visibility', 'visible');
+            $('#installedPrinterName').html(options);
+            $('#installedPrinterName').focus();
+            $('#loadPrinters').hide();
+        } else {
+            alert("No printers are installed in your system.");
+        }
+    }
+    function wcpGetPrintersOnFailure() {
+        // Do something if printers cannot be got from the client
+        alert("No printers are installed in your system.");
+    }
+</script>
+<script type="text/javascript">
+    var wcppGetPrintersTimeout_ms = 10000; //10 sec
+    var wcppGetPrintersTimeoutStep_ms = 500; //0.5 sec
+
+    function wcpGetPrintersOnSuccess() {
+        // Display client installed printers
+        if (arguments[0].length > 0) {
+            var p = arguments[0].split("|");
+            var options = '';
+            for (var i = 0; i < p.length; i++) {
+                options += '<option>' + p[i] + '</option>';
+            }
+            $('#installedPrinters').css('visibility', 'visible');
+            $('#installedPrinterName').html(options);
+            $('#installedPrinterName').focus();
+            $('#loadPrinters').hide();
+        } else {
+            alert("No printers are installed in your system.");
+        }
+    }
+    function wcpGetPrintersOnFailure() {
+        // Do something if printers cannot be got from the client
+        alert("No printers are installed in your system.");
+    }
+</script>
+
 @endsection

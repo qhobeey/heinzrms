@@ -102,6 +102,67 @@ class RecordController extends Controller
         return redirect()->route('property.payments.payment');
     }
 
+    public function savePaymentBusiness(Request $request)
+    {
+      // dd($request->all());
+        $payment = $request->validate([
+            'account_no' => 'required',
+            'collector_id' => 'required',
+            'cashier_id' => '',
+            'amount_paid' => 'required',
+            'payment_mode' => 'required',
+            'gcr_number' => 'required',
+            'payment_date' => 'required',
+            'cprn' => '',
+        ]);
+
+        $collector = \App\Collector::where('id', $payment['collector_id'])->first();
+        unset($payment[1]);
+        // $payment = array_merge($payment, ['payment_year' => Carbon::now()->year,
+        //     'payment_type' => 'P', 'account_no' => 'empty',
+        //     'amount_paid' => floatval($payment['amount_paid']),
+        //     'collector_id' => $collector->collector_id
+        // ]);
+
+        // dd($payment);
+
+        $dateArray = explode('-', $payment['payment_date']);
+        $payment = array_merge($payment, ['payment_year' => current($dateArray), 'collector_id' => $collector->collector_id, 'data_type' => 'B']);
+        // unset($info['date']);
+        if($this->recalculateGCR($payment['gcr_number'], $payment['collector_id'])):
+            if($this->recalculateBill($payment['account_no'], $payment['amount_paid'])):
+              $paymentR = Payment::create($payment);
+              // if($paymentR) {
+              //   $account = (strtoupper($paymentR->data_type) == strtoupper('p'))
+              //               ? Property::with(['type', 'category', 'owner'])->where('property_no', $payment->account_no)->first()
+              //               : Business::with(['type', 'category', 'owner'])->where('business_no', $payment->account_no)->first();
+              //   // dd($account->owner);
+              //   if ($account->owner && $account->owner->phone) {
+              //     $mobile = $account->owner->phone;
+              //     if($mobile[0] == '0') $mobile = ltrim($mobile, '0');
+              //     $mobile = '233' . $mobile;
+              //     // $mobile = '233248160008';
+              //     $bill = Bill::where('account_no', $payment->account_no)->first();
+              //     $message = 'Dear ' . $account->owner ? $account->owner->name : 'sir/madma' . ' of PROPERTY ACC: '. $payment->account_no . '. You have been credited with a payment amount of GHc' .$payment->amount_paid . ' with a GCR No '. $payment->gcr_number . ' and your current balance is GHc ' . $bill->current_amount . '.Thanks';
+              //     $smsRes = Setup::sendSms($mobile, $message);
+              //     // dd($smsRes, 'o');
+              //     if ($smsRes == 'good') {
+              //       return response()->json(['status' => 'success', 'data' => 'Saved and SMS sent', 'payment' => $payment, 'account' => $bill, 'owner' => $account->owner ? $account->owner->name : 'no owner name found']);
+              //     }else{
+              //       return response()->json(['status' => 'success', 'data' => 'Saved..Sending message error']);
+              //     }
+              //   }else {
+              //     return response()->json(['status' => 'success', 'data' => 'Saved with no owner number']);
+              //   }
+              //
+              // }
+            endif;
+
+        endif;
+
+        return redirect()->route('business.payments.payment');
+    }
+
     protected function recalculateBill($account, $amount)
     {
       $max = Bill::where('account_no', $account)->max('year');

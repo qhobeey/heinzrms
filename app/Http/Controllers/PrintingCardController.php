@@ -134,7 +134,8 @@ class PrintingCardController extends Controller
 
     public function printBills()
     {
-      return view('console.billing.print-bills');
+      $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
+      return view('console.billing.print-bills',['wcpScript' => $wcpScript]);
     }
 
 }

@@ -50,7 +50,7 @@ class ApiController extends Controller
             $data = Supervisor::latest()->get();
         endif;
         if($query === 'stock'):
-            $stock = Stock::where('status', 'free')->whereNotNull('accountant_id')->get();
+            $stock = Stock::where('status', 'free')->whereNotNull('accountant_id')->orderBy('min_serial', 'asc')->get();
         endif;
         return response()->json(['status' => 'success', 'data' => $data, 'stock' => $stock]);
     }
@@ -88,9 +88,17 @@ class ApiController extends Controller
         // is_used, is_damaged, is_missing, is_returned, colletor_name, in_stock
         $data = [];
         $gcr = EnumGcr::where('gcr_number', $query)->first();
+        // dd($gcr);
         if (!$gcr) return response()->json(['status' => 'failed', 'data' => '']);
-        if($gcr->id_collector) $collector = DB::table('collectors')->where('collector_id', $gcr->id_collector)->first();
-        $data = array_merge($data, ['is_used' => $gcr->is_used, 'in_stock' => !$gcr->is_used, 'is_damaged' => $gcr->is_damaged, 'collector' => $collector->name]);
+        if($gcr->id_collector) {
+          $collector = DB::table('collectors')->where('collector_id', $gcr->id_collector)->first();
+          $data = array_merge($data, ['collector' => $collector->name]);
+        }
+        if($gcr->id_cashier) {
+          $collector = DB::table('cashiers')->where('cashier_id', $gcr->id_cashier)->first();
+          $data = array_merge($data, ['collector' => $collector->name]);
+        }
+        $data = array_merge($data, ['is_used' => $gcr->is_used, 'in_stock' => !$gcr->is_used, 'is_damaged' => $gcr->is_damaged]);
         return response()->json(['status' => 'success', 'data' => $data]);
     }
 
@@ -636,14 +644,27 @@ class ApiController extends Controller
 
      public function getBilCount(Request $request)
      {
+       // dd($request->all());
        if($request->isFilter == "true"):
-         $bills = \App\Bill::with(['property', 'business'])->where('year', $request->year)->latest()->get();
-         foreach ($bills as $bill) {
-           if(strtolower($bill->bill_type) == strtolower('p')):
-             // TODO::create
-           endif;
-         }
-         dd($bills);
+         $bills = \App\Bill::where('year', $request->year);
+
+         if($request->zonal):
+           $bills->where('zonal_id', $request->zonal);
+         elseif($request->electoral):
+           $bills->where('electoral_id', $request->electoral);
+         elseif($request->tas):
+           $bills->where('tas_id', $request->tas);
+         elseif($request->community):
+           $bills->where('community_id', $request->community);
+         elseif($request->street):
+           $bills->where('street_id', $request->street);
+         endif;
+
+         $bills = $bills->latest()->count();
+
+         return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
+
+
        else:
          $billCount = \App\Bill::where('year', $request->year)->latest()->count();
          return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($billCount, false)], 201);

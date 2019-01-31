@@ -44,6 +44,8 @@ Route::prefix('console')->group(function () {
     Route::get('back/response', 'ConsoleController@back')->name('console.back');
     Route::get('dashboard', 'ConsoleController@dashboard')->name('console.dashboard');
     Route::get('constuction', 'ConsoleController@construction')->name('console.construction');
+    Route::get('constuction2', 'ConsoleController@construction2');
+    Route::get('constuction3', 'ConsoleController@construction3');
     Route::resource('accountants', 'AccountantController');
     Route::resource('supervisors', 'SupervisorController');
     Route::resource('collectors', 'CollectorController');
@@ -113,7 +115,7 @@ Route::prefix('console')->group(function () {
     Route::get('business/records/bills', 'RecordController@getBills')->name('business.records.bills');
     Route::get('prepare/bill/{query}', 'BusinessController@prepareBill')->name('business.prepare.bill');
     Route::get('business/payments/entry', 'RecordController@getpaymentsBusiness')->name('business.payments.payment');
-    Route::post('business/payments/entry', 'RecordController@savePayments')->name('business.payments.payment');
+    Route::post('business/payments/entry', 'RecordController@savePaymentBusiness')->name('business.payments.payment');
 
     /** */
     Route::get('settings', 'SettingsController@index')->name('settings');
@@ -187,6 +189,7 @@ Route::prefix('api/v1/console')->group(function () {
     Route::get('get_stock_from/{query}/{id?}', 'ApiController@getFromStock');
     Route::get('get_data_to/{query}', 'ApiController@getToData');
     Route::get('find-gcr/{query}', 'ApiController@findPaymentGcr');
+    Route::get('find-gcr-enum/{query}', 'ApiController@findGcr');
     Route::get('get/cashier/gcr/{query}', 'ApiController@getCashierGCR');
 
     /** */

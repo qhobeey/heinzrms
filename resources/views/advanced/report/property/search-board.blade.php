@@ -23,7 +23,7 @@
                 <label for="">Enter Year</label>
                 <select class="form-control" name="year" required>
                   <?php
-                    for ($i=date('Y')-1; $i>2017; $i--) {?>
+                    for ($i=date('Y'); $i>2006; $i--) {?>
                       <option value="<?= $i; ?>"><?= $i; ?></option>
                     <?php }?>
                 </select>
@@ -36,7 +36,7 @@
                 <select class="form-control" name="loc">
                   <option value="a"><?php echo strtoupper('all zonals'); ?></option>
                   <?php
-                    $elts = \App\Models\Location\Zonal::latest()->get();
+                    $elts = \App\Models\Location\Zonal::orderBy('code', 'asc')->get();
                     foreach ($elts as $data) {?>
                       <option value="<?= $data->code; ?>"><?= $data->description; ?></option>
                     <?php }?>
@@ -61,7 +61,7 @@
                 <label for="">Enter Year</label>
                 <select class="form-control" name="year" required>
                   <?php
-                    for ($i=date('Y')-1; $i>2017; $i--) {?>
+                    for ($i=date('Y'); $i>2006; $i--) {?>
                       <option value="<?= $i; ?>"><?= $i; ?></option>
                     <?php }?>
                 </select>
@@ -74,7 +74,7 @@
                 <select class="form-control" name="loc">
                   <option value="a"><?php echo strtoupper('all electorals'); ?></option>
                   <?php
-                    $elts = \App\Models\Location\Electoral::latest()->get();
+                    $elts = \App\Models\Location\Electoral::orderBy('code', 'asc')->get();
                     foreach ($elts as $data) {?>
                       <option value="<?= $data->code; ?>"><?= $data->description; ?></option>
                     <?php }?>
@@ -99,7 +99,7 @@
                 <label for="">Enter Year</label>
                 <select class="form-control" name="year" required>
                   <?php
-                    for ($i=date('Y')-1; $i>2017; $i--) {?>
+                    for ($i=date('Y'); $i>2006; $i--) {?>
                       <option value="<?= $i; ?>"><?= $i; ?></option>
                     <?php }?>
                 </select>
@@ -112,7 +112,7 @@
                 <select class="form-control" name="loc">
                   <option value="a"><?php echo strtoupper('all town area'); ?></option>
                   <?php
-                    $elts = \App\Models\Location\Ta::latest()->get();
+                    $elts = \App\Models\Location\Ta::orderBy('code', 'asc')->get();
                     foreach ($elts as $data) {?>
                       <option value="<?= $data->code; ?>"><?= $data->description; ?></option>
                     <?php }?>
@@ -137,7 +137,7 @@
                 <label for="">Enter Year</label>
                 <select class="form-control" name="year" required>
                   <?php
-                    for ($i=date('Y')-1; $i>2017; $i--) {?>
+                    for ($i=date('Y'); $i>2006; $i--) {?>
                       <option value="<?= $i; ?>"><?= $i; ?></option>
                     <?php }?>
                 </select>
@@ -150,7 +150,7 @@
                 <select class="form-control" name="loc">
                   <option value="a"><?php echo strtoupper('all communities'); ?></option>
                   <?php
-                    $elts = \App\Models\Location\Community::latest()->get();
+                    $elts = \App\Models\Location\Community::orderBy('code', 'asc')->get();
                     foreach ($elts as $data) {?>
                       <option value="<?= $data->code; ?>"><?= $data->description; ?></option>
                     <?php }?>

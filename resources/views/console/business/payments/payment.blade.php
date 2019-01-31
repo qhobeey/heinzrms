@@ -4,17 +4,19 @@
 <div class="content">
     <div class="container">
 
+
+
         <div class="col-sm-12">
             <div class="card-box">
-                <div class="row">
-                    <div class="col-sm-6">
-                      <h3 style="color: brown; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Business Payment</h3>
-                    </div>
-                    <div class="col-sm-6"></div>
-                </div>
+              <div class="row">
+                  <div class="col-sm-6">
+                    <h3 style="color: brown; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Business Payment</h3>
+                  </div>
+                  <div class="col-sm-6"></div>
+              </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <form class="form-horizontal heiz-dashboard-forms" role="form" action="{{route('property.payments.payment')}}" id="addTable" method="post" enctype="multipart/form-data" data-parsley-validate="" novalidate="">
+                        <form class="form-horizontal heiz-dashboard-forms" role="form" action="{{route('business.payments.payment')}}" id="addTable" method="post" enctype="multipart/form-data" data-parsley-validate="" novalidate="">
                             @csrf
 
                             <div class="row">
@@ -66,20 +68,26 @@
 
                             <h4 class="form-desc">Bill Details</h4>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Arrears</label>
                                         <input type="text" id="payment_arrears" disabled class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Current Amount</label>
                                         <input type="text" v-if="bill.current_amount == 0.0" :value="f_message" disabled class="form-control">
                                         <input type="text" id="payment_current_amount" disabled class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="">Last bill year</label>
+                                        <input type="text" id="payment_year" disabled class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Net Balance</label>
                                         <input type="text" disabled class="form-control">
@@ -95,10 +103,10 @@
                                                 <label style="margin-top: 10px;" for="">Collector</label>
                                             </div>
                                             <div class="col-md-10">
-                                                <select name="collector_id" v-model="collector_id" id="" @blur="getCStocks(collector_id);" class="form-control">
+                                                <select name="collector_id" v-model="collector_id" id="" @blur="getCStocks(collector_id);" class="form-control" required>
                                                     <option value="">-choose-</option>
                                                     <template v-for="data in collectors">
-                                                        <option :value="data.collector_id">@{{data.name}}</option>
+                                                        <option :value="data.id">@{{data.name}}</option>
                                                     </template>
                                                 </select>
                                             </div>
@@ -130,15 +138,15 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Amount Paid</label>
-                                        <input type="text" name="amount_paid" class="form-control">
+                                        <input type="text" name="amount_paid" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">GCR No</label>
-                                        <select name="gcr_number" name="gcr_number" id="" class="form-control">
+                                        <select name="gcr_number" id="" class="form-control" required>
                                             <template v-for="data in gcrs">
-                                                <option :value="data.id">@{{data.gcr_number}}</option>
+                                                <option :value="data.gcr_number">@{{data.gcr_number}}</option>
                                             </template>
                                         </select>
                                     </div>
@@ -146,7 +154,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Payment Mode</label>
-                                        <select name="payment_mode" id="" class="form-control">
+                                        <select name="payment_mode" id="" class="form-control" required>
                                             <option value="">-select-</option>
                                             <option value="cash">Cash</option>
                                             <option value="cheque">Cheque</option>
@@ -165,11 +173,7 @@
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="">Collectors Payment Receipt No</label>
-                                        <select name="gcr_number" name="cprn" id="" class="form-control">
-                                            <template v-for="data in gcrs">
-                                                <option :value="data.id">@{{data.gcr_number}}</option>
-                                            </template>
-                                        </select>
+                                        <input type="text" name="cprn" id="" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -237,6 +241,7 @@
             // console.log(response.data.data)
             document.getElementById('payment_arrears').value = response.data.data.arrears
             document.getElementById('payment_current_amount').value = response.data.data.current_amount
+            document.getElementById('payment_year').value = response.data.data.year
             document.getElementById('acc_no').value = response.data.data.account_no
             document.getElementById('acc_owner').value = response.data.owner.name
             document.getElementById('acc_zonal').value = response.data.zonal.description

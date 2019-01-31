@@ -143,7 +143,7 @@
       methods: {
         find_gcr(){
             let query = this.query;
-            axios.get(`/api/v1/console/find-gcr/${query}`)
+            axios.get(`/api/v1/console/find-gcr-enum/${query}`)
                  .then(response => {this.query = '', console.log(response.data)})
                  .catch(error => console.error(error));
         }

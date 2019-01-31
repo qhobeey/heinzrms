@@ -311,7 +311,7 @@ class PropertyController extends Controller
           $data = $request->validate([
               'building_permit_no' => '', 'zonal_id' => '', 'serial_no' => '',
               'property_type' => '', 'property_category' => '',
-              'valuation_no' => '', 'house_no' => '', 'division' => '', 'owner_id' => 'required',
+              'valuation_no' => '', 'house_no' => '', 'division' => '',
               'street_id' => '', 'loc_longitude' => '', 'loc_latitude' => '',
               'image' => '', 'electoral_id' => '', 'tas_id' => '', 'community_id' => ''
           ]);

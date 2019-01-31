@@ -35,15 +35,17 @@
 
                             <div class="row fixed-issue-container">
                               @if (\Session::has('error'))
-                                  <div class="alert alert-danger">
-                                      <ul>
-                                          <li>{!! \Session::get('error') !!}</li>
-                                      </ul>
+                                  <div class="col-md-12">
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            <li>{!! \Session::get('error') !!}</li>
+                                        </ul>
+                                    </div>
                                   </div>
                               @endif
-                                <div class="col-md-4" v-for="stock in stocks" v-cloak>
+                                <div class="col-md-1" v-for="stock in stocks" v-cloak>
                                     <div class="form-group">
-                                        <label :for="stock.id">[GCR] start serial[ <span v-cloak>@{{stock.min_serial}}</span> ] & End serial[ <span v-cloak>@{{stock.max_serial}}</span> ]</label>
+                                        <label :for="stock.id" style="font-size:13px;"><span v-cloak>@{{stock.min_serial}}</span></label>
                                         <input type="checkbox" :value="stock.id" :id="stock.id" name="stock_id[]" required>
                                     </div>
                                 </div>
@@ -54,7 +56,7 @@
                                     <div class="form-group">
                                         <label for="">Issue To</label>
                                         <select class="form-control" v-model="issue_to" @blur="to_data(issue_to);" name="to_name" id="">
-                                            <option value="supervisor">Supervisor</option>
+                                            <option value="supervisor" v-if="issue_from=='stock'">Supervisor</option>
                                             <option value="collector">Collector</option>
                                             <option value="cashier">Cashier</option>
                                         </select>
@@ -89,7 +91,7 @@
                             </div>
 
                             <div class="row" style="text-align:center;">
-                                <button type="submit" style="width:50%; margin:auto;" class="form-control btn btn-primary">Issue GCR</button>
+                                <button type="submit" style="width:50%; margin:auto;" :disabled="stocks.length < 1" class="form-control btn btn-primary">Issue GCR</button>
                             </div>
                         </form>
                     </div>

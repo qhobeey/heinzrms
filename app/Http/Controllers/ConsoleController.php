@@ -30,15 +30,37 @@ class ConsoleController extends Controller
         return redirect()->back();
     }
 
-    public function construction()
+    public function construction2()
     {
 
 
 
       // SetBillLocation::dispatch();
+      FloatCleanBills::dispatch();
+      // dd('p');
+      // return redirect()->route('processing');
+        return view('console.construction');
+    }
+    public function construction()
+    {
+
+
+
+      CleanBillsTable::dispatch();
       // FloatCleanBills::dispatch();
       // dd('p');
       // return redirect()->route('processing');
         return view('console.construction');
+    }
+    public function construction3()
+    {
+
+
+
+      SetBillLocation::dispatch();
+      // FloatCleanBills::dispatch();
+      // dd('p');
+      return redirect()->route('processing');
+        // return view('console.construction');
     }
 }
