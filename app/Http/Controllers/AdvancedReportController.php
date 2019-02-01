@@ -73,6 +73,7 @@ class AdvancedReportController extends Controller
     public function propertyListing(Request $request)
     {
 
+      // dd($request->url());
 
        if($request->loc != "a") return $this->propertySearchListingDetails($request->all());
 
@@ -95,6 +96,16 @@ class AdvancedReportController extends Controller
       $location = '';
       $year = '';
       $loc = '';
+      if (array_key_exists('location', $data)) {
+        // dd('o');
+          $location = $data['location'] ? : '';
+          $url = url('/').'/console/advanced/report/property/'.$data['location'].'/'.$data['loc'].'/'.$data['year'].'/';
+      }else{
+          $parts = parse_url(URL::previous());
+          parse_str($parts['query'], $query);
+          $url = url('/').'/console/advanced/report/property/'.$query['location'].'/'.$query['loc'].'/'.$query['year'].'/';
+          // dd($url);
+      }
       if (array_key_exists('year', $data)) {
           $year = $data['year'] ? : '';
       }
@@ -108,10 +119,14 @@ class AdvancedReportController extends Controller
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
       $electoral = $this->electoralProperty->where('code', $loc)->with(['bills' => function($query) use ($year) {
         $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
-      }])->paginate(10);
+      }])->first();
+      $bills = $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $url, $options = []);
+      $info = $electoral->description;
+      $totalBill = $electoral->bills->count();
+      // dd($electoral->bills->count());
 
-      // return ['result'=>$electoral];
-      return view('advanced.report.property.property-listing-details', compact('electoral', 'year', 'location', 'wcpScript'));
+      // return ['result'=>$bills];
+      return view('advanced.report.property.property-listing-details', compact('bills', 'year', 'location', 'wcpScript', 'info', 'totalBill'));
     }
 
 
@@ -124,10 +139,14 @@ class AdvancedReportController extends Controller
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
       $electoral = $this->electoralProperty->where('code', $code)->with(['bills' => function($query) use ($year) {
         $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
-      }])->paginate(1);
+      }])->first();
 
+      $bills = $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $request->url().'/', $options = []);
+      $info = $electoral->description;
+      $totalBill = $electoral->bills->count();
       // return ['result'=>$bills];
-      return view('advanced.report.property.property-listing-details', compact('electoral', 'bills', 'year', 'location', 'wcpScript'));
+      // dd($year, $location, $code, $info);
+      return view('advanced.report.property.property-listing-details', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill'));
     }
 
     public function apiPropertyListing()
@@ -194,6 +213,16 @@ class AdvancedReportController extends Controller
       $location = '';
       $year = '';
       $loc = '';
+      if (array_key_exists('location', $data)) {
+        // dd('o');
+          $location = $data['location'] ? : '';
+          $url = url('/').'/console/advanced/report/business/'.$data['location'].'/'.$data['loc'].'/'.$data['year'].'/';
+      }else{
+          $parts = parse_url(URL::previous());
+          parse_str($parts['query'], $query);
+          $url = url('/').'/console/advanced/report/business/'.$query['location'].'/'.$query['loc'].'/'.$query['year'].'/';
+          // dd($url);
+      }
       if (array_key_exists('year', $data)) {
           $year = $data['year'] ? : '';
       }
@@ -203,14 +232,18 @@ class AdvancedReportController extends Controller
 
       // dd($loc);
 
-      // $electoral = $this->electoralBusiness->where('code', $loc)->get();
+      // $electoral = $this->electoralProperty->where('code', $loc)->get();
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
       $electoral = $this->electoralBusiness->where('code', $loc)->with(['bills' => function($query) use ($year) {
         $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('b'));
-      }])->paginate(10);
+      }])->first();
+      $bills = $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $url, $options = []);
+      $info = $electoral->description;
+      $totalBill = $electoral->bills->count();
+      // dd($electoral->bills->count());
 
-      // return ['result'=>$electoral];
-      return view('advanced.report.business.business-listing-details', compact('electoral', 'year', 'location', 'wcpScript'));
+      // return ['result'=>$bills];
+      return view('advanced.report.business.business-listing-details', compact('bills', 'year', 'location', 'wcpScript', 'info', 'totalBill'));
     }
 
 
@@ -223,10 +256,14 @@ class AdvancedReportController extends Controller
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
       $electoral = $this->electoralBusiness->where('code', $code)->with(['bills' => function($query) use ($year) {
         $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('b'));
-      }])->paginate(1);
+      }])->first();
 
+      $bills = $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $request->url().'/', $options = []);
+      $info = $electoral->description;
+      $totalBill = $electoral->bills->count();
       // return ['result'=>$bills];
-      return view('advanced.report.business.property-listing-details', compact('electoral', 'bills', 'year', 'location', 'wcpScript'));
+      // dd($year, $location, $code, $info);
+      return view('advanced.report.business.business-listing-details', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill'));
     }
 
     public function apiBusinessListing()
@@ -253,9 +290,10 @@ class AdvancedReportController extends Controller
     {
         $year = $request->year;
         $account = $request->account;
-        dd($request->all());
+        // dd($request->all());
         if($account == 'property'):
           $feefixing = \App\PropertyType::with('categories')->orderBy('code', 'asc')->get();
+          // return ['results'=>$feefixing];
           return view('advanced.report.feefixing.listing', compact('feefixing', 'year', 'account'));
         endif;
         if($account == 'business'):

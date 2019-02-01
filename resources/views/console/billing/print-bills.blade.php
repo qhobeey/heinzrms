@@ -15,10 +15,10 @@
                   <form class="heiz-dashboard-forms" style="width:80%;margin:auto;">
                     <div class="row">
                       <div class="col-md-4">
-                        <input style="width:auto;" type="radio" @click="toggleCheck()" name="sortType" value="noFilter" checked> <label for="">No Filtering</label>
+                        <input style="width:auto;" type="radio" id="check1" @click="toggleCheck()" name="sortType" value="noFilter" checked> <label for="">No Filtering</label>
                       </div>
                       <div class="col-md-4">
-                        <input style="width:auto;" type="radio" @click="toggleCheck()" name="sortType" value="filter"> <label for="">Filter Report</label>
+                        <input style="width:auto;" type="radio" id="check2" @click="toggleCheck()" name="sortType" value="filter"> <label for="">Filter Report</label>
                       </div>
                     </div>
 
@@ -114,6 +114,7 @@
                             <div class="form-group">
                                 <label for="">Number of Bills </label>
                                 <input type="text" disabled="true" style="height: 26px;" class="form-control" name="billNumbers" value="">
+                                <img src="/backend/images/25.gif" alt="" style="width: 19px;margin-right: 4px;" v-if="gif">
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -132,7 +133,7 @@
 
                       <div class="row">
                         <div class="col-md-4">
-                          <button @click.prevent="issuePrint()" type="button" class="form-control btn btn-primary btn-xs" style="font-size: 14px;width: 120px;margin-top: 25px;">Print bills</button>
+                          <button id="isp" type="button" class="form-control btn btn-primary btn-xs" style="font-size: 14px;width: 120px;margin-top: 25px;">Print bills</button>
                         </div>
                       </div>
 
@@ -143,6 +144,10 @@
 
             </div>
 
+        </div>
+
+        <div id="loadingCarf" style="display:none;">
+          <h4><img src="/backend/images/25.gif" alt="" style="width: 19px;margin-right: 4px;">Loading... <span id="tt1" style="color:red;">0</span> / <span id="tt2"></span> </h4>
         </div>
 
         <div id="cardcont" style="display:none;">
@@ -161,28 +166,28 @@
                   <div style="background-color: white; width: 400px;">
                     <article style="width:100%; display:flex;">
                       <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Account No:</p>
-                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;AAS4444</p>
+                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;<span id="r_acc_no">AAS4444</span></p>
                     </article>
                     <article style="width:100%; display:flex; height: 96px; padding-top: 20px;">
-                      <p style="color: black;margin-bottom: 10px;margin-top: 10px;font-size: 18px; font-weight: 600;">MT. CALVSRY SCH.</p>
+                      <p id="r_acc_name" style="color: black;margin-bottom: 10px;margin-top: 10px;font-size: 18px; font-weight: 600;">MT. CALVSRY SCH.</p>
                     </article>
                     <article style="width:100%; display:flex;">
                       <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Property Type:</p>
-                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">&nbsp;&nbsp;&nbsp;COMMERCIAL PROPERTY RATE</p>
+                      <p id="r_ac_type" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">&nbsp;&nbsp;&nbsp;COMMERCIAL PROPERTY RATE</p>
                     </article>
                     <article style="width:100%; display:flex;">
                       <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Property Cat:</p>
-                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">&nbsp;&nbsp;&nbsp;PRIVATE SCHOOL</p>
+                      <p id="r_ac_category" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">&nbsp;&nbsp;&nbsp;PRIVATE SCHOOL</p>
                     </article>
 
                     <div style="background-color:white; width:80%; border:2px solid black; margin-top: 15px; padding-left: 10px; padding-bottom: 10px;">
                       <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Rateable value:</p>
-                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">GHc 37,500.00&nbsp;&nbsp;</p>
+                        <p id="r_ac_rateable" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">GHc 37,500.00&nbsp;&nbsp;</p>
                       </article>
                       <article style="width:100%; display:flex; justify-content: space-between; margin-top: 15px;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Rate Imposed:</p>
-                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">0.006&nbsp;&nbsp;</p>
+                        <p id="r_ac_imposed" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">0.006&nbsp;&nbsp;</p>
                       </article>
                     </div>
                     <div style="background-color:white; display:block; width: 100%;">
@@ -197,42 +202,42 @@
                   <div style="background-color: white; width: 400px;">
                     <article style="width:100%; display:flex;">
                       <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Zones:</p>
-                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;NEW TOWN ZONAL COUNCIL</p>
+                      <p id="r_ac_zonal" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;NEW TOWN ZONAL COUNCIL</p>
                     </article>
                     <article style="width:100%; display:flex;">
                       <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Electoral Area:</p>
-                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;TWUMASEN</p>
+                      <p id="r_ac_electoral" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;TWUMASEN</p>
                     </article>
                     <article style="width:100%; display:flex;">
                       <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Town Area Council:</p>
-                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;OBUASE</p>
+                      <p id="r_ac_tas" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;OBUASE</p>
                     </article>
                     <article style="width:100%; display:flex;">
                       <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Street:</p>
-                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;NO NAME</p>
+                      <p id="r_ac_street" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;NO NAME</p>
                     </article>
                     <p style="font-size: 13px; font-weight: 600; color: black; margin-top: 10px; margin-bottom:0px;">All bills must be settled on or before 30-Jun-2016</p>
                     <p style="font-size: 13px; font-weight: 600; color: black; margin-top: 10px;">For enquires contact the Metro Cordinating Director on the ff Nos. 0267555557/0260772926</p>
                     <div style="background-color:white; width:100%; border:2px solid black; margin-top: 15px; padding-left: 10px; padding-bottom: 20px;">
                       <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Previous Year Bill:</p>
-                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">GHc 0.00&nbsp;&nbsp;</p>
+                        <p id="r_ac_pyear" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">GHc 0.00&nbsp;&nbsp;</p>
                       </article>
                       <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Amount Paid(Last Yr):</p>
-                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">GHc 0.00&nbsp;&nbsp;</p>
+                        <p id="r_ac_amountpaid" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">GHc 0.00&nbsp;&nbsp;</p>
                       </article>
                       <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Arrears:</p>
-                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">GHc 0.00&nbsp;&nbsp;</p>
+                        <p id="r_ac_arrears" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">GHc 0.00&nbsp;&nbsp;</p>
                       </article>
                       <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Current Fee:</p>
-                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">GHc 225.00&nbsp;&nbsp;</p>
+                        <p id="r_ac_current" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">GHc 225.00&nbsp;&nbsp;</p>
                       </article>
                       <article style="width:100%; display:flex; justify-content: space-between; margin-top: 30px;padding-top: 5px; border-top: 2px solid black; border-bottom: 2px solid black; padding-bottom: 5px; background: antiquewhite;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Total Amount Due Fee:</p>
-                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">GHc 225.00&nbsp;&nbsp;</p>
+                        <p id="r_ac_total" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">GHc 225.00&nbsp;&nbsp;</p>
                       </article>
                     </div>
                   </div>
@@ -278,6 +283,8 @@
 
 @endsection
 @section('scripts')
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 {!! $wcpScript; !!}
 <script type="text/javascript">
     var wcppGetPrintersTimeout_ms = 10000; //10 sec
@@ -308,7 +315,8 @@
     var app = new Vue({
       el: '#heinz',
       data: {
-        disableFilter: true
+        disableFilter: true,
+        gif: false
       },
       methods: {
         toggleCheck() {
@@ -322,6 +330,7 @@
               isFilter: false
             }
           }else{
+            this.gif = true
             var requestParams = {
               year: document.querySelector("select[name=year]").value,
               zonal: document.querySelector("select[name=zonal]").value,
@@ -333,12 +342,8 @@
             }
           }
           axios.get('/api/get/bill/count', { params: requestParams })
-                .then(response => document.querySelector("input[name=billNumbers]").value = response.data.data)
+                .then(response => {document.querySelector("input[name=billNumbers]").value = response.data.data; this.gif=false})
                 .catch(error => console.error(error));
-        },
-        issuePrint() {
-          document.getElementById('mainContent').style.display = "none"
-          document.getElementById('cardcont').style.display = "block"
         }
       },
       created() {
@@ -347,16 +352,6 @@
 
 
     });
-</script>
-
-<script type="text/javascript">
-  function toggle(source) {
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i] != source)
-            checkboxes[i].checked = source.checked;
-    }
-  }
 </script>
 
 <script type="text/javascript">
@@ -386,8 +381,137 @@
 </script>
 <script>
 $(document).ready(function(){
-    $("#printBtn").click(function () {
+    $("#isp").click(function () {
+      // var checkboxes = document.querySelectorAll('input[type="sortType"]');
+      issuePrint()
+      captureArraySet()
 
+    });
+
+    var printingSet = [];
+
+    function issuePrint() {
+
+      document.getElementById('loadingCarf').style.display = "block"
+    }
+
+    function captureArraySet() {
+      var filterBox1 = document.querySelector('#check1').checked;
+      var filterBox2 = document.querySelector('#check2').checked;
+      var requestParams = {};
+      if(filterBox1){
+        var requestParams = {
+          year: document.querySelector("select[name=year]").value,
+          isFilter: false
+        }
+      }
+      if(filterBox2){
+        var requestParams = {
+          year: document.querySelector("select[name=year]").value,
+          zonal: document.querySelector("select[name=zonal]").value,
+          electoral: document.querySelector("select[name=electoral]").value,
+          tas: document.querySelector("select[name=tas]").value,
+          community: document.querySelector("select[name=community]").value,
+          street: document.querySelector("select[name=street]").value,
+          isFilter: true
+        }
+      }
+
+      // console.log(printingSet);
+
+      axios.get('/api/get/bill/set', { params: requestParams })
+            .then(response => {printingSet = response.data.data; timerReplace()})
+            .catch(error => console.error(error));
+
+
+
+
+    }
+
+    function replaceBill(mode) {
+        // array[i]
+
+        document.getElementById('tt1').innerHTML = parseInt(document.getElementById('tt1').innerHTML) + 1
+        // console.log(mode);
+        var parentParse = mode;
+        var currentBill = mode.bills[0];
+        // console.table(currentBill)
+        // console.log();
+        document.getElementById('r_acc_no').innerHTML = parentParse.property_no
+        document.getElementById('r_acc_name').innerHTML = parentParse.owner.name
+        document.getElementById('r_ac_type').innerHTML = parentParse.type.description
+        document.getElementById('r_ac_category').innerHTML = parentParse.category.description
+        document.getElementById('r_ac_rateable').innerHTML = currentBill.rateable_value ? `${formatDollar(parseFloat(currentBill.rateable_value))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_imposed').innerHTML = currentBill.rate_imposed ? `${parseFloat(currentBill.rate_imposed)} ` : `${parseFloat(0.0)} `
+        document.getElementById('r_ac_zonal').innerHTML = parentParse.zonal ? parentParse.zonal.description : 'NO NAME'
+        document.getElementById('r_ac_electoral').innerHTML = parentParse.electoral ? parentParse.electoral.description : 'NO NAME'
+        document.getElementById('r_ac_tas').innerHTML = parentParse.tas ? parentParse.tas.description : "NO NAME"
+        document.getElementById('r_ac_street').innerHTML = parentParse.street ? parentParse.street.description : "NO NAME"
+        // document.getElementById('r_ac_pyear').innerHTML = "haa"
+        // document.getElementById('r_ac_amountpaid').innerHTML = "haa"
+        document.getElementById('r_ac_arrears').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(currentBill.arrears))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_current').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_total').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
+
+        // startPrinting()
+    }
+
+    function formatDollar(num) {
+        var p = num.toFixed(2).split(".");
+        return "GHc " + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
+            return  num=="-" ? acc : num + (i && !(i % 3) ? "," : "") + acc;
+        }, "") + "." + p[1];
+    }
+
+
+
+    function timerReplace() {
+      let modes = printingSet;
+      if (modes === undefined || modes.length == 0) {
+          console.log('empty bills')
+          alert('No bills found')
+          document.getElementById('loadingCarf').style.display = "none"
+          return false
+      }
+      document.getElementById('mainContent').style.display = "none"
+      document.getElementById('cardcont').style.display = "block"
+      let interval = 10000; //one second
+      document.getElementById('tt2').innerHTML = printingSet.length
+      modes.forEach((mode, index) => {
+
+        setTimeout(() => {
+          replaceBill(mode)
+          // console.log(mode.property_no)
+        }, index * interval)
+      })
+    }
+
+    function startPrinting() {
+      html2canvas($('#card'), {
+        onrendered: function(canvas)
+        {
+          var b64Prefix = "data:image/png;base64,";
+          var imgBase64DataUri = canvas.toDataURL("image/jpg");
+          var imgBase64Content = imgBase64DataUri.substring(b64Prefix.length, imgBase64DataUri.length);
+
+          //2. save image base64 content to server-side Application Cache
+          $.ajax({
+              type: "POST",
+              url: "/api/StoreImageFileController",
+              data: { base64ImageContent : imgBase64DataUri},
+              success: function (imgFileName) {
+                  //alert("The image file: " + imgFileName + " was created at server side. Continue printing it...");
+
+                  //2. Print the stored image file specifying the created file name
+                  jsWebClientPrint.print('useDefaultPrinter=' + $('#useDefaultPrinter').attr('checked') + '&printerName=' + $('#installedPrinterName').val() + '&imageFileName=' + imgFileName);
+              }
+          });
+        }
+       });
+    }
+
+    $("#printBtn").click(function () {
+      console.table(printingSet)
       html2canvas($('#card'), {
         onrendered: function(canvas)
         {

@@ -221,14 +221,14 @@ class BillingController extends Controller
       $arrears = $previousBill ? floatval($previousBill->arrears) : floatval(0);
 
       $bill = array_merge($params, ['account_no' => $account,
-          'account_balance' => $ans, 'arrears' => $arrears, 'current_amount' => $ans, 'bill_type' => $type, 'prepared_by' => 'admin', 'year' => $year,
+          'account_balance' => $ans + $arrears, 'arrears' => $arrears, 'current_amount' => $ans, 'bill_type' => $type, 'prepared_by' => 'admin', 'year' => $year,
           'bill_date' => Carbon::now()->toDateString()
       ]);
       unset($bill['min_charge']);
 
       $billRes = \App\Bill::where('account_no', $account)->where('year', $year)->first();
       if($billRes):
-        $bill = array_merge($bill, ['arrears' => floatval($billRes->arrears)]);
+        $bill = array_merge($bill, ['arrears' => floatval($billRes->arrears), 'account_balance' => floatval($ans) + floatval($billRes->arrears)]);
         $billRes->update($bill);
       else:
         $t = \App\Bill::create($bill);

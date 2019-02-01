@@ -7,6 +7,7 @@ use DB;
 use App\Jobs\CleanBillsTable;
 use App\Jobs\FloatCleanBills;
 use App\Jobs\SetBillLocation;
+use App\Jobs\ReplaceAccountBalance;
 
 class ConsoleController extends Controller
 {
@@ -38,19 +39,19 @@ class ConsoleController extends Controller
       // SetBillLocation::dispatch();
       FloatCleanBills::dispatch();
       // dd('p');
-      // return redirect()->route('processing');
-        return view('console.construction');
+      return redirect()->route('processing');
+        // return view('console.construction');
     }
     public function construction()
     {
 
 
 
-      CleanBillsTable::dispatch();
+      ReplaceAccountBalance::dispatch();
       // FloatCleanBills::dispatch();
       // dd('p');
-      // return redirect()->route('processing');
-        return view('console.construction');
+      return redirect()->route('processing');
+        // return view('console.construction');
     }
     public function construction3()
     {

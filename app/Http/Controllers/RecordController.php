@@ -169,9 +169,9 @@ class RecordController extends Controller
       $bill = Bill::where('account_no', $account)->where('year', $max)->first();
       // $bill = Bill::where('account_no', $account)->first();
       $totalPayment = floatval($bill->total_paid) + floatval($amount);
-      $checkBal = floatval($bill->current_amount) - floatval($amount);
+      $checkBal = floatval($bill->account_balance) - floatval($amount);
       $balance = $checkBal == floatval(0) ? floatval(0): $checkBal;
-      $bill->update(['current_amount' => $balance, 'total_paid' => $totalPayment]);
+      $bill->update(['account_balance' => $balance, 'total_paid' => $totalPayment]);
       return true;
     }
 

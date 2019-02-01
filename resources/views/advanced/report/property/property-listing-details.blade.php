@@ -17,7 +17,7 @@
       <h1 style="font-weight: 600; text-align: center; text-transform: uppercase; color: black; font-size: 28px;"><?= env('ASSEMBLY_SMS_NAME'); ?></h1>
     </div>
     <div class="row" style="border-bottom: 2px solid black;">
-      <h4 style="text-align: center; font-size: 14px; color: black; font-weight: 600;">Property Listing Grouped by <?= ucwords($electoral[0]->description); ?> <?= ucwords($location); ?> for <?= ucwords($year); ?></h4>
+      <h4 style="text-align: center; font-size: 14px; color: black; font-weight: 600;">Property Listing Grouped by <?= ucwords($info); ?> <?= ucwords($location); ?> for <?= ucwords($year); ?></h4>
     </div>
     <table id="fBill2" class="display" cellspacing="0" width="100%">
         <thead>
@@ -40,20 +40,20 @@
           <div class="tableInner">
             <tr class="odd2 heyy" style="background: #f5f5dc;">
                 <td><a href="{{ URL::previous() }}"><img src="/advanced/1/minus-sign.png"></a></td>
-                <td colspan="3"><a style="color:brown; font-weight: 600;" href="{{ URL::previous() }}"><?= $electoral[0]->description; ?>&nbsp; [<?= $electoral[0]->bills->count(); ?>]</a></td>
+                <td colspan="3"><a style="color:brown; font-weight: 600;" href="{{ URL::previous() }}"><?= $info; ?>&nbsp; [<?= $totalBill; ?>]</a></td>
                 <td></td>
                 <td></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral[0]->bills->sum('arrears'), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral[0]->bills->sum('current_amount'), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney(($electoral[0]->bills->sum('arrears') + $electoral[0]->bills->sum('current_amount')), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral[0]->bills->sum('total_paid'), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney(($electoral[0]->bills->sum('arrears') + $electoral[0]->bills->sum('current_amount')) - $electoral[0]->bills->sum('total_paid'), true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney($bills->sum('arrears'), true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney($bills->sum('current_amount'), true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney(($bills->sum('arrears') + $bills->sum('current_amount')), true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney($bills->sum('total_paid'), true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney(($bills->sum('arrears') + $bills->sum('current_amount')) - $bills->sum('total_paid'), true); ?></td>
 
             </tr>
           </div>
         </tbody>
         <tbody>
-          @foreach($electoral[0]->bills as $key => $bill)
+          @foreach($bills as $key => $bill)
             <tr class="odd2 heyy">
                 <td></td>
                 <td><?= $key+1; ?></td>
@@ -72,6 +72,7 @@
         </tbody>
 
     </table>
+    {{$bills->links()}}
   </div>
 
   <div class="row">
