@@ -77,7 +77,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Current Amount</label>
-                                        <input type="text" v-if="bill.current_amount == 0.0" :value="f_message" disabled class="form-control">
+                                        <input type="text" v-if="bill.account_balance == 0.0" :value="f_message" disabled class="form-control">
                                         <input type="text" id="payment_current_amount" disabled class="form-control">
                                     </div>
                                 </div>
@@ -240,7 +240,7 @@
           popDataSet(response) {
             // console.log(response.data.data)
             document.getElementById('payment_arrears').value = response.data.data.arrears
-            document.getElementById('payment_current_amount').value = response.data.data.current_amount
+            document.getElementById('payment_current_amount').value = response.data.data.account_balance
             document.getElementById('payment_year').value = response.data.data.year
             document.getElementById('acc_no').value = response.data.data.account_no
             document.getElementById('acc_owner').value = response.data.owner.name

@@ -35,6 +35,7 @@
               <th style="font-size: 10px;color: black;">Outstanding Arrears</th>
             </tr>
         </thead>
+        @if(count($bills) > 0)
 
         <tbody>
           <div class="tableInner">
@@ -70,8 +71,11 @@
             </tr>
           @endforeach
         </tbody>
-
+        @endif
     </table>
+    @if(count($bills) > 0)
+    {{$bills->links()}}
+    @endif
   </div>
 
   <div class="row">

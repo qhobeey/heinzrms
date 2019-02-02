@@ -80,7 +80,9 @@ class AdvancedReportController extends Controller
        $location = $request['location'];
        $year = $request['year'];
 
-       $electorals = $this->electoralProperty->has('bills')->with(['bills'=>function($query) use ($year) {
+       $electorals = $this->electoralProperty->whereHas('bills', function($q) use ($year) {
+         $q->where('year', $year);
+       })->with(['bills'=>function($query) use ($year) {
           $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
        }])->paginate(10)->appends(request()->query());
       // return ['result'=>$electorals];
@@ -117,12 +119,14 @@ class AdvancedReportController extends Controller
 
       // $electoral = $this->electoralProperty->where('code', $loc)->get();
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
-      $electoral = $this->electoralProperty->where('code', $loc)->with(['bills' => function($query) use ($year) {
+      $electoral = $this->electoralProperty->where('code', $loc)->whereHas('bills', function($q) use ($year) {
+        $q->where('year', $year);
+      })->with(['bills' => function($query) use ($year) {
         $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
       }])->first();
-      $bills = $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $url, $options = []);
-      $info = $electoral->description;
-      $totalBill = $electoral->bills->count();
+      $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $url, $options = []) : [];
+      $info = $electoral ? $electoral->description : '';
+      $totalBill = $electoral ? $electoral->bills->count(): '';
       // dd($electoral->bills->count());
 
       // return ['result'=>$bills];
@@ -137,13 +141,15 @@ class AdvancedReportController extends Controller
     {
 
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
-      $electoral = $this->electoralProperty->where('code', $code)->with(['bills' => function($query) use ($year) {
+      $electoral = $this->electoralProperty->where('code', $code)->whereHas('bills', function($q) use ($year) {
+        $q->where('year', $year);
+      })->with(['bills' => function($query) use ($year) {
         $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
       }])->first();
 
-      $bills = $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $request->url().'/', $options = []);
-      $info = $electoral->description;
-      $totalBill = $electoral->bills->count();
+      $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $request->url().'/', $options = []) : [];
+      $info = $electoral ? $electoral->description : '';
+      $totalBill = $electoral ? $electoral->bills->count(): '';
       // return ['result'=>$bills];
       // dd($year, $location, $code, $info);
       return view('advanced.report.property.property-listing-details', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill'));
@@ -197,7 +203,9 @@ class AdvancedReportController extends Controller
        $location = $request['location'];
        $year = $request['year'];
 
-       $electorals = $this->electoralBusiness->has('bills')->with(['bills'=>function($query) use ($year) {
+       $electorals = $this->electoralBusiness->has('bills')->whereHas('bills', function($q) use ($year) {
+         $q->where('year', $year);
+       })->with(['bills'=>function($query) use ($year) {
           $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('b'));
        }])->paginate(10)->appends(request()->query());
       // return ['result'=>$electorals];
@@ -234,12 +242,14 @@ class AdvancedReportController extends Controller
 
       // $electoral = $this->electoralProperty->where('code', $loc)->get();
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
-      $electoral = $this->electoralBusiness->where('code', $loc)->with(['bills' => function($query) use ($year) {
+      $electoral = $this->electoralBusiness->where('code', $loc)->whereHas('bills', function($q) use ($year) {
+        $q->where('year', $year);
+      })->with(['bills' => function($query) use ($year) {
         $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('b'));
       }])->first();
-      $bills = $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $url, $options = []);
-      $info = $electoral->description;
-      $totalBill = $electoral->bills->count();
+      $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $url, $options = []) : [];
+      $info = $electoral ? $electoral->description : '';
+      $totalBill = $electoral ? $electoral->bills->count() : '';
       // dd($electoral->bills->count());
 
       // return ['result'=>$bills];
@@ -254,13 +264,15 @@ class AdvancedReportController extends Controller
     {
 
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
-      $electoral = $this->electoralBusiness->where('code', $code)->with(['bills' => function($query) use ($year) {
+      $electoral = $this->electoralBusiness->where('code', $code)->whereHas('bills', function($q) use ($year) {
+        $q->where('year', $year);
+      })->with(['bills' => function($query) use ($year) {
         $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('b'));
       }])->first();
 
-      $bills = $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $request->url().'/', $options = []);
-      $info = $electoral->description;
-      $totalBill = $electoral->bills->count();
+      $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $request->url().'/', $options = []) : [];
+      $info = $electoral ? $electoral->description : '';
+      $totalBill = $electoral ? $electoral->bills->count() : '';
       // return ['result'=>$bills];
       // dd($year, $location, $code, $info);
       return view('advanced.report.business.business-listing-details', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill'));

@@ -29,6 +29,7 @@
           <th style="font-size: 10px;color: black;">Outstanding Arrears</th>
         </tr>
     </thead>
+    @if(count($bills) > 0)
     <tbody>
       <div class="tableInner">
         <tr class="odd2 heyy" style="background: #f5f5dc;">
@@ -45,6 +46,7 @@
         </tr>
       </div>
     </tbody>
+
     <tbody>
         @foreach($bills as $key => $bill)
           <tr class="odd2 heyy">
@@ -63,6 +65,7 @@
           </tr>
         @endforeach
     </tbody>
+    @endif
 
 
 </table>
