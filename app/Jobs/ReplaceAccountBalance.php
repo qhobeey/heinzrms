@@ -39,6 +39,7 @@ class ReplaceAccountBalance implements ShouldQueue
           $vv = floatval($bill->account_balance) - floatval($bill->total_paid);
           $bill->current_amount = number_format((float)$cc, 2, '.', '');
           $bill->account_balance = number_format((float)$vv, 2, '.', '');
+          $bill->is_current = 1;
 
           $bill->update();
 
