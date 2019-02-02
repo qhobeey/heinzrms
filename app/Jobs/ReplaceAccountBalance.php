@@ -32,11 +32,11 @@ class ReplaceAccountBalance implements ShouldQueue
       \App\Processing::truncate();
 
       \App\Bill::orderBy('id')->where('year', 2018)->chunk(1000, function ($bills) {
-        \App\Processing::create(['total' => \App\Bill::latest()->count(), 'count' => 0, 'percentage' => 0]);
+        \App\Processing::create(['total' => \App\Bill::where('year', 2018)->count(), 'count' => 0, 'percentage' => 0]);
         foreach ($bills as $key => $bill):
 
-          $bill->current_amount = $bill->account_balance;
-          $bill->account_balance = $bill->current_amount;
+          $bill->current_amount = floatval($bill->account_balance);
+          $bill->account_balance = floatval($bill->current_amount);
 
           $bill->save();
 
