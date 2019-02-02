@@ -36,7 +36,7 @@ class ReplaceAccountBalance implements ShouldQueue
         foreach ($bills as $key => $bill):
 
           $bill->current_amount = floatval($bill->account_balance);
-          $bill->account_balance = floatval($bill->current_amount);
+          $bill->account_balance = floatval($bill->current_amount) - floatval($bill->total_paid);
 
           $bill->save();
 
