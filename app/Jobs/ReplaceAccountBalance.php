@@ -31,13 +31,13 @@ class ReplaceAccountBalance implements ShouldQueue
     {
       \App\Processing::truncate();
 
-      \App\Bill::orderBy('id')->where('year', '2018')->chunk(1000, function ($bills) {
+      \App\Bill::where('year', '2018')->chunk(1000, function ($bills) {
         \App\Processing::create(['total' => \App\Bill::where('year', '2018')->count(), 'count' => 0, 'percentage' => 0]);
         foreach ($bills as $key => $bill):
-          $cc = floatval($bill->current_amount);
-          $vv = floatval($bill->account_balance);
-          $bill->current_amount = $cc + floatval($bill->total_paid);
-          $bill->account_balance = $vv - floatval($bill->total_paid);
+          $cc = floatval($bill->current_amount) + floatval($bill->total_paid);
+          $vv = floatval($bill->account_balance) - floatval($bill->total_paid);
+          $bill->current_amount = number_format((float)$cc, 2, '.', '');
+          $bill->account_balance = number_format((float)$vv, 2, '.', '');
 
           $bill->update();
 
