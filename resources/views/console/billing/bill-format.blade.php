@@ -58,7 +58,10 @@
             <label for="">Assembly Signature</label>
             <input type="file" class="form-control" name="assembly_signature">
             <div style="margin: auto; width: 30%; margin-top:10px;">
-              <img src="<?= $setting->signature ?: '/images/assemblies/bdasign.jpg'; ?>" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
+              <!-- /images/assemblies/bdasign.jpg -->
+              @if($setting->signature)
+              <img src="<?= $setting->signature ?: ''; ?>" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
+              @endif
             </div>
           </div>
         </div>

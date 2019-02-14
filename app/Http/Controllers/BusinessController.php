@@ -174,7 +174,7 @@ class BusinessController extends Controller
     {
         $data = $request->validate([
           'business_no' => '', 'business_name' => '',
-          'business_owner' => 'required', 'business_type' => 'required',
+          'business_type' => 'required', 'community_id' => '',
           'business_category' => 'required', 'zonal_id' => '', 'tas_id' => '',
           'street_id' => '', 'loc_longitude' => '', 'loc_latitude' => '',
           'electoral_id' => '', 'tin_number' => '', 'vat_no' => '', 'industry' => '',
@@ -182,6 +182,8 @@ class BusinessController extends Controller
           'employee_no' => '', 'male_employed' => '', 'female_employed' => '', 'property_no' => '',
           'valuation_no' => '', 'gps_code' => '', 'store_number' => '', 'client' => 'none'
         ]);
+
+        // dd($data);
 
         $business = Business::where('business_no', $id)->first();
         $owner = \App\BusinessOwner::where('owner_id', $request->owner_id)->first();

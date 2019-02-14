@@ -116,6 +116,21 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        <label for="">Longitude</label>
+                                        <input type="text" value="{{$property->loc_longitude}}" name="loc_longitude" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                  <div class="form-group">
+                                      <label for="">Latitude</label>
+                                      <input type="text" value="{{$property->loc_latitude}}" name="loc_latitude" class="form-control">
+                                  </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
                                         <label for="">Sub Metro</label>
                                         <select class="form-control" name="zonal_id" id="zonal_id" @blur="getFilteredTas()">
                                             <option disabled selected="true" value="{{$property->zonal_id}}"><?= $property->zonal ? $property->zonal->description : $property->zonal_id ?></option>

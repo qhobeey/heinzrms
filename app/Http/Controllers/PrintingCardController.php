@@ -132,10 +132,19 @@ class PrintingCardController extends Controller
       return redirect()->back();
     }
 
-    public function printBills()
+    public function printPropertyBills()
     {
+      $setting = \App\BillSetting::first();
+      // dd($setting);
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
-      return view('console.billing.print-bills',['wcpScript' => $wcpScript]);
+      return view('console.billing.property.print-bills',['wcpScript' => $wcpScript, 'setting' => $setting]);
+    }
+    public function printBusinessBills()
+    {
+      $setting = \App\BillSetting::first();
+      // dd($setting);
+      $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
+      return view('console.billing.business.print-bills',['wcpScript' => $wcpScript, 'setting' => $setting]);
     }
 
 }

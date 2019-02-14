@@ -22,6 +22,11 @@ class BillingController extends Controller
       return view('console.billing.processing');
     }
 
+    public function propertyBillPrepare()
+    {
+      return view('console.billing.property.prepare-bills');
+    }
+
 
     public function propertyBills()
     {
@@ -88,12 +93,20 @@ class BillingController extends Controller
       if($feefixing === date("Y")):
         $results = self::checkModelCategory($property, "property");
         if($results){
+          $results = array_merge($results,[
+            'zonal_id'=>$property->zonal_id ?: '', 'tas_id'=>$property->tas_id ?: '',
+            'electoral_id'=>$property->electoral_id ?: '', 'community_id'=>$property->community_id ?: ''
+          ]);
           $billResults = self::prepareBill($property->property_no, "p", $year, $results);
         };
       else:
         //not current fee fixing
         $results = self::checkFeefixingModelCategory($property, "property", $feefixing);
         if($results){
+          $results = array_merge($results,[
+            'zonal_id'=>$property->zonal_id ?: '', 'tas_id'=>$property->tas_id ?: '',
+            'electoral_id'=>$property->electoral_id ?: '', 'community_id'=>$property->community_id ?: ''
+          ]);
           $billResults = self::prepareBill($property->property_no, "p", $year, $results);
         };
       endif;
@@ -106,12 +119,20 @@ class BillingController extends Controller
       if($feefixing === date("Y")):
         $results = self::checkModelCategory($business, "business");
         if($results){
+          $results = array_merge($results,[
+            'zonal_id'=>$business->zonal_id ?: '', 'tas_id'=>$business->tas_id ?: '',
+            'electoral_id'=>$business->electoral_id ?: '', 'community_id'=>$business->community_id ?: ''
+          ]);
           $billResults = self::prepareBill($business->business_no, "b", $year, $results);
         };
       else:
         //not current fee fixing
         $results = self::checkFeefixingModelCategory($business, "business", $feefixing);
         if($results){
+          $results = array_merge($results,[
+            'zonal_id'=>$business->zonal_id ?: '', 'tas_id'=>$business->tas_id ?: '',
+            'electoral_id'=>$business->electoral_id ?: '', 'community_id'=>$business->community_id ?: ''
+          ]);
           $billResults = self::prepareBill($business->business_no, "b", $year, $results);
         };
       endif;
@@ -215,20 +236,27 @@ class BillingController extends Controller
 
     public static function prepareBill($account, $type, $year, $params)
     {
-      $amount = floatval($params['rateable_value']) * floatval($params['rate_pa']);
+
+      $imposed = floatval($params['rate_pa']);
+      $amount = floatval($params['rateable_value']) * $imposed;
       $ans = $amount > $params['min_charge'] ? $amount : $params['min_charge'];
       $previousBill = \App\Bill::where('account_no', $account)->where('year', (string)(intval($year)-1))->first();
-      $arrears = $previousBill ? floatval($previousBill->arrears) : floatval(0);
+      $arrears = $previousBill ? floatval($previousBill->account_balance) : floatval(0);
+      $totalPaid = \App\Payment::where('account_no', $account)->where('payment_year', $year)->sum('amount_paid');
+      $lastYearTotalPaid = \App\Payment::where('account_no', $account)->where('payment_year', (string)(intval($year) - 1))->sum('amount_paid');
+      $lastYearBill = $previousBill ? floatval($previousBill->rate_pa) : floatval(0);
+      unset($params['rate_pa']);
 
       $bill = array_merge($params, ['account_no' => $account,
-          'account_balance' => $ans + $arrears, 'arrears' => $arrears, 'current_amount' => $ans, 'bill_type' => $type, 'prepared_by' => 'admin', 'year' => $year,
-          'bill_date' => Carbon::now()->toDateString()
+          'account_balance' => ($ans + $arrears) - $totalPaid, 'arrears' => $arrears, 'current_amount' => $ans, 'bill_type' => $type, 'prepared_by' => 'admin', 'year' => $year,
+          'bill_date' => Carbon::now()->toDateString(), 'rate_imposed' => $imposed, 'rate_pa' => number_format((float)$ans, 2, '.', ''),
+          'total_paid' => number_format((float)$totalPaid, 2, '.', ''), 'p_year_bill' => $lastYearBill, 'p_year_total_paid' => $lastYearTotalPaid
       ]);
       unset($bill['min_charge']);
 
       $billRes = \App\Bill::where('account_no', $account)->where('year', $year)->first();
       if($billRes):
-        $bill = array_merge($bill, ['arrears' => floatval($billRes->arrears), 'account_balance' => floatval($ans) + floatval($billRes->arrears)]);
+        // $bill = array_merge($bill, ['arrears' => $arrears, 'account_balance' => $ans + $arrears]);
         $billRes->update($bill);
       else:
         $t = \App\Bill::create($bill);

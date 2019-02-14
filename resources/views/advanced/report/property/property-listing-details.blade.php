@@ -58,9 +58,9 @@
                 <td></td>
                 <td><?= $key+1; ?></td>
                 <td><?= $bill->account_no; ?></td>
-                <td><?= $bill->owner; ?></td>
-                <td><?= $bill->address; ?></td>
-                <td><?= $bill->category; ?></td>
+                <td style="font-size: 11px;"><?= $bill->property ? ($bill->property->owner ? $bill->property->owner->name: 'NA'): 'NA'; ?></td>
+                <td style="font-size: 11px;"><?= $bill->property ? ($bill->property->owner ? ($bill->property->owner->address ?: 'NA'): 'NA'): 'NA'; ?></td>
+                <td style="font-size: 11px;"><?= $bill->property ? ($bill->property->category ? $bill->property->category->description: 'NA'): 'NA'; ?></td>
                 <td><?= \App\Repositories\ExpoFunction::formatMoney($bill->arrears, true); ?></td>
                 <td><?= \App\Repositories\ExpoFunction::formatMoney($bill->current_amount, true); ?></td>
                 <td><?= \App\Repositories\ExpoFunction::formatMoney(($bill->arrears + $bill->current_amount), true); ?></td>

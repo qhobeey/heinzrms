@@ -161,7 +161,7 @@
               <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">
                 <?php
                   if($lastyear):
-                    echo "GHc " . \App\Repositories\ExpoFunction::formatMoney($lastyear->arrears, true);
+                    echo "GHc " . \App\Repositories\ExpoFunction::formatMoney($lastyear->total_paid, true);
                   else:
                     echo "NONE";
                   endif;

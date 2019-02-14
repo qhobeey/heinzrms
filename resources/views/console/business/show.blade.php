@@ -206,7 +206,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Community</label>
-                                        <input disabled="true" type="text" name="occupancy" value="-" class="form-control">
+                                        <input disabled="true" type="text" name="occupancy" value="<?= $business->community ? $business->community->description : $business->community_id ?>" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-4">

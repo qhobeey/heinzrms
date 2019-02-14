@@ -25,6 +25,7 @@
               <th></th>
               <th style="font-size: 10px;color: black;">Electoral Area</th>
               <th style="font-size: 10px;color: black;">Account No</th>
+              <th style="font-size: 10px;color: black;">Business Name</th>
               <th style="font-size: 10px;color: black;">Owner Name</th>
               <th style="font-size: 10px;color: black;">Business Address</th>
               <th style="font-size: 10px;color: black;">Business cat</th>
@@ -44,6 +45,7 @@
                 <td colspan="3"><a style="color:brown; font-weight: 600;" href="{{ URL::previous() }}"><?= $info; ?>&nbsp; [<?= $totalBill; ?>]</a></td>
                 <td></td>
                 <td></td>
+                <td></td>
                 <td><?= \App\Repositories\ExpoFunction::formatMoney($bills->sum('arrears'), true); ?></td>
                 <td><?= \App\Repositories\ExpoFunction::formatMoney($bills->sum('current_amount'), true); ?></td>
                 <td><?= \App\Repositories\ExpoFunction::formatMoney(($bills->sum('arrears') + $bills->sum('current_amount')), true); ?></td>
@@ -58,10 +60,11 @@
             <tr class="odd2 heyy">
                 <td></td>
                 <td><?= $key+1; ?></td>
+                <td style="font-size: 11px;"><?= $bill->business ? ($bill->business->business_name ?: 'NA'): 'NA'; ?></td>
                 <td><?= $bill->account_no; ?></td>
-                <td><?= $bill->owner; ?></td>
-                <td><?= $bill->address; ?></td>
-                <td><?= $bill->category; ?></td>
+                <td style="font-size: 11px;"><?= $bill->business ? ($bill->business->owner ? $bill->business->owner->name: 'NA'): 'NA'; ?></td>
+                <td style="font-size: 11px;"><?= $bill->business ? ($bill->business->address ?: 'NA'): 'NA'; ?></td>
+                <td style="font-size: 11px;"><?= $bill->business ? ($bill->business->category ? $bill->business->category->description: 'NA'): 'NA'; ?></td>
                 <td><?= \App\Repositories\ExpoFunction::formatMoney($bill->arrears, true); ?></td>
                 <td><?= \App\Repositories\ExpoFunction::formatMoney($bill->current_amount, true); ?></td>
                 <td><?= \App\Repositories\ExpoFunction::formatMoney(($bill->arrears + $bill->current_amount), true); ?></td>

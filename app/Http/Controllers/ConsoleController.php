@@ -45,13 +45,16 @@ class ConsoleController extends Controller
     public function construction()
     {
 
+      // $account = \App\Bill::orderBy('account_no', 'desc')->limit(10)->get();
+      // dd($account);
+      // $totalPaid = \App\Payment::where('account_no', 'MA13017034')->where('payment_year', '2018')->sum('amount_paid');
+      // dd($totalPaid);
 
-
-      ReplaceAccountBalance::dispatch();
+      // ReplaceAccountBalance::dispatch();
       // FloatCleanBills::dispatch();
       // dd('p');
-      return redirect()->route('processing');
-        // return view('console.construction');
+      // return redirect()->route('processing');
+        return view('console.construction');
     }
     public function construction3()
     {

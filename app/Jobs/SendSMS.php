@@ -39,23 +39,49 @@ class SendSMS implements ShouldQueue
 
       $phoneArray = [];
       if($this->request['account'] == "all"):
-        $properties = ($this->request['zonal'] == "all")
-                      ? \App\Property::with(['owner'])->orderBy('property_no', 'asc')->get()
-                      : \App\Property::with(['owner'])->where('zonal_id', $this->request['zonal'])->orderBy('property_no', 'asc')->get();
-      foreach ($properties  as $property) {
-        if($property->owner && $property->owner->phone){
-          array_push($phoneArray, $property->owner->phone);
-        }
-      }
+        if($this->request['zonal']):
+          $properties = ($this->request['zonal'] == "all")
+                        ? \App\Property::with(['owner'])->orderBy('property_no', 'asc')->get()
+                        : \App\Property::with(['owner'])->where('zonal_id', $this->request['zonal'])->orderBy('property_no', 'asc')->get();
+          foreach ($properties  as $property) {
+            if($property->owner && $property->owner->phone){
+              array_push($phoneArray, $property->owner->phone);
+            }
+          }
 
-      $businesses = ($this->request['zonal'] == "all")
-                    ? \App\Business::with(['owner'])->orderBy('business_no', 'asc')->get()
-                    : \App\Business::with(['owner'])->where('zonal_id', $this->request['zonal'])->orderBy('business_no', 'asc')->get();
-      foreach ($businesses  as $business) {
-        if($business->owner && $business->owner->phone){
-          array_push($phoneArray, $business->owner->phone);
-        }
-      }
+          $businesses = ($this->request['zonal'] == "all")
+                        ? \App\Business::with(['owner'])->orderBy('business_no', 'asc')->get()
+                        : \App\Business::with(['owner'])->where('zonal_id', $this->request['zonal'])->orderBy('business_no', 'asc')->get();
+          foreach ($businesses  as $business) {
+            if($business->owner && $business->owner->phone){
+              array_push($phoneArray, $business->owner->phone);
+            }
+          }
+        endif;
+
+        // Electoral
+
+        if($this->request['electoral']):
+          $properties = ($this->request['electoral'] == "all")
+                        ? \App\Property::with(['owner'])->orderBy('property_no', 'asc')->get()
+                        : \App\Property::with(['owner'])->where('electoral_id', $this->request['electoral'])->orderBy('property_no', 'asc')->get();
+          foreach ($properties  as $property) {
+            if($property->owner && $property->owner->phone){
+              array_push($phoneArray, $property->owner->phone);
+            }
+          }
+
+          $businesses = ($this->request['electoral'] == "all")
+                        ? \App\Business::with(['owner'])->orderBy('business_no', 'asc')->get()
+                        : \App\Business::with(['owner'])->where('electoral_id', $this->request['electoral'])->orderBy('business_no', 'asc')->get();
+          foreach ($businesses  as $business) {
+            if($business->owner && $business->owner->phone){
+              array_push($phoneArray, $business->owner->phone);
+            }
+          }
+        endif;
+
+
       endif;
 
       \App\Processing::create(['total' => count($phoneArray), 'count' => 0, 'percentage' => 0]);

@@ -144,10 +144,10 @@ class AdvancedReportController extends Controller
       $electoral = $this->electoralProperty->where('code', $code)->whereHas('bills', function($q) use ($year) {
         $q->where('year', $year);
       })->with(['bills' => function($query) use ($year) {
-        $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
+        $query->with('properties')->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
       }])->first();
 
-      $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $request->url().'/', $options = []) : [];
+      $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 20, $page = null, $baseUrl = $request->url().'/', $options = []) : [];
       $info = $electoral ? $electoral->description : '';
       $totalBill = $electoral ? $electoral->bills->count(): '';
       // return ['result'=>$bills];
@@ -203,7 +203,7 @@ class AdvancedReportController extends Controller
        $location = $request['location'];
        $year = $request['year'];
 
-       $electorals = $this->electoralBusiness->has('bills')->whereHas('bills', function($q) use ($year) {
+       $electorals = $this->electoralBusiness->whereHas('bills', function($q) use ($year) {
          $q->where('year', $year);
        })->with(['bills'=>function($query) use ($year) {
           $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('b'));
@@ -267,10 +267,10 @@ class AdvancedReportController extends Controller
       $electoral = $this->electoralBusiness->where('code', $code)->whereHas('bills', function($q) use ($year) {
         $q->where('year', $year);
       })->with(['bills' => function($query) use ($year) {
-        $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('b'));
+        $query->with('businesses')->where('year', $year)->where(strtoupper('bill_type'), strtoupper('b'));
       }])->first();
 
-      $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $request->url().'/', $options = []) : [];
+      $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 20, $page = null, $baseUrl = $request->url().'/', $options = []) : [];
       $info = $electoral ? $electoral->description : '';
       $totalBill = $electoral ? $electoral->bills->count() : '';
       // return ['result'=>$bills];
@@ -309,7 +309,7 @@ class AdvancedReportController extends Controller
           return view('advanced.report.feefixing.listing', compact('feefixing', 'year', 'account'));
         endif;
         if($account == 'business'):
-          $feefixing = \App\BusinessType::with('categories')->latest()->get();
+          $feefixing = \App\BusinessType::with('categories')->orderBy('code', 'asc')->get();
           return view('advanced.report.feefixing.listing', compact('feefixing', 'year', 'account'));
         endif;
 

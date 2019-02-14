@@ -40,5 +40,5 @@ Route::put('update_business_from_mobile/{business}/{owner}', 'BusinessApiControl
 Route::post('check_auth_system', 'ApiController@checkMobileAuth');
 
 
-Route::get('get/bill/count', 'ApiController@getBilCount');
-Route::get('get/bill/set', 'ApiController@getBilSet');
+Route::get('get/bill/count/{account}', 'ApiController@getBilCount');
+Route::get('get/bill/set/{account}', 'ApiController@getBilSet');

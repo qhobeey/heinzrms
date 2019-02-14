@@ -144,7 +144,7 @@
                               <div class="col-md-4">
                                   <div class="form-group">
                                       <label for="">Store No</label>
-                                      <input disabled="true" type="text" value="{{$business->store_number}}" name="store_number" class="form-control">
+                                      <input type="text" value="{{$business->store_number}}" name="store_number" class="form-control">
                                   </div>
                               </div>
                             </div>
@@ -153,13 +153,13 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Longitude</label>
-                                        <input type="text" name="loc_longitude" class="form-control">
+                                        <input type="text" value="{{$business->loc_longitude}}" name="loc_longitude" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                   <div class="form-group">
                                       <label for="">Latitude</label>
-                                      <input type="text" name="loc_latitude" class="form-control">
+                                      <input type="text" value="{{$business->loc_latitude}}" name="loc_latitude" class="form-control">
                                   </div>
                                 </div>
                             </div>
@@ -172,11 +172,11 @@
                                     <div class="form-group">
                                         <label for="">Sub Metro</label>
                                         <select class="form-control" name="zonal_id" id="">
-                                            <option value="">-choose-</option>
-                                            <option value="none">No sub metro</option>
-                                            <template v-for="data in zonals">
-                                                <option :value="data.code">@{{data.description}}</option>
-                                            </template>
+                                            <option value=""><?= $business->zonal ? $business->zonal->description : $business->zonal_id ?></option>
+                                            <?php $zonals = \App\Models\Location\Zonal::orderBy('description', 'asc')->get(); ?>
+                                            <?php foreach ($zonals as $key => $zonal): ?>
+                                              <option value="<?php echo $zonal->code; ?>"><?php echo $zonal->description; ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -184,11 +184,11 @@
                                     <div class="form-group">
                                         <label for="">Town Area Council</label>
                                         <select class="form-control" name="tas_id" id="">
-                                            <option value="">-choose-</option>
-                                            <option value="none">No Town Area</option>
-                                            <template v-for="data in tas">
-                                                <option :value="data.code">@{{data.description}}</option>
-                                            </template>
+                                            <option value=""><?= $business->tas ? $business->tas->description : $business->tas_id ?></option>
+                                            <?php $tas = \App\Models\Location\Ta::orderBy('description', 'asc')->get(); ?>
+                                            <?php foreach ($tas as $key => $ta): ?>
+                                              <option value="<?php echo $ta->code; ?>"><?php echo $ta->description; ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -196,11 +196,11 @@
                                     <div class="form-group">
                                         <label for="">Electoral Area</label>
                                         <select class="form-control" name="electoral_id" id="">
-                                            <option value="">-choose-</option>
-                                            <option value="none">No Electoral Area</option>
-                                            <template v-for="data in electorals">
-                                                <option :value="data.code">@{{data.description}}</option>
-                                            </template>
+                                          <option value=""><?= $business->electoral ? $business->electoral->description : $business->electoral_id ?></option>
+                                          <?php $electorals = \App\Models\Location\Electoral::orderBy('description', 'asc')->get(); ?>
+                                          <?php foreach ($electorals as $key => $electoral): ?>
+                                            <option value="<?php echo $electoral->code; ?>"><?php echo $electoral->description; ?></option>
+                                          <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -211,11 +211,11 @@
                                     <div class="form-group">
                                         <label for="">Community</label>
                                         <select class="form-control" name="community_id" id="">
-                                            <option value="">-choose-</option>
-                                            <option value="none">No community</option>
-                                            <template v-for="data in communities">
-                                                <option :value="data.code">@{{data.description}}</option>
-                                            </template>
+                                          <option value=""><?= $business->community ? $business->community->description : $business->community_id; ?></option>
+                                          <?php $communities = \App\Models\Location\Community::orderBy('description', 'asc')->get(); ?>
+                                          <?php foreach ($communities as $key => $community): ?>
+                                            <option value="<?php echo $community->code; ?>"><?php echo $community->description; ?></option>
+                                          <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -235,11 +235,11 @@
                                     <div class="form-group">
                                         <label for="">Street</label>
                                         <select class="form-control" name="street_id" id="">
-                                            <option value="">-choose-</option>
-                                            <option value="none">No street</option>
-                                            <template v-for="data in streets">
-                                                <option :value="data.code">@{{data.description}}</option>
-                                            </template>
+                                          <option value=""><?= $business->street ? $business->street->description : $business->street_id ?></option>
+                                          <?php $streets = \App\Models\Location\Street::orderBy('description', 'asc')->get(); ?>
+                                          <?php foreach ($streets as $key => $street): ?>
+                                            <option value="<?php echo $street->code; ?>"><?php echo $street->description; ?></option>
+                                          <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>

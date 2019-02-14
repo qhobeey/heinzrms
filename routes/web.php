@@ -99,6 +99,9 @@ Route::prefix('console')->group(function () {
     Route::post('property/prepare/bills', 'PropertyController@preparePropertyBills')->name('property.prepare.bills');
     Route::get('property/records/bills/preview/{query}', 'RecordController@previewBill')->name('preview.bill');
 
+    /** */
+    Route::get('property/lgt/prepare/bill', 'BillingController@propertyBillPrepare')->name('lgt.property.bills');
+
     /** Business routes */
     // Route::get('properties', 'PropertyController@index')->name('property.index');
     Route::get('business/types', 'BusinessController@addTypes')->name('business.types');
@@ -149,7 +152,8 @@ Route::prefix('console')->group(function () {
     // Route::get('print/bills', 'PrintingCardController@bills');
     Route::get('print/bills/{bill}', 'PrintingCardController@bills')->name('init.bill.print');
     Route::get('print/notice', 'PrintingCardController@notice');
-    Route::get('auth/print/notice', 'PrintingCardController@printBills')->name('print.bills');
+    Route::get('auth/print/property/notice', 'PrintingCardController@printPropertyBills')->name('print.property.bills');
+    Route::get('auth/print/business/notice', 'PrintingCardController@printBusinessBills')->name('print.business.bills');
 
     /** */
     Route::get('customize/bill/format', 'PrintingCardController@formatBill')->name('customize.bill.format');

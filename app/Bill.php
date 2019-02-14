@@ -18,4 +18,13 @@ class Bill extends Model
     {
         return $this->belongsTo(Business::class, 'account_no', 'business_no');
     }
+
+    public function properties()
+    {
+      return $this->hasMany(Property::class, 'property_no', 'account_no');
+    }
+    public function businesses()
+    {
+      return $this->hasMany(Business::class, 'business_no', 'account_no');
+    }
 }

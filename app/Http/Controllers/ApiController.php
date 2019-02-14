@@ -258,7 +258,7 @@ class ApiController extends Controller
     public function updatePropertyCategoryData(Request $request, $id)
     {
         // dd('ok');
-        $data = $request->validate(['code' => 'required', 'type_id' => 'required', 'description' => '', 'rate_pa' => '', 'min_charge' => '']);
+        $data = $request->validate(['code' => 'required', 'description' => '', 'rate_pa' => '', 'min_charge' => '']);
         $category = PropertyCategory::where('code', $id)->first();
         $category->update($data);
         return response()->json(['status' => 'success', 'data' => $category]);
@@ -647,105 +647,218 @@ class ApiController extends Controller
        return response()->json(['status' => 'success', 'data' => $data], 201);
      }
 
-     public function getBilCount(Request $request)
+     public function getBilCount(Request $request, $account)
      {
        // dd($request->all());
        $year = $request->year;
-       if($request->isFilter == "true"):
+       if(strtoupper($account) == strtoupper('p')):
 
-         if($request->zonal):
-           $addict = $request->zonal;
-           $bills = \App\Property::has('bills')->with(['bills' => function($query) use ($year, $addict){
-             $query->where('zonal_id', $addict)->where('year', $year);
-           }])->count();
-           return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
-         elseif($request->electoral):
-           $addict = $request->electoral;
-           $bills = \App\Property::where('electoral_id', $addict)->whereHas('bills', function($q) use ($year) {
-             $q->where('year', $year);
-           })->with(['bills' => function($query) use ($year, $addict){
-             $query->where('electoral_id', $addict)->where('year', $year);
-           }])->count();
+         if($request->isFilter == "true"):
+
+           if($request->zonal):
+             $addict = $request->zonal;
+             $bills = \App\Property::has('bills')->with(['bills' => function($query) use ($year, $addict){
+               $query->where('zonal_id', $addict)->where('year', $year);
+             }])->count();
+             return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
+           elseif($request->electoral):
+             $addict = $request->electoral;
+             $bills = \App\Property::where('electoral_id', $addict)->whereHas('bills', function($q) use ($year) {
+               $q->where('year', $year);
+             })->with(['bills' => function($query) use ($year, $addict){
+               $query->where('electoral_id', $addict)->where('year', $year);
+             }])->count();
+
+             return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
+           elseif($request->tas):
+             $addict = $request->tas;
+             $bills = \App\Property::has('bills')->with(['bills' => function($query) use ($year, $addict){
+               $query->where('tas_id', $addict)->where('year', $year);
+             }])->count();
+             return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
+           elseif($request->community):
+             $addict = $request->community;
+             $bills = \App\Property::has('bills')->with(['bills' => function($query) use ($year, $addict){
+               $query->where('community_id', $addict)->where('year', $year);
+             }])->count();
+             return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
+           elseif($request->street):
+             $addict = $request->street;
+             $bills = \App\Property::has('bills')->with(['bills' => function($query) use ($year, $addict){
+               $query->where('street_id', $addict)->where('year', $year);
+             }])->count();
+             return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
+           endif;
+
+           $bills = $bills->latest()->count();
 
            return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
-         elseif($request->tas):
-           $addict = $request->tas;
-           $bills = \App\Property::has('bills')->with(['bills' => function($query) use ($year, $addict){
-             $query->where('tas_id', $addict)->where('year', $year);
-           }])->count();
-           return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
-         elseif($request->community):
-           $addict = $request->community;
-           $bills = \App\Property::has('bills')->with(['bills' => function($query) use ($year, $addict){
-             $query->where('community_id', $addict)->where('year', $year);
-           }])->count();
-           return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
-         elseif($request->street):
-           $addict = $request->street;
-           $bills = \App\Property::has('bills')->with(['bills' => function($query) use ($year, $addict){
-             $query->where('street_id', $addict)->where('year', $year);
-           }])->count();
-           return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
+
+
+         else:
+           $billCount = \App\Bill::where('year', $request->year)->latest()->count();
+           return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($billCount, false)], 201);
          endif;
 
-         $bills = $bills->latest()->count();
-
-         return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
+       endif;
 
 
-       else:
-         $billCount = \App\Bill::where('year', $request->year)->latest()->count();
-         return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($billCount, false)], 201);
+
+       if(strtoupper($account) == strtoupper('b')):
+
+         if($request->isFilter == "true"):
+
+           if($request->zonal):
+             $addict = $request->zonal;
+             $bills = \App\Business::has('bills')->with(['bills' => function($query) use ($year, $addict){
+               $query->where('zonal_id', $addict)->where('year', $year);
+             }])->count();
+             return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
+           elseif($request->electoral):
+             $addict = $request->electoral;
+             $bills = \App\Business::where('electoral_id', $addict)->whereHas('bills', function($q) use ($year) {
+               $q->where('year', $year);
+             })->with(['bills' => function($query) use ($year, $addict){
+               $query->where('electoral_id', $addict)->where('year', $year);
+             }])->count();
+
+             return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
+           elseif($request->tas):
+             $addict = $request->tas;
+             $bills = \App\Business::has('bills')->with(['bills' => function($query) use ($year, $addict){
+               $query->where('tas_id', $addict)->where('year', $year);
+             }])->count();
+             return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
+           elseif($request->community):
+             $addict = $request->community;
+             $bills = \App\Business::has('bills')->with(['bills' => function($query) use ($year, $addict){
+               $query->where('community_id', $addict)->where('year', $year);
+             }])->count();
+             return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
+           elseif($request->street):
+             $addict = $request->street;
+             $bills = \App\Business::has('bills')->with(['bills' => function($query) use ($year, $addict){
+               $query->where('street_id', $addict)->where('year', $year);
+             }])->count();
+             return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
+           endif;
+
+           $bills = $bills->latest()->count();
+
+           return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
+
+
+         else:
+           $billCount = \App\Bill::where('year', $request->year)->latest()->count();
+           return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($billCount, false)], 201);
+         endif;
+
        endif;
        dd($request->isFilter);
      }
-     public function getBilSet(Request $request)
+     public function getBilSet(Request $request, $account)
      {
        // dd($request->all());
        $year = $request->year;
-       if($request->isFilter == "true"):
 
-         if($request->zonal):
-           $addict = $request->zonal;
-           $bills = \App\Property::has('bills')->with(['bills' => function($query) use ($year, $addict){
-             $query->where('zonal_id', $addict)->where('year', $year);
-           }])->orderBy('property_no', 'asc')->get();
-           // $bills->where('zonal_id', $request->zonal);
-         elseif($request->electoral):
-           $addict = $request->electoral;
-           // dd($addict);
-           $bills = \App\Property::where('electoral_id', $addict)->whereHas('bills', function($q) use ($year) {
-             $q->where('year', $year);
-           })->with(['owner', 'type', 'category', 'zonal', 'electoral', 'tas', 'street', 'bills' => function($query) use ($year, $addict){
-             $query->where('electoral_id', $addict)->where('year', $year);
-           }])->orderBy('property_no', 'asc')->get();
+       if(strtoupper($account) == strtoupper('p')):
+
+         if($request->isFilter == "true"):
+
+           if($request->zonal):
+             $addict = $request->zonal;
+             $bills = \App\Property::has('bills')->with(['bills' => function($query) use ($year, $addict){
+               $query->where('zonal_id', $addict)->where('year', $year);
+             }])->orderBy('property_no', 'asc')->get();
+             // $bills->where('zonal_id', $request->zonal);
+           elseif($request->electoral):
+             $addict = $request->electoral;
+             // dd($addict);
+             $bills = \App\Property::where('electoral_id', $addict)->whereHas('bills', function($q) use ($year) {
+               $q->where('year', $year);
+             })->with(['owner', 'type', 'category', 'zonal', 'electoral', 'tas', 'street', 'bills' => function($query) use ($year, $addict){
+               $query->where('electoral_id', $addict)->where('year', $year);
+             }])->orderBy('property_no', 'asc')->get();
+             return response()->json(['status' => 'success', 'data' => $bills], 201);
+           elseif($request->tas):
+             $addict = $request->tas;
+             $bills = \App\Property::has('bills')->with(['bills' => function($query) use ($year, $addict){
+               $query->where('tas_id', $addict)->where('year', $year);
+             }])->orderBy('property_no', 'asc')->get();
+           elseif($request->community):
+             $addict = $request->community;
+             $bills = \App\Property::has('bills')->with(['bills' => function($query) use ($year, $addict){
+               $query->where('community_id', $addict)->where('year', $year);
+             }])->orderBy('property_no', 'asc')->get();
+           elseif($request->street):
+             $addict = $request->street;
+             $bills = \App\Property::has('bills')->with(['bills' => function($query) use ($year, $addict){
+               $query->where('street_id', $addict)->where('year', $year);
+             }])->orderBy('property_no', 'asc')->get();
+           endif;
+
+           // $bills = $bills->orderBy('property_no', 'asc')->get();
+
            return response()->json(['status' => 'success', 'data' => $bills], 201);
-         elseif($request->tas):
-           $addict = $request->tas;
-           $bills = \App\Property::has('bills')->with(['bills' => function($query) use ($year, $addict){
-             $query->where('tas_id', $addict)->where('year', $year);
-           }])->orderBy('property_no', 'asc')->get();
-         elseif($request->community):
-           $addict = $request->community;
-           $bills = \App\Property::has('bills')->with(['bills' => function($query) use ($year, $addict){
-             $query->where('community_id', $addict)->where('year', $year);
-           }])->orderBy('property_no', 'asc')->get();
-         elseif($request->street):
-           $addict = $request->street;
-           $bills = \App\Property::has('bills')->with(['bills' => function($query) use ($year, $addict){
-             $query->where('street_id', $addict)->where('year', $year);
-           }])->orderBy('property_no', 'asc')->get();
+
+
+         else:
+           $billCount = \App\Bill::where('year', $request->year)->orderBy('account_no', 'asc')->get();
+           return response()->json(['status' => 'success', 'data' => $bills], 201);
          endif;
 
-         // $bills = $bills->orderBy('property_no', 'asc')->get();
-
-         return response()->json(['status' => 'success', 'data' => $bills], 201);
-
-
-       else:
-         $billCount = \App\Bill::where('year', $request->year)->orderBy('account_no', 'asc')->get();
-         return response()->json(['status' => 'success', 'data' => $bills], 201);
        endif;
+
+
+
+       if(strtoupper($account) == strtoupper('b')):
+
+         if($request->isFilter == "true"):
+
+           if($request->zonal):
+             $addict = $request->zonal;
+             $bills = \App\Business::has('bills')->with(['bills' => function($query) use ($year, $addict){
+               $query->where('zonal_id', $addict)->where('year', $year);
+             }])->orderBy('business_no', 'asc')->get();
+             // $bills->where('zonal_id', $request->zonal);
+           elseif($request->electoral):
+             $addict = $request->electoral;
+             // dd($addict);
+             $bills = \App\Business::where('electoral_id', $addict)->whereHas('bills', function($q) use ($year) {
+               $q->where('year', $year);
+             })->with(['owner', 'type', 'category', 'zonal', 'electoral', 'communities', 'tas', 'street', 'bills' => function($query) use ($year, $addict){
+               $query->where('electoral_id', $addict)->where('year', $year);
+             }])->orderBy('business_no', 'asc')->get();
+             return response()->json(['status' => 'success', 'data' => $bills], 201);
+           elseif($request->tas):
+             $addict = $request->tas;
+             $bills = \App\Business::has('bills')->with(['bills' => function($query) use ($year, $addict){
+               $query->where('tas_id', $addict)->where('year', $year);
+             }])->orderBy('business_no', 'asc')->get();
+           elseif($request->community):
+             $addict = $request->community;
+             $bills = \App\Business::has('bills')->with(['bills' => function($query) use ($year, $addict){
+               $query->where('community_id', $addict)->where('year', $year);
+             }])->orderBy('business_no', 'asc')->get();
+           elseif($request->street):
+             $addict = $request->street;
+             $bills = \App\Business::has('bills')->with(['bills' => function($query) use ($year, $addict){
+               $query->where('street_id', $addict)->where('year', $year);
+             }])->orderBy('business_no', 'asc')->get();
+           endif;
+
+           // $bills = $bills->orderBy('property_no', 'asc')->get();
+
+           return response()->json(['status' => 'success', 'data' => $bills], 201);
+
+
+         else:
+           $billCount = \App\Bill::where('year', $request->year)->orderBy('account_no', 'asc')->get();
+           return response()->json(['status' => 'success', 'data' => $bills], 201);
+         endif;
+
+       endif;
+
        dd($request->isFilter);
      }
 }

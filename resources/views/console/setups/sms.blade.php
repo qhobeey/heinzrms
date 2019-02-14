@@ -9,7 +9,7 @@
           <h3>Construct your custom sms</h3>
           <form class="form-horizontal" action="{{route('setups.sms')}}" method="post">
             @csrf
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-group">
                 <label for="">Select account</label>
                 <select class="form-control" name="account" style="width: 94%;">
@@ -19,15 +19,32 @@
                 </select>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-group">
                 <label for="">Select Zonal / SubMetro</label>
                 <select class="form-control" name="zonal" style="width: 94%;">
+                  <option value="">none</option>
                   <option value="all">all</option>
                   <?php
-                    $zonals = \App\Models\Location\Zonal::latest()->get();
+                    $zonals = \App\Models\Location\Zonal::orderBy('description', 'asc')->get();
                     foreach ($zonals as $zonal) { ?>
                       <option value="<?= $zonal->code; ?>"><?= $zonal->description; ?></option>
+                      <?php
+                    };
+                  ?>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="">Select Electoral</label>
+                <select class="form-control" name="electoral" style="width: 94%;">
+                  <option value="">none</option>
+                  <option value="all">all</option>
+                  <?php
+                    $electorals = \App\Models\Location\Electoral::orderBy('description', 'asc')->get();
+                    foreach ($electorals as $electoral) { ?>
+                      <option value="<?= $electoral->code; ?>"><?= $electoral->description; ?></option>
                       <?php
                     };
                   ?>

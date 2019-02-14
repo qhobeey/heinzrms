@@ -125,17 +125,42 @@
 
                         <div class="col-md-12">
                           <div class="form-group">
-                            <input type="checkbox" name="" class="form-control" value="">
+                            <input type="checkbox" id="zeroRated" class="form-control" value="">
                             <label for="">Do not print bills with Zero(0) Rate Imposed</label>
                           </div>
                         </div>
                       </div>
 
                       <div class="row">
+                        <div class="col-md-6">
+                          <button type="button" id="repPrintBtn" class="btn btn-xs" style="background: black; color: white;">Print Report</button>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="row"  style="width: 84%; margin: auto;">
+
+                            <div id="repPrint" class="col-md-6" style="display:none;">
+                              <div id="loadPrinters">
+                                <button type="button" class="btn btn-xs btn-danger" onclick="javascript:jsWebClientPrint.getPrinters();">Load installed printers...</button>
+                              </div>
+                              <div id="installedPrinters" style="visibility:hidden">
+
+                                  <select name="installedPrinterName" class="form-control" style="width: 100%; height: 30px; font-size: 10px;" id="installedPrinterName"></select>
+                              </div>
+                            </div>
+                            <div class="col-md-6" id="repPrint2" style="display:none;">
+                              <div id="printDevice">
+                                <button type="button" class="btn btn-xs btn-success" id="isp">Issue Print Command</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- <div class="row">
                         <div class="col-md-4">
                           <button id="isp" type="button" class="form-control btn btn-primary btn-xs" style="font-size: 14px;width: 120px;margin-top: 25px;">Print bills</button>
                         </div>
-                      </div>
+                      </div> -->
 
 
 
@@ -146,108 +171,125 @@
 
         </div>
 
-        <div id="loadingCarf" style="display:none;">
-          <h4><img src="/backend/images/25.gif" alt="" style="width: 19px;margin-right: 4px;">Loading... <span id="tt1" style="color:red;">0</span> / <span id="tt2"></span> </h4>
+        <div class="row" id="loadingCarf" style="display:none;">
+          <div class="col-md-6">
+            <h4><img src="/backend/images/25.gif" alt="" style="width: 19px;margin-right: 4px;">Loading... <span id="tt1" style="color:red;">0</span> / <span id="tt2"></span> </h4>
+          </div>
+          <div class="col-md-6">
+            <h4>Zero Imposed Bills: <span id="tt3" style="color: red;">0</span> </h4>
+          </div>
         </div>
 
         <div id="cardcont" style="display:none;">
-          <div id="card" style="width: 1000px; height: 100%; padding-top: 50px; padding-bottom: 20px; border-radius: 0px; background-color:white; margin-top: 60px; margin-bottom: 50px;">
-              <div style="width: 804px; background-color:white; margin:auto;">
-                <div style="background-color:white; width:800px; display: flex; flex-direction: row;">
-                  <img src="/images/assemblies/OFFINSOLOGO.jpg" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
+          <div id="card" style="width: 1000px; height: 100%; padding-top: 35px; padding-bottom: 20px; border-radius: 0px; background-color:white; margin-top: 60px; margin-bottom: 50px;">
+              <div style="width: 880px; background-color:white; margin:auto;">
+                <div style="background-color:white; width:880px; display: flex; flex-direction: row;">
+                  <img src="{{$setting->logo}}" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
                   <div style="width: 640px; border: 2px solid black; height: 100%; margin: auto;">
-                    <h3 style="text-align: center; font-size: 25px; font-weight: 600; color: black; text-transform: uppercase;">Offinso Municipal Assembly</h3>
+                    <h3 style="text-align: center; font-size: 25px; font-weight: 600; color: black; text-transform: uppercase;"><?= env('ASSEMBLY_SMS_NAME'); ?></h3>
                   </div>
                   <img src="/images/assemblies/ghanacoatofarms.jpg" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
                 </div>
-                <h2 style="text-align: center; font-size: 26px; margin-top: 0px; margin-bottom: 0px; font-weight: 500; text-transform: uppercase; color: black;">Property Rate</h2>
+                <h2 style="text-align: center; font-size: 26px; margin-top: 0px; margin-bottom: 0px; font-weight: 500; text-transform: uppercase; color: black;">Property Rate
+                  <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; left: 100px; text-transform: capitalize;">Bill year:
+                    <span id="r_ac_year" style="position: relative; left: 14px;">2019</span>
+                  </span>
+                </h2>
                 <hr style="margin-top: 0px; margin-bottom: 20px; width: 65%; border-top: 2px solid black;">
-                <div style="background-color: white; width:800px; display: flex;">
-                  <div style="background-color: white; width: 400px;">
+                <div style="background-color: white; width:880px; display: flex;">
+                  <div style="background-color: white; width: 450px;">
                     <article style="width:100%; display:flex;">
-                      <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Account No:</p>
+                      <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Account No:</p>
                       <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;<span id="r_acc_no">AAS4444</span></p>
                     </article>
-                    <article style="width:100%; display:flex; height: 96px; padding-top: 20px;">
-                      <p id="r_acc_name" style="color: black;margin-bottom: 10px;margin-top: 10px;font-size: 18px; font-weight: 600;">MT. CALVSRY SCH.</p>
+                    <article style="width:100%; display:flex;">
+                      <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">House No:</p>
+                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;<span id="r_acc_hsno">DDL4/RL</span></p>
                     </article>
                     <article style="width:100%; display:flex;">
-                      <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Property Type:</p>
-                      <p id="r_ac_type" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">&nbsp;&nbsp;&nbsp;COMMERCIAL PROPERTY RATE</p>
+                      <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Address:</p>
+                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;<span id="r_acc_address">Konongo</span></p>
+                    </article>
+                    <article style="width:100%; display:flex; height: 55px; padding-top: 0px;">
+                      <p style="color: black;margin-bottom: 10px;margin-top: 10px;font-size: 18px; font-weight: 600;"><span id="r_acc_name">MT. CALVSRY SCH.</span></p>
+                    </article>
+                    <article style="width: 100%; display: flex; height: 45px; padding-top: 0px;margin-top:-26px;">
+                      <p style="color: black;margin-bottom: 10px;margin-top: 10px;font-size: 14px; font-weight: 600;"><span id="r_acc_phone">0248160008</span></p>
                     </article>
                     <article style="width:100%; display:flex;">
-                      <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Property Cat:</p>
-                      <p id="r_ac_category" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">&nbsp;&nbsp;&nbsp;PRIVATE SCHOOL</p>
+                      <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Property Type:</p>
+                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">&nbsp;&nbsp;&nbsp;<span id="r_ac_type">COMMERCIAL PROPERTY RATE</span></p>
+                    </article>
+                    <article style="width:100%; display:flex;">
+                      <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Property Cat:</p>
+                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">&nbsp;&nbsp;&nbsp;<span id="r_ac_category">PRIVATE SCHOOL</span></p>
                     </article>
 
                     <div style="background-color:white; width:80%; border:2px solid black; margin-top: 15px; padding-left: 10px; padding-bottom: 10px;">
                       <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Rateable value:</p>
-                        <p id="r_ac_rateable" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">GHc 37,500.00&nbsp;&nbsp;</p>
+                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_rateable">GHc 37,500.00</span>&nbsp;&nbsp;</p>
                       </article>
                       <article style="width:100%; display:flex; justify-content: space-between; margin-top: 15px;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Rate Imposed:</p>
-                        <p id="r_ac_imposed" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">0.006&nbsp;&nbsp;</p>
+                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_imposed">0.006</span> &nbsp;&nbsp;</p>
                       </article>
                     </div>
                     <div style="background-color:white; display:block; width: 100%;">
-                      <div style="background-color:white; display:flex; padding-top: 30px;">
+                      <div style="background-color:white; display:flex; padding-top: 10px;">
                         <h4 style="font-size: 15px; font-weight: 600; color:black;">Stamp:&nbsp;&nbsp;&nbsp;</h4>
-                        <img src="/images/assemblies/bdasign.jpg" style="width: 180px; height: 40px; object-fit: contain;">
+                        <img src="{{$setting->signature}}" style="width: 180px; height: 70px; object-fit: contain;">
                       </div>
                       <hr style="margin-top: 2px; margin-bottom: 2px; border-top: 2px dashed black; width: 80%; margin-left: inherit;">
-                      <p style="text-transform: uppercase; font-size: 10px; width: 80%; color:black; text-align: center; font-weight:500;">district cordinating director</p>
+                      <p style="text-transform: uppercase; font-size: 10px; width: 80%; color:black; text-align: center; font-weight:500;">{{$setting->authority_person}}</p>
                     </div>
                   </div>
                   <div style="background-color: white; width: 400px;">
                     <article style="width:100%; display:flex;">
                       <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Zones:</p>
-                      <p id="r_ac_zonal" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;NEW TOWN ZONAL COUNCIL</p>
+                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;<span id="r_ac_zonal">NO NAME</span></p>
                     </article>
                     <article style="width:100%; display:flex;">
                       <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Electoral Area:</p>
-                      <p id="r_ac_electoral" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;TWUMASEN</p>
+                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;<span id="r_ac_electoral">NO NAME</span></p>
                     </article>
                     <article style="width:100%; display:flex;">
                       <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Town Area Council:</p>
-                      <p id="r_ac_tas" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;OBUASE</p>
+                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;<span id="r_ac_tas">NO NAME</span></p>
                     </article>
                     <article style="width:100%; display:flex;">
                       <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Street:</p>
-                      <p id="r_ac_street" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;NO NAME</p>
+                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;<span id="r_ac_street">NO NAME</span></p>
                     </article>
-                    <p style="font-size: 13px; font-weight: 600; color: black; margin-top: 10px; margin-bottom:0px;">All bills must be settled on or before 30-Jun-2016</p>
-                    <p style="font-size: 13px; font-weight: 600; color: black; margin-top: 10px;">For enquires contact the Metro Cordinating Director on the ff Nos. 0267555557/0260772926</p>
-                    <div style="background-color:white; width:100%; border:2px solid black; margin-top: 15px; padding-left: 10px; padding-bottom: 20px;">
+                    <p style="font-size: 13px; font-weight: 600; color: black; margin-top: 10px; margin-bottom:0px;">All bills must be settled on or before &nbsp;<?= \Carbon\Carbon::parse($setting->paymet_date)->toFormattedDateString();?></p>
+                    <p style="font-size: 13px; font-weight: 600; color: black; margin-top: 10px;">For enquires contact the <?= $setting->organization_type; ?> finance office on the ff Nos. <?= $setting->contact_info_text; ?></p>
+                    <div style="background-color:white; width:100%; border:2px solid black; margin-top: 15px; padding-left: 10px; padding-bottom: 3px;">
                       <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Previous Year Bill:</p>
-                        <p id="r_ac_pyear" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">GHc 0.00&nbsp;&nbsp;</p>
+                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_pyear">GHc 0.00</span> &nbsp;&nbsp;</p>
                       </article>
                       <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Amount Paid(Last Yr):</p>
-                        <p id="r_ac_amountpaid" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">GHc 0.00&nbsp;&nbsp;</p>
+                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_amountpaid">GHc 0.00</span> &nbsp;&nbsp;</p>
                       </article>
+                      <hr style="width: 61%; display: flex; justify-content: space-between; border-top: 2px dashed rgb(0, 0, 0); padding-top: 6px; margin-top: 10px; margin-bottom: 0px; float: right;">
                       <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Arrears:</p>
-                        <p id="r_ac_arrears" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">GHc 0.00&nbsp;&nbsp;</p>
+                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_arrears">GHc 0.00</span> &nbsp;&nbsp;</p>
                       </article>
                       <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Current Fee:</p>
-                        <p id="r_ac_current" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">GHc 225.00&nbsp;&nbsp;</p>
+                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_current">GHc 225.00</span> &nbsp;&nbsp;</p>
                       </article>
-                      <article style="width:100%; display:flex; justify-content: space-between; margin-top: 30px;padding-top: 5px; border-top: 2px solid black; border-bottom: 2px solid black; padding-bottom: 5px; background: antiquewhite;">
+                      <article style="width:100%; display:flex; justify-content: space-between; margin-top: 10px;padding-top: 5px; border-top: 2px solid black; border-bottom: 2px solid black; padding-bottom: 5px; background: antiquewhite;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Total Amount Due Fee:</p>
-                        <p id="r_ac_total" style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">GHc 225.00&nbsp;&nbsp;</p>
+                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;"><span id="r_ac_total">GHc 225.00</span> &nbsp;&nbsp;</p>
                       </article>
                     </div>
                   </div>
                 </div>
-                <div style="background-color:white; width: 100%; font-size: 11px; color: black; margin-top:20px;">
-                  <p>
-                    The Asante Akin South District Assembly (A.A.S.D.A) is vested with the power to collect Property Rate in the Asante Akim South District Assembly
-                    by the provision of Section 34,77,78,94, and 98 of Local Government Act, 1993 (Act 462) and other relevant Bye Laws. In the event of failure to
-                    comply with the demand of this notice, A.A.S.D.A shall be liable to Civil Prosecution for the recovery of the outstanding amount plus interest.
-                  </p>
+                <div style="background-color:white; width: 100%; font-size: 11px; color: black; margin-top:0px;">
+                  <p>{{$setting->enforce_law_text}}</p>
                   <h4 style="color: black; text-transform: uppercase; font-weight: 600; text-align: center; margin-top: 13px; font-size: 22px;">payment should be made with the bill</h4>
                   <h5 style="text-align: center; text-transform: uppercase; font-weight: 600; color: black; font-size: 16px; letter-spacing: 2px;">pay your bills promptly and help the city clean</h5>
                   <hr style="border-top: 2px dashed black;">
@@ -256,7 +298,7 @@
               </div>
           </div>
 
-          <div class="row"  style="width: 84%; margin: auto;">
+          <!-- <div class="row"  style="width: 84%; margin: auto;">
 
             <div id="loadPrinters">
               Click to load and select one of the installed printers!
@@ -270,7 +312,7 @@
             <div class="row" id="printDevice">
               <button type="button" class="btn btn-success" id="printBtn">Issue Print Command</button>
             </div>
-          </div>
+          </div> -->
 
         </div>
     </div>
@@ -284,7 +326,7 @@
 @endsection
 @section('scripts')
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script src="/js/html2canvas.js"></script>
 {!! $wcpScript; !!}
 <script type="text/javascript">
     var wcppGetPrintersTimeout_ms = 10000; //10 sec
@@ -341,7 +383,7 @@
               isFilter: true
             }
           }
-          axios.get('/api/get/bill/count', { params: requestParams })
+          axios.get('/api/get/bill/count/p', { params: requestParams })
                 .then(response => {document.querySelector("input[name=billNumbers]").value = response.data.data; this.gif=false})
                 .catch(error => console.error(error));
         }
@@ -381,6 +423,10 @@
 </script>
 <script>
 $(document).ready(function(){
+  $('#repPrintBtn').on('click', function(){
+      document.getElementById('repPrint').style.display = "block"
+      document.getElementById('repPrint2').style.display = "block"
+  });
     $("#isp").click(function () {
       // var checkboxes = document.querySelectorAll('input[type="sortType"]');
       issuePrint()
@@ -398,6 +444,7 @@ $(document).ready(function(){
     function captureArraySet() {
       var filterBox1 = document.querySelector('#check1').checked;
       var filterBox2 = document.querySelector('#check2').checked;
+
       var requestParams = {};
       if(filterBox1){
         var requestParams = {
@@ -419,7 +466,7 @@ $(document).ready(function(){
 
       // console.log(printingSet);
 
-      axios.get('/api/get/bill/set', { params: requestParams })
+      axios.get('/api/get/bill/set/p', { params: requestParams })
             .then(response => {printingSet = response.data.data; timerReplace()})
             .catch(error => console.error(error));
 
@@ -431,29 +478,48 @@ $(document).ready(function(){
     function replaceBill(mode) {
         // array[i]
 
+        // console.log(parseInt(document.getElementById('tt2').innerHTML));
+        // console.log(parseInt(document.getElementById('tt1').innerHTML));
+
         document.getElementById('tt1').innerHTML = parseInt(document.getElementById('tt1').innerHTML) + 1
         // console.log(mode);
         var parentParse = mode;
         var currentBill = mode.bills[0];
+        var zeroRatedBox = document.querySelector('#zeroRated').checked;
         // console.table(currentBill)
         // console.log();
         document.getElementById('r_acc_no').innerHTML = parentParse.property_no
-        document.getElementById('r_acc_name').innerHTML = parentParse.owner.name
-        document.getElementById('r_ac_type').innerHTML = parentParse.type.description
-        document.getElementById('r_ac_category').innerHTML = parentParse.category.description
+        document.getElementById('r_acc_name').innerHTML = parentParse.owner ? parentParse.owner.name : 'NA'
+        document.getElementById('r_acc_hsno').innerHTML = parentParse.house_no ? parentParse.house_no : 'NA'
+        document.getElementById('r_acc_address').innerHTML = parentParse.address ? parentParse.address : 'NA'
+        document.getElementById('r_acc_phone').innerHTML = parentParse.owner ? parentParse.owner.phone : 'NA'
+        document.getElementById('r_ac_type').innerHTML = parentParse.type ? parentParse.type.description : 'NA'
+        document.getElementById('r_ac_category').innerHTML = parentParse.category ? parentParse.category.description : 'NA'
         document.getElementById('r_ac_rateable').innerHTML = currentBill.rateable_value ? `${formatDollar(parseFloat(currentBill.rateable_value))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_imposed').innerHTML = currentBill.rate_imposed ? `${parseFloat(currentBill.rate_imposed)} ` : `${parseFloat(0.0)} `
         document.getElementById('r_ac_zonal').innerHTML = parentParse.zonal ? parentParse.zonal.description : 'NO NAME'
         document.getElementById('r_ac_electoral').innerHTML = parentParse.electoral ? parentParse.electoral.description : 'NO NAME'
         document.getElementById('r_ac_tas').innerHTML = parentParse.tas ? parentParse.tas.description : "NO NAME"
         document.getElementById('r_ac_street').innerHTML = parentParse.street ? parentParse.street.description : "NO NAME"
-        // document.getElementById('r_ac_pyear').innerHTML = "haa"
-        // document.getElementById('r_ac_amountpaid').innerHTML = "haa"
+        document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(currentBill.p_year_bill))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_amountpaid').innerHTML = currentBill.p_year_total_paid ? `${formatDollar(parseFloat(currentBill.p_year_total_paid))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_arrears').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(currentBill.arrears))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_current').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_total').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_year').innerHTML = currentBill.year
 
-        // startPrinting()
+        if(zeroRatedBox){
+          if(parseFloat(currentBill.rate_imposed) == parseFloat(0) || parseFloat(currentBill.rate_imposed) == parseFloat(0.0)){
+            console.log('zero');
+            document.getElementById('tt3').innerHTML = parseInt(document.getElementById('tt3').innerHTML) + 1
+            return true;
+          }else{
+            startPrinting()
+          }
+        }else{
+          startPrinting()
+        }
+
     }
 
     function formatDollar(num) {
@@ -463,9 +529,20 @@ $(document).ready(function(){
         }, "") + "." + p[1];
     }
 
+    function reloadPage() {
+      document.getElementById('loadingCarf').style.display = "none"
+      document.getElementById('cardcont').style.display = "none"
+      document.getElementById('mainContent').style.display = "block"
+      alert('completed.')
+      window.location.reload(true);
 
+    }
 
     function timerReplace() {
+
+      // console.log(zeroRatedBox);
+      // return false
+
       let modes = printingSet;
       if (modes === undefined || modes.length == 0) {
           console.log('empty bills')
@@ -477,37 +554,51 @@ $(document).ready(function(){
       document.getElementById('cardcont').style.display = "block"
       let interval = 10000; //one second
       document.getElementById('tt2').innerHTML = printingSet.length
-      modes.forEach((mode, index) => {
 
+
+      modes.forEach((mode, index) => {
         setTimeout(() => {
           replaceBill(mode)
           // console.log(mode.property_no)
+          if(parseInt(document.getElementById('tt2').innerHTML) === parseInt(document.getElementById('tt1').innerHTML)) {
+            setTimeout(reloadPage, interval)
+          }
         }, index * interval)
+        // console.log('2');
+
+        // if(parseInt(document.getElementById('tt2').innerHTML) == parseInt(document.getElementById('tt1').innerHTML)) {
+        //   document.getElementById('loadingCarf').style.display = "none"
+        //   document.getElementById('cardcont').style.display = "none"
+        //   alert('completed.')
+        //   return false
+        // }
       })
+      // console.log('3');
+
+
+
     }
 
     function startPrinting() {
-      html2canvas($('#card'), {
-        onrendered: function(canvas)
-        {
-          var b64Prefix = "data:image/png;base64,";
-          var imgBase64DataUri = canvas.toDataURL("image/jpg");
-          var imgBase64Content = imgBase64DataUri.substring(b64Prefix.length, imgBase64DataUri.length);
+      console.log('priniting');
+      html2canvas(document.querySelector("#card")).then(canvas => {
+        var b64Prefix = "data:image/png;base64,";
+        var imgBase64DataUri = canvas.toDataURL("image/jpg");
+        var imgBase64Content = imgBase64DataUri.substring(b64Prefix.length, imgBase64DataUri.length);
 
-          //2. save image base64 content to server-side Application Cache
-          $.ajax({
-              type: "POST",
-              url: "/api/StoreImageFileController",
-              data: { base64ImageContent : imgBase64DataUri},
-              success: function (imgFileName) {
-                  //alert("The image file: " + imgFileName + " was created at server side. Continue printing it...");
+        //2. save image base64 content to server-side Application Cache
+        $.ajax({
+            type: "POST",
+            url: "/api/StoreImageFileController",
+            data: { base64ImageContent : imgBase64DataUri},
+            success: function (imgFileName) {
+                //alert("The image file: " + imgFileName + " was created at server side. Continue printing it...");
 
-                  //2. Print the stored image file specifying the created file name
-                  jsWebClientPrint.print('useDefaultPrinter=' + $('#useDefaultPrinter').attr('checked') + '&printerName=' + $('#installedPrinterName').val() + '&imageFileName=' + imgFileName);
-              }
-          });
-        }
-       });
+                //2. Print the stored image file specifying the created file name
+                jsWebClientPrint.print('useDefaultPrinter=' + $('#useDefaultPrinter').attr('checked') + '&printerName=' + $('#installedPrinterName').val() + '&imageFileName=' + imgFileName);
+            }
+        });
+      });
     }
 
     $("#printBtn").click(function () {

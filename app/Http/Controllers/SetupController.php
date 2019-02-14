@@ -53,7 +53,8 @@ class SetupController extends Controller
 
     public function sendNewSMS1(Request $request)
     {
-      // dd($request->all());
+      if($request->zonal) dd('op');
+      dd($request->all());
 
       SendSMS::dispatch($request->all());
 
@@ -62,26 +63,6 @@ class SetupController extends Controller
 
     public function sendBillsSMS(Request $request)
     {
-      // $bill = \App\Bill::with('property')->where('bill_type', 'p')->first();
-      // $bills = \App\Bill::with('property')->where('bill_type', 'p')->latest()->get();
-      // foreach($bills as $bill):
-      //   if(!$bill->property->owner || $bill->property->owner->phone == "") continue;
-      //   $number = $bill->property->owner->phone;
-      //   if($number[0] == '0') $number = ltrim($number, '0');
-      //   $number = substr($number, 0, 9);
-      //   if($number == "NULL" || $number == "") continue;
-      //   $number = '233' . $number;
-      //   $acc_type = ($bill->bill_type == 'p') ? 'property' : 'business';
-      //   $message = "Dear ".$bill->property->owner->name. " of " .$acc_type. " number " .$bill->account_no. ". we hereby notify you of your " .$acc_type. " Rate for the year " .$bill->year. " is GHC " .$bill->current_amount. ". we will appreciate it if you could pay the said amount to the revenue collector close to your locality or pay at the revenue office, for any enquiries please contact the Revenue Head on 0549825660";
-      //   // dump($number);
-      //   $smsRes = self::sendSms($number, $message);
-      //   if($smsRes == 'good'){
-      //     \App\InstantSMS::create(['phone' => $number, 'sent' => 1, 'failed' => 0, 'message' => $message]);
-      //   }else{
-      //     \App\InstantSMS::create(['phone' => $number, 'sent' => 0, 'failed' => 1, 'message' => $message]);
-      //   }
-      // endforeach;
-      // dd('ok');
       SendCustomSMS::dispatch();
       return redirect()->route('processing');
     }
@@ -91,7 +72,7 @@ class SetupController extends Controller
       // dd(config('app.smsBaseURL'), config('app.smsAPIKey'), env('ASSEMBLY_SMS_FROM'));
       $data = [ "sender" => env('ASSEMBLY_SMS_FROM'), "recipient" => $to, "message" => $text];
       $client = new \GuzzleHttp\Client([ 'headers' => ['Content-Type' => 'application/json', 'X-SMS-Apikey' => config('app.smsAPIKey')]]);
-      $res = $client->request('POST', config('app.smsBaseURL'), ['json' => $data]);
+      $res = $client->request('POST', config('app.smsBaseURL'), ['json' => $data, 'verify' => false]);
       $response = json_decode($res->getBody());
       // dd($response);
 

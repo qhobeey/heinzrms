@@ -374,14 +374,15 @@ class BusinessApiController extends Controller
         return response()->json(['status' => 'success', 'business' => $business], 201);
     }
 
-    public function updateBusinessFromMobile(Request $request, $business, $owner)
+    public function updateBusinessFromMobile(Request $request, $businessID, $owner)
     {
 
       // dd($request->all());
       // $businessOwner;
+      $business = Business::where('id', $businessID)->first();
 
         if($request->firstname || $request->lastname || $request->phone || $request->address):
-            $businessOwner = BusinessOwner::find($owner);
+            $businessOwner = BusinessOwner::where('owner_id', $business->business_owner)->first();
             // dd($businessOwner);
             $businessOwner->name = $request->firstname ." ".$request->lastname;
             $businessOwner->phone = $request->phone;
@@ -389,7 +390,7 @@ class BusinessApiController extends Controller
             $businessOwner->save();
         endif;
 
-        $business = Business::find($business);
+
 
         // dd($businessOwner);
 
@@ -400,6 +401,7 @@ class BusinessApiController extends Controller
         $business->industry=$request->industry;
         $business->gps_code=$request->gps_code;
         $business->employee_no=$request->employee_no;
+        $business->store_number=$request->store_number;
         $business->save();
         // dd($business, $businessOwner);
 
