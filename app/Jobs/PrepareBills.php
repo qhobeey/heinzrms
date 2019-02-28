@@ -39,7 +39,7 @@ class PrepareBills implements ShouldQueue
 
         if($this->request['account'] == "property"):
 
-          \App\Property::latest()->chunk(100, function ($properties) {
+          \App\Property::latest()->chunk(1000, function ($properties) {
             if ($properties->count() == 0) dd('No properties data found!');
             \App\Processing::create(['total' => \App\Property::latest()->count(), 'count' => 0, 'percentage' => 0]);
               foreach ($properties as $property) {
