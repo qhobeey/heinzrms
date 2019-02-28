@@ -32,7 +32,7 @@ class ElectoralPropertyReport extends Model
     }
     public function bills()
     {
-      return $this->hasMany('App\Bill','electoral_id');
+      return $this->hasMany('App\Bill','electoral_id', 'code');
     }
     public function businesses()
     {
