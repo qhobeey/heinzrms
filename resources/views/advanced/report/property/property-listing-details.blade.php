@@ -43,11 +43,11 @@
                 <td colspan="3"><a style="color:brown; font-weight: 600;" href="{{ URL::previous() }}"><?= $info; ?>&nbsp; [<?= $totalBill; ?>]</a></td>
                 <td></td>
                 <td></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney($bills->sum('arrears'), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney($bills->sum('current_amount'), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney(($bills->sum('arrears') + $bills->sum('current_amount')), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney($bills->sum('total_paid'), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney(($bills->sum('arrears') + $bills->sum('current_amount')) - $bills->sum('total_paid'), true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('arrears'), true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('current_amount'), true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney(($electoral->bills->sum('arrears') + $electoral->bills->sum('current_amount')), true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('total_paid'), true); ?></td>
+                <td><?= \App\Repositories\ExpoFunction::formatMoney(($electoral->bills->sum('arrears') + $electoral->bills->sum('current_amount')) - $electoral->bills->sum('total_paid'), true); ?></td>
 
             </tr>
           </div>

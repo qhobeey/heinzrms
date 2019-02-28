@@ -67,4 +67,16 @@ class ConsoleController extends Controller
       return redirect()->route('processing');
         // return view('console.construction');
     }
+
+    public function construction4()
+    {
+      $bns = DB::table('abusua_tag')->orderBy('business_no', 'asc')->get();
+      foreach ($bns as $bn) {
+        if($bn->store_number == '' || $bn->store_number == null) continue;
+        $business = \App\Business::where('business_no', $bn->business_no)->first();
+        $business->store_number = $bn->store_number;
+        $business->update();
+      }
+      dd('all done');
+    }
 }

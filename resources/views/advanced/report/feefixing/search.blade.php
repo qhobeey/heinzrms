@@ -21,7 +21,7 @@
                 <label for="">Enter Year</label>
                 <select class="form-control" name="year" required>
                   <?php
-                    for ($i=date('Y')-1; $i>2017; $i--) {?>
+                    for ($i=date('Y'); $i>2017; $i--) {?>
                       <option value="<?= $i; ?>"><?= $i; ?></option>
                     <?php }?>
                 </select>
@@ -46,7 +46,7 @@
                 <label for="">Enter Year</label>
                 <select class="form-control" name="year" required>
                   <?php
-                    for ($i=date('Y')-1; $i>2017; $i--) {?>
+                    for ($i=date('Y'); $i>2017; $i--) {?>
                       <option value="<?= $i; ?>"><?= $i; ?></option>
                     <?php }?>
                 </select>

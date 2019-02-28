@@ -390,8 +390,9 @@ class ApiController extends Controller
                 if($mobile[0] == '0') $mobile = ltrim($mobile, '0');
                 $mobile = '233' . $mobile;
                 // $mobile = '233248160008';
-                $bill = Bill::where('account_no', $payment->account_no)->first();
-                $message = 'Dear ' . $account->owner ? $account->owner->name : 'sir/madma' . ' of PROPERTY ACC: '. $payment->account_no . '. You have been credited with a payment amount of GHc' .$payment->amount_paid . ' with a GCR No '. $payment->gcr_number . ' and your current balance is GHc ' . $bill->current_amount . '.Thanks';
+                $max = Bill::where('account_no', $account)->max('year');
+                $bill = Bill::where('account_no', $account)->where('year', $max)->first();
+                $message = 'Dear ' . $account->owner ? $account->owner->name : 'sir/madma' . ' of ACC: '. $payment->account_no . '. You have been credited with a payment amount of GHc' .$payment->amount_paid . ' with a GCR No '. $payment->gcr_number . ' and your current balance is GHc ' . $bill->current_amount . '.Thanks';
                 $smsRes = Setup::sendSms($mobile, $message);
                 // dd($smsRes, 'o');
                 if ($smsRes == 'good') {
@@ -415,11 +416,14 @@ class ApiController extends Controller
 
     protected function recalculateBill($account, $amount)
     {
-      $bill = Bill::where('account_no', $account)->first();
+
+      $max = Bill::where('account_no', $account)->max('year');
+      $bill = Bill::where('account_no', $account)->where('year', $max)->first();
+      // $bill = Bill::where('account_no', $account)->first();
       $totalPayment = floatval($bill->total_paid) + floatval($amount);
-      $checkBal = floatval($bill->current_amount) - floatval($amount);
+      $checkBal = floatval($bill->account_balance) - floatval($amount);
       $balance = $checkBal == floatval(0) ? floatval(0): $checkBal;
-      $bill->update(['current_amount' => $balance, 'total_paid' => $totalPayment]);
+      $bill->update(['account_balance' => $balance, 'total_paid' => $totalPayment]);
       return true;
     }
 
@@ -551,23 +555,23 @@ class ApiController extends Controller
         return response()->json(['status' => 'success', 'property' => $property], 201);
     }
 
-    public function updatePropertyFromMobile(Request $request, $prop, $owner)
+    public function updatePropertyFromMobile(Request $request, $propertyID, $owner)
     {
+        $property = Property::where('id', $propertyID)->first();
 
-        if($request->firstname || $request->lastname || $request->phone || $request->address):
-            $propertyOwner = PropertyOwner::find($owner);
-            $propertyOwner->name = $request->firstname ." ".$request->lastname;
-            $propertyOwner->phone = $request->phone;
-            $propertyOwner->address = $request->address;
-            $propertyOwner->save();
-        endif;
+          if($request->firstname || $request->lastname || $request->phone || $request->address):
+              $businessOwner = BusinessOwner::where('owner_id', $property->property_owner)->first();
+              // dd($businessOwner);
+              $propertyOwner->name = $request->firstname ." ".$request->lastname;
+              $propertyOwner->phone = $request->phone;
+              $propertyOwner->address = $request->address;
+              $propertyOwner->update();
+          endif;
 
-        $property = Property::find($prop);
-
-        $property->house_no=$request->house_no;
-        $property->valuation_no=$request->valuation_no;
-        $property->building_permit_no=$request->building_permit_no;
-        $property->save();
+          $property->house_no=$request->house_no;
+          $property->valuation_no=$request->valuation_no;
+          $property->building_permit_no=$request->building_permit_no;
+          $property->update();
 
         return response()->json(['status' => 'success', 'property' => $property, 'owner' => $propertyOwner], 201);
     }
@@ -664,9 +668,9 @@ class ApiController extends Controller
            elseif($request->electoral):
              $addict = $request->electoral;
              $bills = \App\Property::where('electoral_id', $addict)->whereHas('bills', function($q) use ($year) {
-               $q->where('year', $year);
+               $q->where('year', $year)->where('printed', 0);
              })->with(['bills' => function($query) use ($year, $addict){
-               $query->where('electoral_id', $addict)->where('year', $year);
+               $query->where('electoral_id', $addict)->where('year', $year)->where('printed', 0);
              }])->count();
 
              return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
@@ -716,10 +720,10 @@ class ApiController extends Controller
              return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
            elseif($request->electoral):
              $addict = $request->electoral;
-             $bills = \App\Business::where('electoral_id', $addict)->whereHas('bills', function($q) use ($year) {
-               $q->where('year', $year);
+             $bills = \App\Business::where('electoral_id', $addict)->whereNotNull('property_no')->whereHas('bills', function($q) use ($year) {
+               $q->where('year', $year)->where('printed', 0);
              })->with(['bills' => function($query) use ($year, $addict){
-               $query->where('electoral_id', $addict)->where('year', $year);
+               $query->where('electoral_id', $addict)->where('year', $year)->where('printed', 0);
              }])->count();
 
              return response()->json(['status' => 'success', 'data' => \App\Repositories\ExpoFunction::formatMoney($bills, false)], 201);
@@ -774,10 +778,10 @@ class ApiController extends Controller
            elseif($request->electoral):
              $addict = $request->electoral;
              // dd($addict);
-             $bills = \App\Property::where('electoral_id', $addict)->whereHas('bills', function($q) use ($year) {
-               $q->where('year', $year);
+             $bills = \App\Property::where('electoral_id', $addict)->whereNotNull('property_no')->whereHas('bills', function($q) use ($year) {
+               $q->where('year', $year)->where('printed', 0);
              })->with(['owner', 'type', 'category', 'zonal', 'electoral', 'tas', 'street', 'bills' => function($query) use ($year, $addict){
-               $query->where('electoral_id', $addict)->where('year', $year);
+               $query->where('electoral_id', $addict)->where('year', $year)->where('printed', 0);
              }])->orderBy('property_no', 'asc')->get();
              return response()->json(['status' => 'success', 'data' => $bills], 201);
            elseif($request->tas):
@@ -825,9 +829,9 @@ class ApiController extends Controller
              $addict = $request->electoral;
              // dd($addict);
              $bills = \App\Business::where('electoral_id', $addict)->whereHas('bills', function($q) use ($year) {
-               $q->where('year', $year);
+               $q->where('year', $year)->where('printed', 0);
              })->with(['owner', 'type', 'category', 'zonal', 'electoral', 'communities', 'tas', 'street', 'bills' => function($query) use ($year, $addict){
-               $query->where('electoral_id', $addict)->where('year', $year);
+               $query->where('electoral_id', $addict)->where('year', $year)->where('printed', 0);
              }])->orderBy('business_no', 'asc')->get();
              return response()->json(['status' => 'success', 'data' => $bills], 201);
            elseif($request->tas):
@@ -860,5 +864,13 @@ class ApiController extends Controller
        endif;
 
        dd($request->isFilter);
+     }
+
+     public function updateBill(Request $request)
+     {
+       $bill = \App\Bill::where('account_no', $request->account)->where('year', $request->year)->first();
+       $bill->printed = 1;
+       $bill->update();
+       return response()->json(['status' => 'success']);
      }
 }

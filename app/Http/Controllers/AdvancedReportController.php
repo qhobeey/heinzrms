@@ -130,7 +130,7 @@ class AdvancedReportController extends Controller
       // dd($electoral->bills->count());
 
       // return ['result'=>$bills];
-      return view('advanced.report.property.property-listing-details', compact('bills', 'year', 'location', 'wcpScript', 'info', 'totalBill'));
+      return view('advanced.report.property.property-listing-details', compact('bills', 'year', 'location', 'wcpScript', 'info', 'totalBill', 'electoral'));
     }
 
 
@@ -150,9 +150,9 @@ class AdvancedReportController extends Controller
       $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 20, $page = null, $baseUrl = $request->url().'/', $options = []) : [];
       $info = $electoral ? $electoral->description : '';
       $totalBill = $electoral ? $electoral->bills->count(): '';
-      // return ['result'=>$bills];
+      // return ['result'=> $electoral->bills->sum('arrears')];
       // dd($year, $location, $code, $info);
-      return view('advanced.report.property.property-listing-details', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill'));
+      return view('advanced.report.property.property-listing-details', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill', 'electoral'));
     }
 
     public function apiPropertyListing()
@@ -253,7 +253,7 @@ class AdvancedReportController extends Controller
       // dd($electoral->bills->count());
 
       // return ['result'=>$bills];
-      return view('advanced.report.business.business-listing-details', compact('bills', 'year', 'location', 'wcpScript', 'info', 'totalBill'));
+      return view('advanced.report.business.business-listing-details', compact('bills', 'year', 'location', 'wcpScript', 'info', 'totalBill', 'electoral'));
     }
 
 
@@ -275,7 +275,7 @@ class AdvancedReportController extends Controller
       $totalBill = $electoral ? $electoral->bills->count() : '';
       // return ['result'=>$bills];
       // dd($year, $location, $code, $info);
-      return view('advanced.report.business.business-listing-details', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill'));
+      return view('advanced.report.business.business-listing-details', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill', 'electoral'));
     }
 
     public function apiBusinessListing()
@@ -304,12 +304,20 @@ class AdvancedReportController extends Controller
         $account = $request->account;
         // dd($request->all());
         if($account == 'property'):
-          $feefixing = \App\PropertyType::with('categories')->orderBy('code', 'asc')->get();
-          // return ['results'=>$feefixing];
+          if($year == date('Y')):
+            $feefixing = \App\PropertyType::with('categories')->orderBy('code', 'asc')->get();
+          else:
+            $feefixing = \App\PropertyType::with(['fixcategories'])->orderBy('code', 'asc')->get();
+          endif;
           return view('advanced.report.feefixing.listing', compact('feefixing', 'year', 'account'));
         endif;
         if($account == 'business'):
-          $feefixing = \App\BusinessType::with('categories')->orderBy('code', 'asc')->get();
+          if($year == date('Y')):
+            $feefixing = \App\BusinessType::with('categories')->orderBy('code', 'asc')->get();
+          else:
+            $feefixing = \App\BusinessType::with(['fixcategories'])->orderBy('code', 'asc')->get();
+          endif;
+
           return view('advanced.report.feefixing.listing', compact('feefixing', 'year', 'account'));
         endif;
 

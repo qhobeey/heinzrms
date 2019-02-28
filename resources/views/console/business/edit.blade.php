@@ -172,7 +172,7 @@
                                     <div class="form-group">
                                         <label for="">Sub Metro</label>
                                         <select class="form-control" name="zonal_id" id="">
-                                            <option value=""><?= $business->zonal ? $business->zonal->description : $business->zonal_id ?></option>
+                                            <option value="<?= $business->zonal_id; ?>"><?= $business->zonal ? $business->zonal->description : $business->zonal_id ?></option>
                                             <?php $zonals = \App\Models\Location\Zonal::orderBy('description', 'asc')->get(); ?>
                                             <?php foreach ($zonals as $key => $zonal): ?>
                                               <option value="<?php echo $zonal->code; ?>"><?php echo $zonal->description; ?></option>
@@ -184,7 +184,7 @@
                                     <div class="form-group">
                                         <label for="">Town Area Council</label>
                                         <select class="form-control" name="tas_id" id="">
-                                            <option value=""><?= $business->tas ? $business->tas->description : $business->tas_id ?></option>
+                                            <option value="<?= $business->tas_id; ?>"><?= $business->tas ? $business->tas->description : $business->tas_id ?></option>
                                             <?php $tas = \App\Models\Location\Ta::orderBy('description', 'asc')->get(); ?>
                                             <?php foreach ($tas as $key => $ta): ?>
                                               <option value="<?php echo $ta->code; ?>"><?php echo $ta->description; ?></option>
@@ -196,7 +196,7 @@
                                     <div class="form-group">
                                         <label for="">Electoral Area</label>
                                         <select class="form-control" name="electoral_id" id="">
-                                          <option value=""><?= $business->electoral ? $business->electoral->description : $business->electoral_id ?></option>
+                                          <option value="<?= $business->electoral_id; ?>"><?= $business->electoral ? $business->electoral->description : $business->electoral_id ?></option>
                                           <?php $electorals = \App\Models\Location\Electoral::orderBy('description', 'asc')->get(); ?>
                                           <?php foreach ($electorals as $key => $electoral): ?>
                                             <option value="<?php echo $electoral->code; ?>"><?php echo $electoral->description; ?></option>
@@ -211,7 +211,7 @@
                                     <div class="form-group">
                                         <label for="">Community</label>
                                         <select class="form-control" name="community_id" id="">
-                                          <option value=""><?= $business->community ? $business->community->description : $business->community_id; ?></option>
+                                          <option value="<?= $business->community_id; ?>"><?= $business->community ? $business->community->description : $business->community_id; ?></option>
                                           <?php $communities = \App\Models\Location\Community::orderBy('description', 'asc')->get(); ?>
                                           <?php foreach ($communities as $key => $community): ?>
                                             <option value="<?php echo $community->code; ?>"><?php echo $community->description; ?></option>
@@ -223,7 +223,7 @@
                                     <div class="form-group">
                                         <label for="">Unit</label>
                                         <select class="form-control" name="unit_id" id="">
-                                            <option value="">-choose-</option>
+                                            <option value="<?= $business->unit_id; ?>">-choose-</option>
                                             <option value="none">No unit</option>
                                             <template v-for="data in units">
                                                 <option :value="data.code">@{{data.description}}</option>
@@ -235,7 +235,7 @@
                                     <div class="form-group">
                                         <label for="">Street</label>
                                         <select class="form-control" name="street_id" id="">
-                                          <option value=""><?= $business->street ? $business->street->description : $business->street_id ?></option>
+                                          <option value="<?= $business->street_id; ?>"><?= $business->street ? $business->street->description : $business->street_id ?></option>
                                           <?php $streets = \App\Models\Location\Street::orderBy('description', 'asc')->get(); ?>
                                           <?php foreach ($streets as $key => $street): ?>
                                             <option value="<?php echo $street->code; ?>"><?php echo $street->description; ?></option>

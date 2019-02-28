@@ -132,33 +132,36 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Sub Metro</label>
-                                        <select class="form-control" name="zonal_id" id="zonal_id" @blur="getFilteredTas()">
-                                            <option disabled selected="true" value="{{$property->zonal_id}}"><?= $property->zonal ? $property->zonal->description : $property->zonal_id ?></option>
-                                            <template v-for="data in zonals">
-                                                <option :value="data.code">@{{data.description}}</option>
-                                            </template>
+                                        <select class="form-control" name="zonal_id" id="">
+                                            <option value="<?= $property->zonal_id; ?>"><?= $property->zonal ? $property->zonal->description : $property->zonal_id ?></option>
+                                            <?php $zonals = \App\Models\Location\Zonal::orderBy('description', 'asc')->get(); ?>
+                                            <?php foreach ($zonals as $key => $zonal): ?>
+                                              <option value="<?php echo $zonal->code; ?>"><?php echo $zonal->description; ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Town Area Council</label>
-                                        <select class="form-control" name="tas_id" id="tas_id" @blur="getFilteredElectorals()">
-                                          <option disabled selected="true" value="{{$property->tas_id}}"><?= $property->tas ? $property->tas->description : $property->tas_id ?></option>
-                                            <template v-for="data in tas">
-                                                <option :value="data.code">@{{data.description}}</option>
-                                            </template>
+                                        <select class="form-control" name="tas_id" id="">
+                                            <option value="<?= $property->tas_id; ?>"><?= $property->tas ? $property->tas->description : $property->tas_id ?></option>
+                                            <?php $tas = \App\Models\Location\Ta::orderBy('description', 'asc')->get(); ?>
+                                            <?php foreach ($tas as $key => $ta): ?>
+                                              <option value="<?php echo $ta->code; ?>"><?php echo $ta->description; ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Electoral Area</label>
-                                        <select class="form-control" name="electoral_id" id="electoral_id" @blur="getFilteredCommunities()">
-                                          <option disabled selected="true" value="{{$property->electoral_id}}"><?= $property->electoral ? $property->electoral->description : $property->electoral_id ?></option>
-                                            <template v-for="data in electorals">
-                                                <option :value="data.code">@{{data.description}}</option>
-                                            </template>
+                                        <select class="form-control" name="electoral_id" id="">
+                                          <option value="<?= $property->electoral_id; ?>"><?= $property->electoral ? $property->electoral->description : $property->electoral_id ?></option>
+                                          <?php $electorals = \App\Models\Location\Electoral::orderBy('description', 'asc')->get(); ?>
+                                          <?php foreach ($electorals as $key => $electoral): ?>
+                                            <option value="<?php echo $electoral->code; ?>"><?php echo $electoral->description; ?></option>
+                                          <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -168,9 +171,22 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Community</label>
-                                        <select class="form-control" name="community_id" id="community_id" @blur="getFilteredStreets()">
-                                          <option disabled selected="true" value="{{$property->community_id}}"><?= $property->community ? $property->community->description : $property->community_id ?></option>
-                                            <template v-for="data in communities">
+                                        <select class="form-control" name="community_id" id="">
+                                          <option value="<?= $property->community_id; ?>"><?= $property->community ? $property->community->description : $property->community_id; ?></option>
+                                          <?php $communities = \App\Models\Location\Community::orderBy('description', 'asc')->get(); ?>
+                                          <?php foreach ($communities as $key => $community): ?>
+                                            <option value="<?php echo $community->code; ?>"><?php echo $community->description; ?></option>
+                                          <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">Unit</label>
+                                        <select class="form-control" name="unit_id" id="">
+                                            <option value="<?= $property->unit_id; ?>">-choose-</option>
+                                            <option value="none">No unit</option>
+                                            <template v-for="data in units">
                                                 <option :value="data.code">@{{data.description}}</option>
                                             </template>
                                         </select>
@@ -180,25 +196,14 @@
                                     <div class="form-group">
                                         <label for="">Street</label>
                                         <select class="form-control" name="street_id" id="">
-                                          <option disabled selected="true" value="{{$property->street_id}}"><?= $property->street ? $property->street->description : $property->street_id ?></option>
-                                            <template v-for="data in streets">
-                                                <option :value="data.code">@{{data.description}}</option>
-                                            </template>
+                                          <option value="<?= $property->street_id; ?>"><?= $property->street ? $property->street->description : $property->street_id ?></option>
+                                          <?php $streets = \App\Models\Location\Street::orderBy('description', 'asc')->get(); ?>
+                                          <?php foreach ($streets as $key => $street): ?>
+                                            <option value="<?php echo $street->code; ?>"><?php echo $street->description; ?></option>
+                                          <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="">Unit</label>
-                                        <select class="form-control" name="unit_id" id="">
-                                          <option disabled selected="true" value="{{$property->unit_id}}"><?= $property->unit ? $property->unit->description : $property->unit_id ?></option>
-                                            <template v-for="data in units">
-                                                <option :value="data.code">@{{data.description}}</option>
-                                            </template>
-                                        </select>
-                                    </div>
-                                </div>
-
                             </div>
 
                             <div class="row">

@@ -45,6 +45,7 @@ Route::prefix('console')->group(function () {
     Route::get('dashboard', 'ConsoleController@dashboard')->name('console.dashboard');
     Route::get('constuction', 'ConsoleController@construction')->name('console.construction');
     Route::get('constuction2', 'ConsoleController@construction2');
+    Route::get('constuction4', 'ConsoleController@construction4');
     Route::get('clean/bills/location', 'ConsoleController@construction3');
     Route::resource('accountants', 'AccountantController');
     Route::resource('supervisors', 'SupervisorController');
@@ -101,6 +102,14 @@ Route::prefix('console')->group(function () {
 
     /** */
     Route::get('property/lgt/prepare/bill', 'BillingController@propertyBillPrepare')->name('lgt.property.bills');
+    Route::get('property/lgt/prepare/bill/bulk', 'BillingController@propertyBillPrepareBulk')->name('lgt.property.bills.bulk');
+    Route::get('account/bills/advanced/{query?}', 'BillingController@filterBillsQuery')->name('lgt.property.bills.bulk.query');
+    Route::get('property/lgt/custom/sms', 'SetupController@propertySMS')->name('lgt.property.sms');
+    Route::post('property/lgt/custom/sms', 'SetupController@postPropertySMS')->name('lgt.property.sms');
+    Route::get('property/lgt/custom/bg/{query?}', 'SetupController@filterPropertySMSQuery')->name('lgt.property.sms.query');
+    Route::get('business/lgt/custom/sms', 'SetupController@businessSMS')->name('lgt.business.sms');
+    Route::post('business/lgt/custom/sms', 'SetupController@postBusinessSMS')->name('lgt.business.sms');
+    Route::get('business/lgt/custom/bg/{query?}', 'SetupController@filterBusinessSMSQuery')->name('lgt.business.sms.query');
 
     /** Business routes */
     // Route::get('properties', 'PropertyController@index')->name('property.index');

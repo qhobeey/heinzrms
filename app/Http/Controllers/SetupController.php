@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Jobs\SendSMS;
 use App\Jobs\SendCustomSMS;
+use App\Jobs\TSMSJobCustomized;
 
 use config;
 
@@ -78,5 +79,62 @@ class SetupController extends Controller
 
       // if($response->messages[0]->status->groupName == "REJECTED") return 'bad';
       return 'good';
+    }
+
+    public function propertySMS()
+    {
+      $properties = [];
+      return view('console.setups.property-sms', compact('properties'));
+    }
+
+    public function postPropertySMS(Request $request)
+    {
+      $data = $request->validate(['message' => 'required', 'account_box' => 'required']);
+      TSMSJobCustomized::dispatch($request->all());
+
+      return redirect()->route('processing');
+
+    }
+
+    public function filterProperySMSQuery(Request $request, $query=null)
+    {
+      if($request->account_no):
+        $properties = \App\Property::where('business_no', $request->account_no)->get();
+        return view('console.setups.business-sms', compact('businesses'));
+      endif;
+      if($request->electoral_id):
+        $properties = \App\Property::where('electoral_id', $request->electoral_id)->orderBy('property_no', 'asc')->get();
+        return view('console.setups.property-sms', compact('properties'));
+      endif;
+      dd($request->all());
+    }
+
+    public function businessSMS()
+    {
+      $businesses = [];
+      return view('console.setups.business-sms', compact('businesses'));
+    }
+
+    public function postBusinessSMS(Request $request)
+    {
+      // dd($request->all());
+      $data = $request->validate(['message' => 'required', 'account_box' => 'required']);
+      TSMSJobCustomized::dispatch($request->all());
+
+      return redirect()->route('processing');
+
+    }
+
+    public function filterBusinessSMSQuery(Request $request, $query=null)
+    {
+      if($request->account_no):
+        $businesses = \App\Business::where('business_no', $request->account_no)->get();
+        return view('console.setups.business-sms', compact('businesses'));
+      endif;
+      if($request->electoral_id):
+        $businesses = \App\Business::where('electoral_id', $request->electoral_id)->orderBy('business_no', 'asc')->get();
+        return view('console.setups.business-sms', compact('businesses'));
+      endif;
+      dd($request->all());
     }
 }

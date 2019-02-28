@@ -34,7 +34,8 @@
                         <li><a href="{{route('property.owners')}}">{{__('Property Owners')}}</a></li>
                         <li><a href="{{route('property.payments.payment')}}">{{__('Property Payments')}}</a></li>
                         <li><a href="{{route('print.property.bills')}}">{{__('Print Bills')}}</a></li>
-                        <li><a href="{{route('lgt.property.bills')}}">{{__('Generate Bills')}}</a></li>
+                        <li><a href="{{route('lgt.property.bills.bulk')}}">{{__('Advanced Bills')}}</a></li>
+                        <li><a href="{{route('lgt.property.sms')}}">{{__('Property SMS')}}</a></li>
                     </ul>
                 </li>
 
@@ -50,6 +51,7 @@
                         <li><a href="{{route('business.owners')}}">{{__('Business Owners')}}</a></li>
                         <li><a href="{{route('business.payments.payment')}}">{{__('Business Payments')}}</a></li>
                         <li><a href="{{route('print.business.bills')}}">{{__('Bulk Bills Printing')}}</a></li>
+                        <li><a href="{{route('lgt.business.sms')}}">{{__('Business SMS')}}</a></li>
                     </ul>
                 </li>
 
@@ -90,7 +92,7 @@
                       <li class="has_sub">
                           <a href="{{route('clients')}}" class="waves-effect"> <span> {{__('Clients')}} </span> </a>
                       </li>
-                      <li><a href="{{route('setups.sms')}}">{{__('SMS')}}</a></li>
+                      <!-- <li><a href="{{route('setups.sms')}}">{{__('SMS')}}</a></li> -->
                       <li class="has_sub">
                           <a href="javascript:void(0);" class="waves-effect"><span> {{__('System Personnels')}} </span> <span class="menu-arrow"></span></a>
                           <ul class="list-unstyled">

@@ -9,7 +9,7 @@ class Property extends Model
     protected $primaryKey = 'property_no';
     protected $keyType = 'string';
     public $incrementing = false;
-    
+
 
     public function type()
     {
@@ -42,6 +42,10 @@ class Property extends Model
     {
         return $this->belongsTo('App\Models\Location\Electoral', 'electoral_id', 'code');
     }
+    public function community()
+    {
+        return $this->belongsTo('App\Models\Location\Community', 'community_id', 'code');
+    }
     public function street()
     {
         return $this->belongsTo('App\Models\Location\Street', 'street_id', 'code');
@@ -50,6 +54,6 @@ class Property extends Model
     {
         return $this->hasMany('App\Bill', 'account_no');
     }
-    
-    
+
+
 }

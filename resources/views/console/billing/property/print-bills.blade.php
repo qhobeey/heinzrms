@@ -171,7 +171,7 @@
 
         </div>
 
-        <div class="row" id="loadingCarf" style="display:none;">
+        <div class="row" id="loadingCarf" style="display:block;">
           <div class="col-md-6">
             <h4><img src="/backend/images/25.gif" alt="" style="width: 19px;margin-right: 4px;">Loading... <span id="tt1" style="color:red;">0</span> / <span id="tt2"></span> </h4>
           </div>
@@ -480,6 +480,12 @@ $(document).ready(function(){
 
         // console.log(parseInt(document.getElementById('tt2').innerHTML));
         // console.log(parseInt(document.getElementById('tt1').innerHTML));
+        if (mode.bills === undefined || mode.bills.length == 0) {
+            alert('No bills pending found')
+            window.location.reload(true);
+            document.getElementById('loadingCarf').style.display = "none"
+            return false
+        }
 
         document.getElementById('tt1').innerHTML = parseInt(document.getElementById('tt1').innerHTML) + 1
         // console.log(mode);
@@ -489,10 +495,10 @@ $(document).ready(function(){
         // console.table(currentBill)
         // console.log();
         document.getElementById('r_acc_no').innerHTML = parentParse.property_no
-        document.getElementById('r_acc_name').innerHTML = parentParse.owner ? parentParse.owner.name : 'NA'
-        document.getElementById('r_acc_hsno').innerHTML = parentParse.house_no ? parentParse.house_no : 'NA'
-        document.getElementById('r_acc_address').innerHTML = parentParse.address ? parentParse.address : 'NA'
-        document.getElementById('r_acc_phone').innerHTML = parentParse.owner ? parentParse.owner.phone : 'NA'
+        document.getElementById('r_acc_name').innerHTML = parentParse.owner ? parentParse.owner.name : ''
+        document.getElementById('r_acc_hsno').innerHTML = parentParse.house_no ? parentParse.house_no : ''
+        document.getElementById('r_acc_address').innerHTML = parentParse.address ? parentParse.address : ''
+        document.getElementById('r_acc_phone').innerHTML = parentParse.owner ? parentParse.owner.phone : ''
         document.getElementById('r_ac_type').innerHTML = parentParse.type ? parentParse.type.description : 'NA'
         document.getElementById('r_ac_category').innerHTML = parentParse.category ? parentParse.category.description : 'NA'
         document.getElementById('r_ac_rateable').innerHTML = currentBill.rateable_value ? `${formatDollar(parseFloat(currentBill.rateable_value))} ` : `${formatDollar(0.0)} `
@@ -508,16 +514,23 @@ $(document).ready(function(){
         document.getElementById('r_ac_total').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_year').innerHTML = currentBill.year
 
+        if((parentParse.address == '' || parentParse.address == null) && (parentParse.house_no == '' || parentParse.house_no == null)){
+          document.getElementById('tt3').innerHTML = parseInt(document.getElementById('tt3').innerHTML) + 1
+          return true;
+        }
+
         if(zeroRatedBox){
-          if(parseFloat(currentBill.rate_imposed) == parseFloat(0) || parseFloat(currentBill.rate_imposed) == parseFloat(0.0)){
+          if(parseFloat(currentBill.account_balance) == parseFloat(0) || parseFloat(currentBill.account_balance) == parseFloat(0.0)){
             console.log('zero');
             document.getElementById('tt3').innerHTML = parseInt(document.getElementById('tt3').innerHTML) + 1
             return true;
           }else{
             startPrinting()
+            ajaxPrintStatus(parentParse.property_no)
           }
         }else{
           startPrinting()
+          ajaxPrintStatus(parentParse.property_no)
         }
 
     }
@@ -577,6 +590,16 @@ $(document).ready(function(){
 
 
 
+    }
+
+    function ajaxPrintStatus(accountP) {
+      var requestParams = {
+        year: document.querySelector("select[name=year]").value,
+        account: accountP
+      }
+      axios.get('/api/update/print/status', { params: requestParams })
+            .then(response => console.log(response.data))
+            .catch(error => console.error(error));
     }
 
     function startPrinting() {

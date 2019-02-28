@@ -7,7 +7,7 @@
             <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                 <div class="row">
                     <div class="col-sm-6">
-                      <h3 style="color: brown; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Account List (<?php echo count($businesses); ?>)</h3>
+                      <h3 style="color: brown; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Account List (<?php echo count($properties); ?>)</h3>
                     </div>
                 </div>
                 <div class="row">
@@ -17,9 +17,9 @@
                               <strong style="color:red;">{{ $errors->first('account_box') }}</strong>
                           </small>
                       @endif
-                      <form class="" action="{{route('lgt.business.sms')}}" method="post">
+                      <form class="" action="{{route('lgt.property.sms')}}" method="post">
                         @csrf
-                        <input type="hidden" name="type" value="b">
+                        <input type="hidden" name="type" value="p">
                         <section style="max-height: 365px;overflow: auto;">
                           <table class="table table-striped table-bordered dt-responsive fixed">
                               <thead style="font-size: 12px;">
@@ -28,7 +28,6 @@
                                         <input type="checkbox" onclick="toggle(this);" name="allBox" value="all">
                                       </th>
                                       <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending" style="width: 91px;">Account No</th>
-                                      <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Name</th>
                                       <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Owner</th>
                                       <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Telephone</th>
                                       <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Zonal</th>
@@ -38,35 +37,34 @@
                                   </tr>
                               </thead>
                               <tbody style="font-size: 11px;">
-                                  @foreach($businesses as $business)
+                                  @foreach($properties as $property)
                                   <tr role="row" class="odd">
                                       <td class="sorting_1" tabindex="0">
-                                        <input type="checkbox" name="account_box[]" value="<?php echo $business->business_no; ?>">
+                                        <input type="checkbox" name="account_box[]" value="<?php echo $property->property_no; ?>">
                                       </td>
-                                      <td class="sorting_1" tabindex="0"><a href="{{route('business.show', $business->business_no)}}">{{$business->business_no}}</a></td>
-                                      <td class="sorting_1" tabindex="0"><a href="#">{{$business->business_name}}</a></td>
+                                      <td class="sorting_1" tabindex="0"><a href="{{route('property.show', $property->property_no)}}">{{$property->property_no}}</a></td>
                                       <td class="sorting_1" tabindex="0"><a href="#">
-                                        <?= $business->owner ? ($business->owner->name ?: 'NA') : $business->business_owner; ?>
+                                        <?= $property->owner ? ($property->owner->name ?: 'NA') : $property->property_owner; ?>
                                       </a></td>
                                       <td class="sorting_1" tabindex="0"><a href="#">
-                                        <?= $business->owner ? ($business->owner->phone ?: 'NA') : "NA"; ?>
+                                        <?= $property->owner ? ($property->owner->phone ?: 'NA') : "NA"; ?>
                                       </a></td>
                                       <td class="sorting_1" tabindex="0"><a href="#">
-                                        <?= $business->zonal ? ($business->zonal->description ?: 'NA') : $business->zonal_id; ?>
+                                        <?= $property->zonal ? ($property->zonal->description ?: 'NA') : $property->zonal_id; ?>
                                       </a></td>
                                       <td class="sorting_1" tabindex="0">
                                         <a href="#">
-                                          <?= $business->electoral ? ($business->electoral->description ?: 'NA') : $business->electoral; ?>
+                                          <?= $property->electoral ? ($property->electoral->description ?: 'NA') : $property->electoral; ?>
                                         </a>
                                       </td>
                                       <td class="sorting_1" tabindex="0">
                                         <a href="#">
-                                          <?= $business->tas ? ($business->tas->description ?: 'NA') : $business->tas; ?>
+                                          <?= $property->tas ? ($property->tas->description ?: 'NA') : $property->tas; ?>
                                         </a>
                                       </td>
                                       <td class="sorting_1" tabindex="0">
                                         <a href="#">
-                                          <?= $business->community ? ($business->community->description ?: 'NA') : $business->community; ?>
+                                          <?= $property->community ? ($property->community->description ?: 'NA') : $property->community; ?>
                                         </a>
                                       </td>
 
@@ -100,7 +98,7 @@
                     <div class="col-md-3">
                       <h4 class="fp">Filter Parameters</h4>
                       <hr style="margin-top: 10px;margin-bottom: 5px;">
-                      <form class="filterbox" action="{{route('lgt.business.sms.query')}}" method="get">
+                      <form class="filterbox" action="{{route('lgt.property.sms.query')}}" method="get">
                         @csrf
                         <div class="form-group">
                           <label for="">Zonal</label>

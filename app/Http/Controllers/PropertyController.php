@@ -310,10 +310,11 @@ class PropertyController extends Controller
 
           $data = $request->validate([
               'building_permit_no' => '', 'zonal_id' => '', 'serial_no' => '',
-              'property_type' => '', 'property_category' => '',
+              'property_type' => '', 'property_category' => '', 'zonal_id' => '',
               'valuation_no' => '', 'house_no' => '', 'division' => '',
               'street_id' => '', 'loc_longitude' => '', 'loc_latitude' => '',
-              'image' => '', 'electoral_id' => '', 'tas_id' => '', 'community_id' => ''
+              'image' => '', 'electoral_id' => '', 'tas_id' => '', 'community_id' => '',
+              'street_id' => ''
           ]);
 
           $owner = \App\PropertyOwner::where('owner_id', $request->owner_id)->first();

@@ -9,7 +9,12 @@ class PropertyType extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
-    public function categories(){
+    public function categories()
+		{
         return $this->hasMany(PropertyCategory::class, 'type_id');
+    }
+    public function fixcategories()
+		{
+        return $this->hasMany(PropertyFeefixingCategory::class, 'type_id', 'code');
     }
 }

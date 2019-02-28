@@ -500,3 +500,18 @@ table.dataTable.feefixing thead th, table.dataTable thead td {
   left: 50%;
   top: 50%;
 }
+.filterbox select{
+  width: 100%!important;
+  height: 30px;
+  font-size: 11px;
+}
+.filterbox > .form-group{
+  margin-top: 10px!important;
+}
+.fp{
+  letter-spacing: 2px;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: brown;
+  font-weight: 600;
+}

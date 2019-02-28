@@ -26,6 +26,26 @@ class BillingController extends Controller
     {
       return view('console.billing.property.prepare-bills');
     }
+    public function propertyBillPrepareBulk()
+    {
+      $bills = [];
+      return view('console.billing.property.bulk-print', compact('bills'));
+    }
+
+    public function filterBillsQuery(Request $request, $query=null)
+    {
+      // dd($request->all());
+      if($request->account_no):
+        $bills = \App\Bill::where('account', $request->account_no)->where('bill_type', $request->bill_type)->where('year', $request->year)->get();
+        return view('console.billing.property.bulk-print', compact('bills'));
+      endif;
+      if($request->electoral_id):
+        $bills = \App\Bill::where('electoral_id', $request->electoral_id)->where('bill_type', $request->bill_type)->where('year', $request->year)->orderBy('account_no', 'asc')->get();
+        // dd($bills);
+        return view('console.billing.property.bulk-print', compact('bills'));
+      endif;
+      dd($request->all());
+    }
 
 
     public function propertyBills()
@@ -250,7 +270,7 @@ class BillingController extends Controller
       $bill = array_merge($params, ['account_no' => $account,
           'account_balance' => ($ans + $arrears) - $totalPaid, 'arrears' => $arrears, 'current_amount' => $ans, 'bill_type' => $type, 'prepared_by' => 'admin', 'year' => $year,
           'bill_date' => Carbon::now()->toDateString(), 'rate_imposed' => $imposed, 'rate_pa' => number_format((float)$ans, 2, '.', ''),
-          'total_paid' => number_format((float)$totalPaid, 2, '.', ''), 'p_year_bill' => $lastYearBill, 'p_year_total_paid' => $lastYearTotalPaid
+          'total_paid' => number_format((float)$totalPaid, 2, '.', ''), 'p_year_bill' => $lastYearBill, 'p_year_total_paid' => $lastYearTotalPaid, 'printed' => 0
       ]);
       unset($bill['min_charge']);
 

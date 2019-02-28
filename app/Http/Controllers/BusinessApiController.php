@@ -387,12 +387,8 @@ class BusinessApiController extends Controller
             $businessOwner->name = $request->firstname ." ".$request->lastname;
             $businessOwner->phone = $request->phone;
             $businessOwner->address = $request->address;
-            $businessOwner->save();
+            $businessOwner->update();
         endif;
-
-
-
-        // dd($businessOwner);
 
         $business->business_name=$request->business_name;
         $business->vat_no=$request->vat_no;
@@ -402,7 +398,7 @@ class BusinessApiController extends Controller
         $business->gps_code=$request->gps_code;
         $business->employee_no=$request->employee_no;
         $business->store_number=$request->store_number;
-        $business->save();
+        $business->update();
         // dd($business, $businessOwner);
 
         return response()->json(['status' => 'success', 'business' => $business, 'owner' => $businessOwner], 201);

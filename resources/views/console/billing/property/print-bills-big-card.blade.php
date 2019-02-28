@@ -180,73 +180,75 @@
           </div>
         </div>
 
-        <div id="cardcont" style="display:block;">
-          <div id="card" style="width: 1000px; height: 100%; padding-top: 27px; padding-bottom: 20px; border-radius: 0px; background-color:white; margin-top: 40px; margin-bottom: 50px;">
-              <div style="width: 870px; background-color:white; margin:auto;">
-                <div style="background-color:white; width:800px; display: flex; flex-direction: row;">
+        <div id="cardcont" style="display:none;">
+          <div id="card" style="width: 1000px; height: 100%; padding-top: 35px; padding-bottom: 20px; border-radius: 0px; background-color:white; margin-top: 60px; margin-bottom: 50px;">
+              <div style="width: 880px; background-color:white; margin:auto;">
+                <div style="background-color:white; width:880px; display: flex; flex-direction: row;">
                   <img src="{{$setting->logo}}" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
                   <div style="width: 640px; border: 2px solid black; height: 100%; margin: auto;">
                     <h3 style="text-align: center; font-size: 25px; font-weight: 600; color: black; text-transform: uppercase;"><?= env('ASSEMBLY_SMS_NAME'); ?></h3>
                   </div>
                   <img src="/images/assemblies/ghanacoatofarms.jpg" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
                 </div>
-                <h2 style="text-align: center; font-size: 20px; margin-top: -10px; margin-bottom: 0px; font-weight: 500; text-transform: capitalize;; color: black;">
-                  <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; right: 175px; text-transform: capitalize;">Account No:
-                    <span id="r_acc_no">&nbsp;&nbsp;&nbsp;AAS4444</span>
-                  </span>
-                  Business Operating Permit
+                <h2 style="text-align: center; font-size: 26px; margin-top: 0px; margin-bottom: 0px; font-weight: 500; text-transform: uppercase; color: black;">Property Rate
                   <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; left: 100px; text-transform: capitalize;">Bill year:
                     <span id="r_ac_year" style="position: relative; left: 14px;">2019</span>
                   </span>
                 </h2>
                 <hr style="margin-top: 0px; margin-bottom: 20px; width: 65%; border-top: 2px solid black;">
-                <div style="background-color: white; width:870px; display: flex;">
-                  <div style="background-color: white; width: 466px;">
+                <div style="background-color: white; width:880px; display: flex;">
+                  <div style="background-color: white; width: 450px;">
                     <article style="width:100%; display:flex;">
-                      <!-- <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Store Number:</p> -->
-                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;<span id="r_acc_snumber">ER56</span></p>
+                      <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Account No:</p>
+                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;<span id="r_acc_no">AAS4444</span></p>
                     </article>
                     <article style="width:100%; display:flex;">
-                      <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Business Name:</p>
-                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;<span id="r_acc_bname">Marvalinks Technologies</span></p>
+                      <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">House No:</p>
+                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;<span id="r_acc_hsno">DDL4/RL</span></p>
                     </article>
                     <article style="width:100%; display:flex;">
                       <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Address:</p>
-                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;<span id="r_acc_address">Accra</span></p>
+                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;<span id="r_acc_address">Konongo</span></p>
                     </article>
-                    <article style="width: 100%; display: flex; height: 50px; padding-top: 0px; margin-top: -10px;">
+                    <article style="width:100%; display:flex; height: 55px; padding-top: 0px;">
                       <p style="color: black;margin-bottom: 10px;margin-top: 10px;font-size: 18px; font-weight: 600;"><span id="r_acc_name">MT. CALVSRY SCH.</span></p>
                     </article>
-                    <article style="width: 100%; display: flex; height: 31px; padding-top: 0px;margin-top:-26px;">
+                    <article style="width: 100%; display: flex; height: 45px; padding-top: 0px;margin-top:-26px;">
                       <p style="color: black;margin-bottom: 10px;margin-top: 10px;font-size: 14px; font-weight: 600;"><span id="r_acc_phone">0248160008</span></p>
                     </article>
                     <article style="width:100%; display:flex;">
-                      <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Business Type:</p>
-                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_type">COMMERCIAL Business RATE</span></p>
+                      <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Property Type:</p>
+                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">&nbsp;&nbsp;&nbsp;<span id="r_ac_type">COMMERCIAL PROPERTY RATE</span></p>
                     </article>
                     <article style="width:100%; display:flex;">
-                      <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Business Cat:</p>
-                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_category">PRIVATE SCHOOL</span></p>
+                      <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Property Cat:</p>
+                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">&nbsp;&nbsp;&nbsp;<span id="r_ac_category">PRIVATE SCHOOL</span></p>
                     </article>
 
                     <div style="background-color:white; width:80%; border:2px solid black; margin-top: 15px; padding-left: 10px; padding-bottom: 10px;">
+                      <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
+                        <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Rateable value:</p>
+                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_rateable">GHc 37,500.00</span>&nbsp;&nbsp;</p>
+                      </article>
                       <article style="width:100%; display:flex; justify-content: space-between; margin-top: 15px;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Rate Imposed:</p>
-                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_imposed">GHc 84.00</span> &nbsp;&nbsp;</p>
+                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_imposed">0.006</span> &nbsp;&nbsp;</p>
                       </article>
                     </div>
                     <div style="background-color:white; display:block; width: 100%;">
-                      <div style="background-color:white; display:flex; padding-top: 5px;">
+                      <div style="background-color:white; display:flex; padding-top: 10px;">
                         <h4 style="font-size: 15px; font-weight: 600; color:black;">Stamp:&nbsp;&nbsp;&nbsp;</h4>
-                        @if($setting->signature)
-                        <img src="{{$setting->signature}}" style="width: 180px; height: 40px; object-fit: contain;">
-                        @endif
+                        <img src="{{$setting->signature}}" style="width: 180px; height: 70px; object-fit: contain;">
                       </div>
                       <hr style="margin-top: 2px; margin-bottom: 2px; border-top: 2px dashed black; width: 80%; margin-left: inherit;">
                       <p style="text-transform: uppercase; font-size: 10px; width: 80%; color:black; text-align: center; font-weight:500;">{{$setting->authority_person}}</p>
                     </div>
                   </div>
-                  <div style="background-color: white; width: 430px;">
+                  <div style="background-color: white; width: 400px;">
+                    <article style="width:100%; display:flex;">
+                      <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Zones:</p>
+                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;<span id="r_ac_zonal">NO NAME</span></p>
+                    </article>
                     <article style="width:100%; display:flex;">
                       <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Electoral Area:</p>
                       <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;<span id="r_ac_electoral">NO NAME</span></p>
@@ -256,16 +258,12 @@
                       <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;<span id="r_ac_tas">NO NAME</span></p>
                     </article>
                     <article style="width:100%; display:flex;">
-                      <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Community:</p>
-                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;<span id="r_ac_com">NO NAME</span></p>
-                    </article>
-                    <article style="width:100%; display:flex;">
                       <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Street:</p>
                       <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;<span id="r_ac_street">NO NAME</span></p>
                     </article>
-                    <p style="font-size: 13px; font-weight: 600; color: black; margin-top: 0px; margin-bottom:0px;">All bills must be settled on or before &nbsp;<?= \Carbon\Carbon::parse($setting->paymet_date)->toFormattedDateString();?></p>
-                    <p style="font-size: 13px; font-weight: 600; color: black; margin-top: 0px;">For enquires contact the <?= $setting->organization_type; ?> finance office on the ff Nos. <?= $setting->contact_info_text; ?></p>
-                    <div style="background-color:white; width:100%; border:2px solid black; margin-top: -10px; padding-left: 10px; padding-bottom: 2px;">
+                    <p style="font-size: 13px; font-weight: 600; color: black; margin-top: 10px; margin-bottom:0px;">All bills must be settled on or before &nbsp;<?= \Carbon\Carbon::parse($setting->paymet_date)->toFormattedDateString();?></p>
+                    <p style="font-size: 13px; font-weight: 600; color: black; margin-top: 10px;">For enquires contact the <?= $setting->organization_type; ?> finance office on the ff Nos. <?= $setting->contact_info_text; ?></p>
+                    <div style="background-color:white; width:100%; border:2px solid black; margin-top: 15px; padding-left: 10px; padding-bottom: 3px;">
                       <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Previous Year Bill:</p>
                         <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_pyear">GHc 0.00</span> &nbsp;&nbsp;</p>
@@ -283,17 +281,17 @@
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Current Fee:</p>
                         <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_current">GHc 225.00</span> &nbsp;&nbsp;</p>
                       </article>
-                      <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;padding-top: 5px; border-top: 2px solid black; border-bottom: 2px solid black; padding-bottom: 5px; background: antiquewhite;">
+                      <article style="width:100%; display:flex; justify-content: space-between; margin-top: 10px;padding-top: 5px; border-top: 2px solid black; border-bottom: 2px solid black; padding-bottom: 5px; background: antiquewhite;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Total Amount Due Fee:</p>
                         <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;"><span id="r_ac_total">GHc 225.00</span> &nbsp;&nbsp;</p>
                       </article>
                     </div>
                   </div>
                 </div>
-                <div style="background-color:white; width: 100%; font-size: 11px; color: black; margin-top:5px;">
+                <div style="background-color:white; width: 100%; font-size: 11px; color: black; margin-top:0px;">
                   <p>{{$setting->enforce_law_text}}</p>
-                  <h4 style="color: black; text-transform: uppercase; font-weight: 600; text-align: center; margin-top: -3px; font-size: 22px;">payment should be made with the bill</h4>
-                  <h5 style="text-align: center; text-transform: uppercase; font-weight: 600; margin-top: -4px; color: black; font-size: 16px; letter-spacing: 2px;">pay your bills promptly and help the city clean</h5>
+                  <h4 style="color: black; text-transform: uppercase; font-weight: 600; text-align: center; margin-top: 13px; font-size: 22px;">payment should be made with the bill</h4>
+                  <h5 style="text-align: center; text-transform: uppercase; font-weight: 600; color: black; font-size: 16px; letter-spacing: 2px;">pay your bills promptly and help the city clean</h5>
                   <hr style="border-top: 2px dashed black;">
                 </div>
 
@@ -328,7 +326,6 @@
 @endsection
 @section('scripts')
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script> -->
 <script src="/js/html2canvas.js"></script>
 {!! $wcpScript; !!}
 <script type="text/javascript">
@@ -386,7 +383,7 @@
               isFilter: true
             }
           }
-          axios.get('/api/get/bill/count/b', { params: requestParams })
+          axios.get('/api/get/bill/count/p', { params: requestParams })
                 .then(response => {document.querySelector("input[name=billNumbers]").value = response.data.data; this.gif=false})
                 .catch(error => console.error(error));
         }
@@ -469,7 +466,7 @@ $(document).ready(function(){
 
       // console.log(printingSet);
 
-      axios.get('/api/get/bill/set/b', { params: requestParams })
+      axios.get('/api/get/bill/set/p', { params: requestParams })
             .then(response => {printingSet = response.data.data; timerReplace()})
             .catch(error => console.error(error));
 
@@ -483,9 +480,6 @@ $(document).ready(function(){
 
         // console.log(parseInt(document.getElementById('tt2').innerHTML));
         // console.log(parseInt(document.getElementById('tt1').innerHTML));
-        console.log(mode);
-        // console.table(mode.bills);
-
         if (mode.bills === undefined || mode.bills.length == 0) {
             alert('No bills pending found')
             window.location.reload(true);
@@ -500,18 +494,17 @@ $(document).ready(function(){
         var zeroRatedBox = document.querySelector('#zeroRated').checked;
         // console.table(currentBill)
         // console.log();
-        document.getElementById('r_acc_no').innerHTML = parentParse.business_no
-        document.getElementById('r_acc_bname').innerHTML = parentParse.business_name
-        document.getElementById('r_acc_address').innerHTML = parentParse.address
-        document.getElementById('r_acc_snumber').innerHTML =  parentParse.property_no ? parentParse.property_no : ''
+        document.getElementById('r_acc_no').innerHTML = parentParse.property_no
         document.getElementById('r_acc_name').innerHTML = parentParse.owner ? parentParse.owner.name : 'NA'
-        document.getElementById('r_acc_phone').innerHTML = parentParse.phone ? parentParse.phone : 'NA'
-        document.getElementById('r_ac_type').innerHTML = parentParse.type.description
-        document.getElementById('r_ac_category').innerHTML = parentParse.category.description
-        document.getElementById('r_ac_imposed').innerHTML = currentBill.rate_pa ? `${formatDollar(parseFloat(currentBill.rate_pa))} ` : `${formatDollar(parseFloat(0.0))} `
-        // document.getElementById('r_ac_zonal').innerHTML = parentParse.zonal ? parentParse.zonal.description : 'NO NAME'
+        document.getElementById('r_acc_hsno').innerHTML = parentParse.house_no ? parentParse.house_no : 'NA'
+        document.getElementById('r_acc_address').innerHTML = parentParse.address ? parentParse.address : 'NA'
+        document.getElementById('r_acc_phone').innerHTML = parentParse.owner ? parentParse.owner.phone : 'NA'
+        document.getElementById('r_ac_type').innerHTML = parentParse.type ? parentParse.type.description : 'NA'
+        document.getElementById('r_ac_category').innerHTML = parentParse.category ? parentParse.category.description : 'NA'
+        document.getElementById('r_ac_rateable').innerHTML = currentBill.rateable_value ? `${formatDollar(parseFloat(currentBill.rateable_value))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_imposed').innerHTML = currentBill.rate_imposed ? `${parseFloat(currentBill.rate_imposed)} ` : `${parseFloat(0.0)} `
+        document.getElementById('r_ac_zonal').innerHTML = parentParse.zonal ? parentParse.zonal.description : 'NO NAME'
         document.getElementById('r_ac_electoral').innerHTML = parentParse.electoral ? parentParse.electoral.description : 'NO NAME'
-        document.getElementById('r_ac_com').innerHTML = parentParse.community ? parentParse.community.description : 'NO NAME'
         document.getElementById('r_ac_tas').innerHTML = parentParse.tas ? parentParse.tas.description : "NO NAME"
         document.getElementById('r_ac_street').innerHTML = parentParse.street ? parentParse.street.description : "NO NAME"
         document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(currentBill.p_year_bill))} ` : `${formatDollar(0.0)} `
@@ -521,29 +514,18 @@ $(document).ready(function(){
         document.getElementById('r_ac_total').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_year').innerHTML = currentBill.year
 
-
-
-        if((parentParse.address == '' || parentParse.address == null) && (parentParse.property_no == '' || parentParse.property_no == null)){
-          document.getElementById('tt3').innerHTML = parseInt(document.getElementById('tt3').innerHTML) + 1
-          return true;
-        }
-
-        // if(parentParse.store_number == '' || parentParse.store_number == null){
-        //   document.getElementById('tt3').innerHTML = parseInt(document.getElementById('tt3').innerHTML) + 1
-        //   return true;
-        // }
         if(zeroRatedBox){
-          if(parseFloat(currentBill.account_balance) == parseFloat(0.0)){
+          if(parseFloat(currentBill.account_balance) == parseFloat(0) || parseFloat(currentBill.account_balance) == parseFloat(0.0)){
             console.log('zero');
             document.getElementById('tt3').innerHTML = parseInt(document.getElementById('tt3').innerHTML) + 1
             return true;
           }else{
             startPrinting()
-            ajaxPrintStatus(parentParse.business_no)
+            ajaxPrintStatus(parentParse.property_no)
           }
         }else{
           startPrinting()
-          ajaxPrintStatus(parentParse.business_no)
+          ajaxPrintStatus(parentParse.property_no)
         }
 
     }
@@ -578,14 +560,14 @@ $(document).ready(function(){
       }
       document.getElementById('mainContent').style.display = "none"
       document.getElementById('cardcont').style.display = "block"
-      let interval = 20000; //one second
+      let interval = 10000; //one second
       document.getElementById('tt2').innerHTML = printingSet.length
 
 
       modes.forEach((mode, index) => {
         setTimeout(() => {
           replaceBill(mode)
-          // console.log(mode.business_no)
+          // console.log(mode.property_no)
           if(parseInt(document.getElementById('tt2').innerHTML) === parseInt(document.getElementById('tt1').innerHTML)) {
             setTimeout(reloadPage, interval)
           }
@@ -640,7 +622,6 @@ $(document).ready(function(){
     $("#printBtn").click(function () {
       console.table(printingSet)
       html2canvas($('#card'), {
-        scale: 2,
         onrendered: function(canvas)
         {
           var b64Prefix = "data:image/png;base64,";

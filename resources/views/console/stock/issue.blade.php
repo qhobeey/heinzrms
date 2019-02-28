@@ -19,6 +19,7 @@
                                             <option selected value="stock">Stock</option>
                                             <option value="supervisor">Supervisor</option>
                                         </select>
+
                                     </div>
                                 </div>
                                 <div class="col-md-6" v-if="issue_from == 'supervisor'">
@@ -29,6 +30,11 @@
                                               <option :value="data.id">@{{data.name}}</option>
                                             </template>
                                         </select>
+                                        @if ($errors->has('from_name'))
+                                            <small class="invalid-feedback">
+                                                <strong style="color:red;">{{ $errors->first('from_name') }}</strong>
+                                            </small>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -60,6 +66,11 @@
                                             <option value="collector">Collector</option>
                                             <option value="cashier">Cashier</option>
                                         </select>
+                                        @if ($errors->has('to_name'))
+                                            <small class="invalid-feedback">
+                                                <strong style="color:red;">{{ $errors->first('to_name') }}</strong>
+                                            </small>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6" v-if="tos.length > 0">
@@ -70,6 +81,11 @@
                                             <option :value="data.id">@{{data.name}}</option>
                                           </template>
                                         </select>
+                                        @if ($errors->has('to_id'))
+                                            <small class="invalid-feedback">
+                                                <strong style="color:red;">{{ $errors->first('to_id') }}</strong>
+                                            </small>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

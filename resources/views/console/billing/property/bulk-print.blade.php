@@ -7,7 +7,7 @@
             <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                 <div class="row">
                     <div class="col-sm-6">
-                      <h3 style="color: brown; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Account List (<?php echo count($businesses); ?>)</h3>
+                      <h3 style="color: brown; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Account List (<?php echo count($bills); ?>)</h3>
                     </div>
                 </div>
                 <div class="row">
@@ -17,9 +17,9 @@
                               <strong style="color:red;">{{ $errors->first('account_box') }}</strong>
                           </small>
                       @endif
-                      <form class="" action="{{route('lgt.business.sms')}}" method="post">
+                      <form class="" action="{{route('lgt.property.sms')}}" method="post">
                         @csrf
-                        <input type="hidden" name="type" value="b">
+                        <input type="hidden" name="type" value="p">
                         <section style="max-height: 365px;overflow: auto;">
                           <table class="table table-striped table-bordered dt-responsive fixed">
                               <thead style="font-size: 12px;">
@@ -28,47 +28,29 @@
                                         <input type="checkbox" onclick="toggle(this);" name="allBox" value="all">
                                       </th>
                                       <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending" style="width: 91px;">Account No</th>
-                                      <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Name</th>
-                                      <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Owner</th>
-                                      <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Telephone</th>
-                                      <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Zonal</th>
-                                      <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Electoral</th>
-                                      <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Town Area</th>
-                                      <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Community</th>
+                                      <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending"style="width: 45px;">Type</th>
+                                      <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Rate PA</th>
+                                      <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Current Amt</th>
+                                      <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Arrears</th>
+                                      <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Balance</th>
+                                      <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending">Total Pmt</th>
+                                      <th class="" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Table No: activate to sort column ascending" style="width: 65px;">Year</th>
                                   </tr>
                               </thead>
                               <tbody style="font-size: 11px;">
-                                  @foreach($businesses as $business)
+                                  @foreach($bills as $bill)
                                   <tr role="row" class="odd">
                                       <td class="sorting_1" tabindex="0">
-                                        <input type="checkbox" name="account_box[]" value="<?php echo $business->business_no; ?>">
+                                        <input type="checkbox" name="account_box[]" value="<?php echo $bill->account_no; ?>">
                                       </td>
-                                      <td class="sorting_1" tabindex="0"><a href="{{route('business.show', $business->business_no)}}">{{$business->business_no}}</a></td>
-                                      <td class="sorting_1" tabindex="0"><a href="#">{{$business->business_name}}</a></td>
-                                      <td class="sorting_1" tabindex="0"><a href="#">
-                                        <?= $business->owner ? ($business->owner->name ?: 'NA') : $business->business_owner; ?>
-                                      </a></td>
-                                      <td class="sorting_1" tabindex="0"><a href="#">
-                                        <?= $business->owner ? ($business->owner->phone ?: 'NA') : "NA"; ?>
-                                      </a></td>
-                                      <td class="sorting_1" tabindex="0"><a href="#">
-                                        <?= $business->zonal ? ($business->zonal->description ?: 'NA') : $business->zonal_id; ?>
-                                      </a></td>
-                                      <td class="sorting_1" tabindex="0">
-                                        <a href="#">
-                                          <?= $business->electoral ? ($business->electoral->description ?: 'NA') : $business->electoral; ?>
-                                        </a>
-                                      </td>
-                                      <td class="sorting_1" tabindex="0">
-                                        <a href="#">
-                                          <?= $business->tas ? ($business->tas->description ?: 'NA') : $business->tas; ?>
-                                        </a>
-                                      </td>
-                                      <td class="sorting_1" tabindex="0">
-                                        <a href="#">
-                                          <?= $business->community ? ($business->community->description ?: 'NA') : $business->community; ?>
-                                        </a>
-                                      </td>
+                                      <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->account_no; ?></a></td>
+                                      <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->bill_type; ?></a></td>
+                                      <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->rate_pa; ?></a></td>
+                                      <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->current_amount; ?></a></td>
+                                      <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->arrears; ?></a></td>
+                                      <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->account_balance; ?></a></td>
+                                      <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->total_paid; ?></a></td>
+                                      <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->year; ?></a></td>
 
                                   </tr>
 
@@ -78,29 +60,14 @@
                           </table>
                         </section>
                         <section class="row" style="margin-top:20px;">
-                          <div class="form-group" style="width:100%;">
-                            @if ($errors->has('message'))
-                                <small class="invalid-feedback">
-                                    <strong style="color:red;">{{ $errors->first('message') }}</strong>
-                                </small>
-                            @endif
-                            <label for="">Customise your SMS</label>
-                            <textarea name="message" class="form-control" style="width:100%;height: 140px;"></textarea>
-                            <small style="color:#F44336;">
-                              NB:&nbsp;available variables to use in customizing your sms: <code>#account</code> - account no, <code>#bill</code> - current bill,
-                              <code>#arrears</code> - available arrears, <code>#owner</code> - account owner
-                            </small>
-                          </div>
-                          <div class="form-group">
-                            <button style="margin-top:30px;" type="submit" class="btn btn-sm btn-danger">Send SMS</button>
-                          </div>
+                          <!-- skldk;flks;dlfks;d -->
                         </section>
                       </form>
                     </div>
                     <div class="col-md-3">
                       <h4 class="fp">Filter Parameters</h4>
                       <hr style="margin-top: 10px;margin-bottom: 5px;">
-                      <form class="filterbox" action="{{route('lgt.business.sms.query')}}" method="get">
+                      <form class="filterbox" action="{{route('lgt.property.bills.bulk.query')}}" method="get">
                         @csrf
                         <div class="form-group">
                           <label for="">Zonal</label>
@@ -140,6 +107,22 @@
                             <?php foreach ($communities as $key => $community): ?>
                               <option value="<?php echo $community->code; ?>"><?php echo $community->description; ?></option>
                             <?php endforeach; ?>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="">Bill Type</label>
+                          <select class="form-control" name="bill_type" required>
+                              <option value="p">Property</option>
+                              <option value="b">Business</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="">Bill year</label>
+                          <select class="form-control" name="year" required>
+                            <?php
+                              for ($i=date('Y'); $i>2017; $i--) {?>
+                                <option value="<?= $i; ?>"><?= $i; ?></option>
+                              <?php }?>
                           </select>
                         </div>
                         <div class="form-group">
