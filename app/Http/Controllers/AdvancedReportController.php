@@ -82,7 +82,7 @@ class AdvancedReportController extends Controller
 
        $electorals = $this->electoralProperty->with(['bills'=>function($query) use ($year) {
           $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
-       }])->paginate(30)->appends(request()->query());
+       }])->paginate(50)->appends(request()->query());
       // return ['result'=>$electorals];
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
 
