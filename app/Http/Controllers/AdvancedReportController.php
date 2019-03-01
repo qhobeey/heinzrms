@@ -145,10 +145,10 @@ class AdvancedReportController extends Controller
         $query->with('properties')->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
       }])->first();
 
-      $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 25, $page = null, $baseUrl = $request->url().'/', $options = []) : [];
+      $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $request->url().'/', $options = []) : [];
       $info = $electoral ? $electoral->description : '';
       $totalBill = $electoral ? $electoral->bills->count(): '';
-      // return ['result'=> $electoral->bills->sum('arrears')]; 
+      // return ['result'=> $electoral->bills->sum('arrears')];
       // dd($year, $location, $code, $info);
       return view('advanced.report.property.property-listing-details', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill', 'electoral'));
     }
