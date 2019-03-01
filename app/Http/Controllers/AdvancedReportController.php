@@ -80,11 +80,9 @@ class AdvancedReportController extends Controller
        $location = $request['location'];
        $year = $request['year'];
 
-       $electorals = $this->electoralProperty->whereHas('bills', function($q) use ($year) {
-         $q->where('year', $year);
-       })->with(['bills'=>function($query) use ($year) {
+       $electorals = $this->electoralProperty->with(['bills'=>function($query) use ($year) {
           $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
-       }])->paginate(10)->appends(request()->query());
+       }])->paginate(30)->appends(request()->query());
       // return ['result'=>$electorals];
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
 
@@ -307,7 +305,9 @@ class AdvancedReportController extends Controller
           if($year == date('Y')):
             $feefixing = \App\PropertyType::with('categories')->orderBy('code', 'asc')->get();
           else:
-            $feefixing = \App\PropertyType::with(['fixcategories'])->orderBy('code', 'asc')->get();
+            $feefixing = \App\PropertyType::with(['fixcategories' => function($query) use ($year) {
+              $query->where('year', $year);
+            }])->orderBy('code', 'asc')->get();
           endif;
           return view('advanced.report.feefixing.listing', compact('feefixing', 'year', 'account'));
         endif;
@@ -315,7 +315,9 @@ class AdvancedReportController extends Controller
           if($year == date('Y')):
             $feefixing = \App\BusinessType::with('categories')->orderBy('code', 'asc')->get();
           else:
-            $feefixing = \App\BusinessType::with(['fixcategories'])->orderBy('code', 'asc')->get();
+            $feefixing = \App\BusinessType::with(['fixcategories' => function($query) use ($year) {
+              $query->where('year', $year);
+            }])->orderBy('code', 'asc')->get();
           endif;
 
           return view('advanced.report.feefixing.listing', compact('feefixing', 'year', 'account'));
