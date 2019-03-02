@@ -480,7 +480,7 @@ $(document).ready(function(){
 
         // console.log(parseInt(document.getElementById('tt2').innerHTML));
         // console.log(parseInt(document.getElementById('tt1').innerHTML));
-        console.log('Modes Bills:  ' + modes);
+        console.log('Modes Bills:  ' + mode);
         if (mode.bills === undefined || mode.bills.length == 0) {
             alert('No bills pending found')
             window.location.reload(true);
