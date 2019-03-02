@@ -499,7 +499,7 @@ $(document).ready(function(){
         document.getElementById('r_acc_name').innerHTML = parentParse.owner ? parentParse.owner.name : ''
         document.getElementById('r_acc_hsno').innerHTML = (parentParse.house_no && parentParse.house_no != 'NULL') ? parentParse.house_no : ''
         document.getElementById('r_acc_address').innerHTML = parentParse.address ? parentParse.address : ''
-        document.getElementById('r_acc_phone').innerHTML = parentParse.owner ? parentParse.owner.phone : ''
+        document.getElementById('r_acc_phone').innerHTML = parentParse.owner ? ((parentParse.owner.phone && parentParse.owner.phone != 'Null') ?: '') : ''
         document.getElementById('r_ac_type').innerHTML = parentParse.type ? parentParse.type.description : 'NA'
         document.getElementById('r_ac_category').innerHTML = parentParse.category ? parentParse.category.description : 'NA'
         document.getElementById('r_ac_rateable').innerHTML = currentBill.rateable_value ? `${formatDollar(parseFloat(currentBill.rateable_value))} ` : `${formatDollar(0.0)} `
