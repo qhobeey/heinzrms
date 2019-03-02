@@ -43,11 +43,11 @@
                 <td colspan="3"><a style="color:brown; font-weight: 600;" href="{{ URL::previous() }}"><?= $info; ?>&nbsp; [<?= $totalBill; ?>]</a></td>
                 <td></td>
                 <td></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('arrears'), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('current_amount'), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney(($electoral->bills->sum('arrears') + $electoral->bills->sum('current_amount')), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('total_paid'), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney(($electoral->bills->sum('arrears') + $electoral->bills->sum('current_amount')) - $electoral->bills->sum('total_paid'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('arrears'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('current_amount'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($electoral->bills->sum('arrears') + $electoral->bills->sum('current_amount')), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('total_paid'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($electoral->bills->sum('arrears') + $electoral->bills->sum('current_amount')) - $electoral->bills->sum('total_paid'), true); ?></td>
 
             </tr>
           </div>
@@ -58,18 +58,35 @@
                 <td></td>
                 <td><?= $key+1; ?></td>
                 <td><?= $bill->account_no; ?></td>
-                <td style="font-size: 11px;"><?= $bill->property ? ($bill->property->owner ? $bill->property->owner->name: 'NA'): 'NA'; ?></td>
-                <td style="font-size: 11px;"><?= $bill->property ? ($bill->property->address ?: 'NA'): 'NA'; ?></td>
-                <td style="font-size: 11px;"><?= $bill->property ? ($bill->property->category ? $bill->property->category->description: 'NA'): 'NA'; ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney($bill->arrears, true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney($bill->current_amount, true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney(($bill->arrears + $bill->current_amount), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney($bill->total_paid, true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney(($bill->arrears + $bill->current_amount) - $bill->total_paid, true); ?></td>
+                <td class="text-number" style="font-size: 11px;"><?= $bill->property ? ($bill->property->owner ? $bill->property->owner->name: 'NA'): 'NA'; ?></td>
+                <td class="text-number" style="font-size: 11px;"><?= $bill->property ? ($bill->property->address ?: 'NA'): 'NA'; ?></td>
+                <td class="text-number" style="font-size: 11px;"><?= $bill->property ? ($bill->property->category ? $bill->property->category->description: 'NA'): 'NA'; ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($bill->arrears, true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($bill->current_amount, true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($bill->arrears + $bill->current_amount), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($bill->total_paid, true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($bill->arrears + $bill->current_amount) - $bill->total_paid, true); ?></td>
 
             </tr>
           @endforeach
         </tbody>
+
+        <?php if ($bills->currentPage() == $bills->lastPage()): ?>
+        <tbody>
+          <div class="tableInner">
+            <tr class="odd2 heyy gtotal">
+                <td colspan="6" style="font-size: 18px;">GRAND TOTAL</td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('arrears'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('current_amount'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($electoral->bills->sum('arrears') + $electoral->bills->sum('current_amount')), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('total_paid'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($electoral->bills->sum('arrears') + $electoral->bills->sum('current_amount')) - $electoral->bills->sum('total_paid'), true); ?></td>
+
+            </tr>
+          </div>
+        </tbody>
+
+        <?php endif; ?>
 
         @endif
 

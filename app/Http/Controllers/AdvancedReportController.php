@@ -83,7 +83,10 @@ class AdvancedReportController extends Controller
        $electorals = $this->electoralProperty->with(['bills'=>function($query) use ($year) {
           $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
        }])->paginate(50)->appends(request()->query());
-      // return ['result'=>$electorals];
+       $elects = $this->electoralProperty->with(['bills'=>function($query) use ($year) {
+          $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
+       }])->get();
+      // return ['result'=>$elects->bills];
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
 
       return view('advanced.report.property.property-listing', compact('electorals', 'location', 'year', 'wcpScript'));
@@ -148,7 +151,7 @@ class AdvancedReportController extends Controller
       $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $request->url().'/', $options = []) : [];
       $info = $electoral ? $electoral->description : '';
       $totalBill = $electoral ? $electoral->bills->count(): '';
-      // return ['result'=> $electoral->bills->sum('arrears')];
+      // return ['result'=> $bills->currentPage()];
       // dd($year, $location, $code, $info);
       return view('advanced.report.property.property-listing-details', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill', 'electoral'));
     }

@@ -248,7 +248,7 @@
                           </div>
                           <div style="background-color: white; width: 400px;">
                             <article style="width:100%; display:flex;">
-                              <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Zones:</p>
+                              <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Sub Metro:</p>
                               <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;<span id="r_ac_zonal">NO NAME</span></p>
                             </article>
                             <article style="width:100%; display:flex;">
@@ -413,7 +413,7 @@ $(document).ready(function(){
 
     }
 
-    // console.log(type);
+    console.log('bill Array:  ' + billsArray);
 
     var requestParams = {
       account: billsArray,
@@ -480,6 +480,7 @@ $(document).ready(function(){
 
         // console.log(parseInt(document.getElementById('tt2').innerHTML));
         // console.log(parseInt(document.getElementById('tt1').innerHTML));
+        console.log('Modes Bills:  ' + modes);
         if (mode.bills === undefined || mode.bills.length == 0) {
             alert('No bills pending found')
             window.location.reload(true);
@@ -558,6 +559,7 @@ $(document).ready(function(){
       // return false
 
       let modes = printingSet;
+      console.log('Modes:  ' + modes);
       if (modes === undefined || modes.length == 0) {
           console.log('empty bills')
           alert('No bills found')

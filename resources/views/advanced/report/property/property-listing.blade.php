@@ -45,11 +45,11 @@
                   </a>
                 </td>
                 <td></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('arrears'), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('current_amount'), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney(($electoral->bills->sum('arrears') + $electoral->bills->sum('current_amount')), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('total_paid'), true); ?></td>
-                <td><?= \App\Repositories\ExpoFunction::formatMoney(($electoral->bills->sum('arrears') + $electoral->bills->sum('current_amount')) - $electoral->bills->sum('total_paid'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('arrears'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('current_amount'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($electoral->bills->sum('arrears') + $electoral->bills->sum('current_amount')), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('total_paid'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($electoral->bills->sum('arrears') + $electoral->bills->sum('current_amount')) - $electoral->bills->sum('total_paid'), true); ?></td>
             </tr>
           </div>
           @endforeach
@@ -62,7 +62,7 @@
 
                 </td>
                 <td></td>
-                <td>
+                <td class="text-number">
 
                   <?php
                     $sumArrears = 0.0;
@@ -72,7 +72,7 @@
                     echo \App\Repositories\ExpoFunction::formatMoney($sumArrears, true);
                   ?>
                 </td>
-                <td>
+                <td class="text-number">
 
                   <?php
                     $sumArrears = 0.0;
@@ -82,7 +82,7 @@
                     echo \App\Repositories\ExpoFunction::formatMoney($sumArrears, true);
                   ?>
                 </td>
-                <td>
+                <td class="text-number">
 
                   <?php
                     $sumArrears = 0.0;
@@ -92,7 +92,7 @@
                     echo \App\Repositories\ExpoFunction::formatMoney($sumArrears, true);
                   ?>
                 </td>
-                <td>
+                <td class="text-number">
 
                   <?php
                     $sumArrears = 0.0;
@@ -102,7 +102,7 @@
                     echo \App\Repositories\ExpoFunction::formatMoney($sumArrears, true);
                   ?>
                 </td>
-                <td>
+                <td class="text-number">
 
                   <?php
                     $sumArrears = 0.0;
