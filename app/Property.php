@@ -46,6 +46,10 @@ class Property extends Model
     {
         return $this->belongsTo('App\Models\Location\Community', 'community_id', 'code');
     }
+    public function communities()
+    {
+        return $this->belongsTo('App\Models\Location\Community', 'community_id', 'code');
+    }
     public function street()
     {
         return $this->belongsTo('App\Models\Location\Street', 'street_id', 'code');

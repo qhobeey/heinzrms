@@ -872,7 +872,8 @@ class ApiController extends Controller
          $bills = [];
          foreach ($request->account as $key => $account) {
            $year = $request->year;
-           $bill = \App\Property::where('property_no', $account)->has('bills')->with(['bills' => function($query) use ($year){
+           $bill = \App\Property::where('property_no', $account)->has('bills')
+            ->with(['owner', 'type', 'category', 'zonal', 'electoral', 'communities', 'tas', 'street','bills' => function($query) use ($year){
              $query->where('year', $year);
            }])->first();
            // $bill = \App\Bill::where('account_no', $account)->where('year', $request->year)->first();

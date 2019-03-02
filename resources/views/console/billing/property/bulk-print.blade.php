@@ -45,7 +45,7 @@
                                   @foreach($bills as $bill)
                                   <tr role="row" class="odd">
                                       <td class="sorting_1" tabindex="0">
-                                        <input type="checkbox" name="account_box[]" value="<?php echo $bill->account_no.'-'.$bill->year.'-'.$bill->bill_type; ?>">
+                                        <input type="checkbox" class="hdr" name="account_box[]" value="<?php echo $bill->account_no.'-'.$bill->year.'-'.$bill->bill_type; ?>">
                                       </td>
                                       <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->account_no; ?></a></td>
                                       <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->bill_type; ?></a></td>
@@ -173,7 +173,7 @@
 
 
 
-                <div class="row" id="loadingCarf" style="display:block;">
+                <div class="row" id="loadingCarf" style="display:none;">
                   <div class="col-md-6">
                     <h4><img src="/backend/images/25.gif" alt="" style="width: 19px;margin-right: 4px;">Loading... <span id="tt1" style="color:red;">0</span> / <span id="tt2"></span> </h4>
                   </div>
@@ -329,7 +329,7 @@
 <script src="/js/select2.js"></script>
 <script type="text/javascript">
 function toggle(source) {
-  var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  var checkboxes = document.querySelectorAll('input[type="checkbox"].hdr');
   for (var i = 0; i < checkboxes.length; i++) {
       if (checkboxes[i] != source)
           checkboxes[i].checked = source.checked;
@@ -395,22 +395,25 @@ function toggle(source) {
 $(document).ready(function(){
   var printingSet = [];
   var globalYear;
+  var globalType;
   $('#isp').on('click', function() {
     var billsArray = [];
     var billYear;
     var type;
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    var checkboxes = document.querySelectorAll('input[type="checkbox"].hdr');
+    document.getElementById('loadingCarf').style.display = "block"
     for (var i = 0; i < checkboxes.length; i++) {
       if (checkboxes[i].checked){
         billsArray.push((checkboxes[i].value).split('-')[0]);
         billYear = (checkboxes[i].value).split('-')[1];
         type = (checkboxes[i].value).split('-')[2];
+        globalType = (checkboxes[i].value).split('-')[2];
         globalYear = (checkboxes[i].value).split('-')[1];
       }
 
     }
 
-    console.log(globalYear);
+    // console.log(type);
 
     var requestParams = {
       account: billsArray,
@@ -463,7 +466,7 @@ $(document).ready(function(){
 
       // console.log(printingSet);
 
-      axios.get('/api/get/bill/set/p', { params: requestParams })
+      axios.get(`/api/get/bill/set/${globalType}`, { params: requestParams })
             .then(response => {printingSet = response.data.data; timerReplace()})
             .catch(error => console.error(error));
 
@@ -489,11 +492,12 @@ $(document).ready(function(){
         var parentParse = mode;
         var currentBill = mode.bills[0];
         var zeroRatedBox = document.querySelector('#zeroRated').checked;
+        console.log(parentParse)
         // console.table(currentBill)
         // console.log();
         document.getElementById('r_acc_no').innerHTML = parentParse.property_no
         document.getElementById('r_acc_name').innerHTML = parentParse.owner ? parentParse.owner.name : ''
-        document.getElementById('r_acc_hsno').innerHTML = parentParse.house_no ? parentParse.house_no : ''
+        document.getElementById('r_acc_hsno').innerHTML = (parentParse.house_no && parentParse.house_no != 'NULL') ? parentParse.house_no : ''
         document.getElementById('r_acc_address').innerHTML = parentParse.address ? parentParse.address : ''
         document.getElementById('r_acc_phone').innerHTML = parentParse.owner ? parentParse.owner.phone : ''
         document.getElementById('r_ac_type').innerHTML = parentParse.type ? parentParse.type.description : 'NA'
@@ -511,10 +515,10 @@ $(document).ready(function(){
         document.getElementById('r_ac_total').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_year').innerHTML = currentBill.year
 
-        if((parentParse.address == '' || parentParse.address == null) && (parentParse.house_no == '' || parentParse.house_no == null)){
-          document.getElementById('tt3').innerHTML = parseInt(document.getElementById('tt3').innerHTML) + 1
-          return true;
-        }
+        // if((parentParse.address == '' || parentParse.address == null) && (parentParse.house_no == '' || parentParse.house_no == null)){
+        //   document.getElementById('tt3').innerHTML = parseInt(document.getElementById('tt3').innerHTML) + 1
+        //   return true;
+        // }
 
         if(zeroRatedBox){
           if(parseFloat(currentBill.account_balance) == parseFloat(0) || parseFloat(currentBill.account_balance) == parseFloat(0.0)){

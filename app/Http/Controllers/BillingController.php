@@ -60,7 +60,7 @@ class BillingController extends Controller
         // dd($bills);
         return view('console.billing.property.bulk-print', compact('bills', 'setting', 'wcpScript'));
       endif;
-      dd($request->all());
+      return redirect()->back();
     }
 
 
