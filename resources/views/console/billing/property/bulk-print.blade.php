@@ -183,7 +183,7 @@
                 </div>
 
                 <div id="cardcont" style="display:none;">
-                  <div id="card" style="width: 1000px; height: 100%; padding-top: 25px; padding-bottom: 20px; border-radius: 0px; background-color:white; margin-top: 60px; margin-bottom: 50px;">
+                  <div id="card" style="width: 1000px; height: 100%; padding-top: 35px; padding-bottom: 20px; border-radius: 0px; background-color:white; margin-top: 60px; margin-bottom: 50px;">
                       <div style="width: 880px; background-color:white; margin:auto;">
                         <div style="background-color:white; width:880px; display: flex; flex-direction: row;">
                           <img src="{{$setting->logo}}" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
@@ -227,7 +227,7 @@
                               <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;">&nbsp;&nbsp;&nbsp;<span id="r_ac_category">PRIVATE SCHOOL</span></p>
                             </article>
 
-                            <div style="background-color:white; width:80%; border:2px solid black; margin-top: 15px; padding-left: 10px; padding-bottom: 10px;">
+                            <div style="background-color:white; width:80%; border:2px solid black; margin-top: 10px; padding-left: 10px; padding-bottom: 10px;">
                               <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
                                 <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Rateable value:</p>
                                 <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_rateable">GHc 37,500.00</span>&nbsp;&nbsp;</p>
@@ -265,7 +265,7 @@
                             </article>
                             <p style="font-size: 13px; font-weight: 600; color: black; margin-top: 10px; margin-bottom:0px;">All bills must be settled on or before &nbsp;<?= \Carbon\Carbon::parse($setting->paymet_date)->toFormattedDateString();?></p>
                             <p style="font-size: 13px; font-weight: 600; color: black; margin-top: 10px;">For enquires contact the <?= $setting->organization_type; ?> finance office on the ff Nos. <?= $setting->contact_info_text; ?></p>
-                            <div style="background-color:white; width:100%; border:2px solid black; margin-top: 15px; padding-left: 10px; padding-bottom: 3px;">
+                            <div style="background-color:white; width:100%; border:2px solid black; margin-top: 10px; padding-left: 10px; padding-bottom: 3px;">
                               <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
                                 <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Previous Year Bill:</p>
                                 <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_pyear">GHc 0.00</span> &nbsp;&nbsp;</p>
@@ -292,8 +292,8 @@
                         </div>
                         <div style="background-color:white; width: 100%; font-size: 11px; color: black; margin-top:0px;">
                           <p>{{$setting->enforce_law_text}}</p>
-                          <h4 style="color: black; text-transform: uppercase; font-weight: 600; text-align: center; margin-top: 13px; font-size: 22px;">payment should be made with the bill</h4>
-                          <h5 style="text-align: center; text-transform: uppercase; font-weight: 600; color: black; font-size: 16px; letter-spacing: 2px;">pay your bills promptly and help the city clean</h5>
+                          <h4 style="color: black; text-transform: uppercase; font-weight: 600; text-align: center; margin-top: -3px; font-size: 22px;">payment should be made with the bill</h4>
+                          <h5 style="text-align: center; text-transform: uppercase; font-weight: 600; color: black; font-size: 16px; margin-top: -5px; letter-spacing: 2px;">pay your bills promptly and help the city clean</h5>
                           <hr style="border-top: 2px dashed black;">
                         </div>
 
