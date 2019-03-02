@@ -866,9 +866,28 @@ class ApiController extends Controller
        dd($request->isFilter);
      }
 
+     public function getBilSetBulk(Request $request, $account)
+     {
+       if(strtoupper($account) == strtoupper('p')):
+         $bills = [];
+         foreach ($request->account as $key => $account) {
+           $year = $request->year;
+           $bill = \App\Property::where('property_no', $account)->has('bills')->with(['bills' => function($query) use ($year){
+             $query->where('year', $year);
+           }])->first();
+           // $bill = \App\Bill::where('account_no', $account)->where('year', $request->year)->first();
+           if(!$bill) continue;
+           array_push($bills, $bill);
+         }
+         return response()->json(['status' => 'success', 'data' => $bills], 201);
+       endif;
+       return response()->json(['status' => 'success', 'data' => $request->all()]);
+     }
+
+
      public function updateBill(Request $request)
      {
-       $bill = \App\Bill::where('account_no', $request->account)->where('year', $request->year)->first();
+       $bill = \App\Bill::with('property')->where('account_no', $request->account)->where('year', $request->year)->first();
        $bill->printed = 1;
        $bill->update();
        return response()->json(['status' => 'success']);

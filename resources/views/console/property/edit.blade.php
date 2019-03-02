@@ -126,6 +126,12 @@
                                       <input type="text" value="{{$property->loc_latitude}}" name="loc_latitude" class="form-control">
                                   </div>
                                 </div>
+                                <div class="col-md-4">
+                                  <div class="form-group">
+                                      <label for="">Address</label>
+                                      <input type="text" value="{{$property->address}}" name="address" class="form-control">
+                                  </div>
+                                </div>
                             </div>
 
                             <div class="row">

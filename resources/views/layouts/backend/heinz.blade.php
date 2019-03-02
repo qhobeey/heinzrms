@@ -55,15 +55,24 @@
 @include('_includes.backend.top-bar')
 
 
-
-
 @include('_includes.backend.left-side')
 
     <div id="heinz" class="content-page">
       <h4 class="back">
         <a href="{{ URL::previous() }}">back</a>
       </h4>
-        @yield('content')
+
+      @if(session()->has('success'))
+        <div class="alert alert-success" style="width: 37%;position: relative;top: 26px;float: right;margin-right: 21px;">
+          <strong>Success!</strong> {{ session()->get('success') }}
+        </div>
+      @endif
+      @if(session()->has('error'))
+        <div class="alert alert-error" style="width: 37%;position: relative;top: 26px;float: right;margin-right: 21px;">
+          <strong>Error!</strong> {{ session()->get('error') }}
+        </div>
+      @endif
+      @yield('content')
     </div>
 
 <script>
@@ -127,6 +136,9 @@ function printDiv(divName) {
 
    document.body.innerHTML = originalContents;
 }
+</script>
+<script>
+    $('.alert').delay(3000).fadeOut(350);
 </script>
 @yield('scripts')
 

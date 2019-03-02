@@ -90,23 +90,25 @@
                                         <input type="text" name="occupancy" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label for="">Property Owner</label>
-                                        <select class="form-control" required="required" name="property_owner" id="">
-                                            <option value="">-choose-</option>
-                                            <template v-for="data in owners">
-                                                <option :value="data.id">@{{data.firstname}} @{{data.lastname}}</option>
-                                            </template>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <button class="btn btn-owner form-control">Add new Owner</button>
-                                    </div>
-                                </div>
+
                             </div>
+                            <h4 class="form-desc">Property Owner</h4>
+
+                            <div class="row">
+                              <div class="col-md-4">
+                                <label for="">Property Owner Name</label>
+                                <input type="text" name="name" class="form-control">
+                              </div>
+                              <div class="col-md-4">
+                                <label for="">Property Address</label>
+                                <input type="text" name="address" class="form-control">
+                              </div>
+                              <div class="col-md-4">
+                                <label for="">Property Owner Number</label>
+                                <input type="text" name="phone" class="form-control">
+                              </div>
+                            </div>
+
 
                             <h4 class="form-desc">Property Location</h4>
                             <hr>
@@ -119,7 +121,7 @@
                                             <option value="">-choose-</option>
                                             <option value="none">No sub metro</option>
                                             <template v-for="data in zonals">
-                                                <option :value="data.id">@{{data.description}}</option>
+                                                <option :value="data.code">@{{data.description}}</option>
                                             </template>
                                         </select>
                                     </div>
@@ -131,7 +133,7 @@
                                             <option value="">-choose-</option>
                                             <option value="none">No Town Area</option>
                                             <template v-for="data in tas">
-                                                <option :value="data.id">@{{data.description}}</option>
+                                                <option :value="data.code">@{{data.description}}</option>
                                             </template>
                                         </select>
                                     </div>
@@ -143,7 +145,7 @@
                                             <option value="">-choose-</option>
                                             <option value="none">No Electoral Area</option>
                                             <template v-for="data in electorals">
-                                                <option :value="data.id">@{{data.description}}</option>
+                                                <option :value="data.code">@{{data.description}}</option>
                                             </template>
                                         </select>
                                     </div>
@@ -158,7 +160,7 @@
                                             <option value="">-choose-</option>
                                             <option value="none">No community</option>
                                             <template v-for="data in communities">
-                                                <option :value="data.id">@{{data.description}}</option>
+                                                <option :value="data.code">@{{data.description}}</option>
                                             </template>
                                         </select>
                                     </div>
@@ -170,7 +172,7 @@
                                             <option value="">-choose-</option>
                                             <option value="none">No unit</option>
                                             <template v-for="data in units">
-                                                <option :value="data.id">@{{data.description}}</option>
+                                                <option :value="data.code">@{{data.description}}</option>
                                             </template>
                                         </select>
                                     </div>
@@ -182,7 +184,7 @@
                                             <option value="">-choose-</option>
                                             <option value="none">No street</option>
                                             <template v-for="data in streets">
-                                                <option :value="data.id">@{{data.description}}</option>
+                                                <option :value="data.code">@{{data.description}}</option>
                                             </template>
                                         </select>
                                     </div>

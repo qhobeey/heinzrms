@@ -57,22 +57,61 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'building_permit_no' => '',
+        // $data = $request->validate([
+        //     'building_permit_no' => '',
+        //     'serial_no' => '', 'property_type' => 'required',
+        //     'property_category' => 'required',
+        //     'valuation_no' => '', 'house_no' => '',
+        //     'street_id' => '', 'loc_longitude' => '', 'loc_latitude' => '',
+        //     'image' => '', 'client' => ''
+        // ]);
+        // $data = array_merge($data, ['client' => 'none', 'property_owner' => (string) $request->property_owner, 'property_no' => 'PR-'.env('ASSEMBLY_CODE').mt_rand(10000,100000)]);
+        //
+        // $truesave = Property::create($data);
+        $props = $request->validate([
+            'name' => 'required',
+            'phone' => '', 'address' => '','building_permit_no' => '',
             'serial_no' => '', 'property_type' => 'required',
-            'property_category' => 'required',
+            'property_category' => 'required', 'zonal_id' => '',
             'valuation_no' => '', 'house_no' => '',
             'street_id' => '', 'loc_longitude' => '', 'loc_latitude' => '',
-            'image' => '', 'client' => ''
+            'image' => '', 'client' => '', 'electoral_id' => '', 'tas_id' => '', 'community_id' => ''
         ]);
-        $data = array_merge($data, ['client' => 'none', 'property_owner' => (string) $request->property_owner, 'property_no' => 'PR-'.env('ASSEMBLY_CODE').mt_rand(10000,100000)]);
-        // dd($data);
-        $truesave = Property::create($data);
-        // if ($truesave) $this->initPropertyBill($truesave);
-        //init bills
-        //generate QrCode
-        // QrCode::size(50)->generate(Request::url());
-        //save Qrcode in clodinary
+        // dd($props);
+        $owns = array(
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'address' => $request->address
+        );
+        $res = PropertyOwner::create($owns);
+        if($res) {
+          $owners = PropertyOwner::latest()->count();
+          $res->owner_id = strtoupper(env('ASSEMBLY_CODE')[0].$res->name[0].sprintf('%03d', $owners));
+          $res->save();
+        }
+        unset($props['phone'], $props['name']);
+
+        $props = array_merge($props, ['property_owner' => $res->owner_id]);
+        $tkn = \App\TrackAccountNumber::first();
+        $addedValue = $tkn->property + 1;
+        $tkn->property = $addedValue;
+        $tkn->save();
+
+        if($props['zonal_id'] == null || $props['zonal_id'] == "no zonal data" || $props['zonal_id'] == ""){
+          $props = array_merge($props, ['property_no' => 'PR-'.env('ASSEMBLY_CODE').sprintf('%05d', $addedValue)]);
+        }else{
+          $props = array_merge($props, ['property_no' => 'PR-'.strtoupper($props['zonal_id']).sprintf('%05d', $addedValue)]);
+        }
+
+        $props = array_merge($props, ['client' => 'office@gmail.com']);
+
+        $property = Property::create($props);
+        if($property):
+          $tkn = \App\TrackAccountNumber::first();
+          $addedValue = $tkn->property + 1;
+          $tkn->property = $addedValue;
+          $tkn->save();
+        endif;
         return redirect()->route('property.create');
     }
 

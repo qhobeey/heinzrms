@@ -42,4 +42,5 @@ Route::post('check_auth_system', 'ApiController@checkMobileAuth');
 
 Route::get('get/bill/count/{account}', 'ApiController@getBilCount');
 Route::get('get/bill/set/{account}', 'ApiController@getBilSet');
+Route::get('get/bulkbill/set/{account}', 'ApiController@getBilSetBulk');
 Route::get('/update/print/status', 'ApiController@updateBill');

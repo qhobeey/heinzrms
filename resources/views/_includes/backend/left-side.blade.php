@@ -33,8 +33,8 @@
                         <!-- <li><a href="{{route('stock.return')}}">{{__('Fee Fixing')}}</a></li> -->
                         <li><a href="{{route('property.owners')}}">{{__('Property Owners')}}</a></li>
                         <li><a href="{{route('property.payments.payment')}}">{{__('Property Payments')}}</a></li>
-                        <li><a href="{{route('print.property.bills')}}">{{__('Print Bills')}}</a></li>
-                        <li><a href="{{route('lgt.property.bills.bulk')}}">{{__('Advanced Bills')}}</a></li>
+                        <!-- <li><a href="{{route('print.property.bills')}}">{{__('Print Bills old')}}</a></li> -->
+                        <li><a href="{{route('lgt.property.bills.bulk')}}">{{__('Print Bills')}}</a></li>
                         <li><a href="{{route('lgt.property.sms')}}">{{__('Property SMS')}}</a></li>
                     </ul>
                 </li>
