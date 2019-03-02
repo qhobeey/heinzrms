@@ -69,8 +69,9 @@
 
 
 </table>
-{{$bills->links()}}
+
 </div>
+{{$bills->links()}}
 
 
 @endsection

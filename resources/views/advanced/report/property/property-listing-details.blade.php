@@ -74,10 +74,12 @@
         @endif
 
     </table>
-    @if(count($bills) > 0)
-    {{$bills->links()}}
-    @endif
+
   </div>
+
+  @if(count($bills) > 0)
+  {{$bills->links()}}
+  @endif
 
   <div class="row">
     <div class="col-md-6">

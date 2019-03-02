@@ -118,8 +118,9 @@
       </tfoot>
 
   </table>
-  {{$electorals->appends(request()->query())->links()}}
+
   </div>
+  {{$electorals->appends(request()->query())->links()}}
 
   <div class="row">
     <div class="col-md-6">
