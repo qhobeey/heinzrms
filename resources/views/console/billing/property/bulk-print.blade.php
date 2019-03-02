@@ -183,7 +183,7 @@
                 </div>
 
                 <div id="cardcont" style="display:none;">
-                  <div id="card" style="width: 1000px; height: 100%; padding-top: 35px; padding-bottom: 20px; border-radius: 0px; background-color:white; margin-top: 60px; margin-bottom: 50px;">
+                  <div id="card" style="width: 1000px; height: 100%; padding-top: 25px; padding-bottom: 20px; border-radius: 0px; background-color:white; margin-top: 60px; margin-bottom: 50px;">
                       <div style="width: 880px; background-color:white; margin:auto;">
                         <div style="background-color:white; width:880px; display: flex; flex-direction: row;">
                           <img src="{{$setting->logo}}" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
