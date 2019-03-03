@@ -869,18 +869,23 @@ class ApiController extends Controller
      public function getBilSetBulk(Request $request, $accountType)
      {
        if(strtoupper($accountType) == strtoupper('p')):
-         $bills = [];
-         // return response()->json(['status' => 'success', 'data' => $request->all()], 201);
-         foreach ($request->account as $key => $account) {
-           $year = $request->year;
-           $bill = \App\Property::where('property_no', $account)->has('bills')
-            ->with(['owner', 'type', 'category', 'zonal', 'electoral', 'communities', 'tas', 'street','bills' => function($query) use ($year){
-             $query->where('year', $year);
-           }])->first();
-           // $bill = \App\Bill::where('account_no', $account)->where('year', $request->year)->first();
-           if(!$bill) continue;
-           array_push($bills, $bill);
-         }
+         // $bills = [];
+         $year = $request->year;
+         $bills = \App\Property::whereIn('property_no', $request->account)->has('bills')
+          ->with(['owner', 'type', 'category', 'zonal', 'electoral', 'communities', 'tas', 'street','bills' => function($query) use ($year){
+           $query->where('year', $year);
+         }])->get();;
+         return response()->json(['status' => 'success', 'data' => $bills], 201);
+         // foreach ($request->account as $key => $account) {
+         //   $year = $request->year;
+         //   $bill = \App\Property::where('property_no', $account)->has('bills')
+         //    ->with(['owner', 'type', 'category', 'zonal', 'electoral', 'communities', 'tas', 'street','bills' => function($query) use ($year){
+         //     $query->where('year', $year);
+         //   }])->first();
+         //   // $bill = \App\Bill::where('account_no', $account)->where('year', $request->year)->first();
+         //   if(!$bill) continue;
+         //   array_push($bills, $bill);
+         // }
          return response()->json(['status' => 'success', 'data' => $bills], 201);
        endif;
        return response()->json(['status' => 'success', 'data' => $request->all()]);
