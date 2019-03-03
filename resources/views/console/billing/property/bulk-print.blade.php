@@ -466,7 +466,7 @@ $(document).ready(function(){
 
       // console.log(printingSet);
 
-      axios.get(`/api/get/bill/set/${globalType}`, { params: requestParams })
+      axios.post(`/api/get/bill/set/${globalType}`, { params: requestParams })
             .then(response => {printingSet = response.data.data; timerReplace()})
             .catch(error => console.error(error));
 
