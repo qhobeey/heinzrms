@@ -870,6 +870,7 @@ class ApiController extends Controller
      {
        if(strtoupper($accountType) == strtoupper('p')):
          $bills = [];
+         // return response()->json(['status' => 'success', 'data' => $request->all()], 201);
          foreach ($request->account as $key => $account) {
            $year = $request->year;
            $bill = \App\Property::where('property_no', $account)->has('bills')

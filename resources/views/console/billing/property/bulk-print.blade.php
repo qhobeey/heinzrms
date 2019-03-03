@@ -420,7 +420,7 @@ $(document).ready(function(){
       year: billYear
     }
 
-    axios.post(`/api/get/bulkbill/set/${type.toLowerCase()}`, { params: requestParams })
+    axios.post(`/api/get/bulkbill/set/${type.toLowerCase()}`, requestParams)
           .then(response => {printingSet = response.data.data; timerReplace()})
           .catch(error => console.error(error));
   });
