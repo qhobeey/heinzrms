@@ -866,9 +866,9 @@ class ApiController extends Controller
        dd($request->isFilter);
      }
 
-     public function getBilSetBulk(Request $request, $account)
+     public function getBilSetBulk(Request $request, $accountType)
      {
-       if(strtoupper($account) == strtoupper('p')):
+       if(strtoupper($accountType) == strtoupper('p')):
          $bills = [];
          foreach ($request->account as $key => $account) {
            $year = $request->year;
