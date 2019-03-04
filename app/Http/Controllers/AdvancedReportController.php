@@ -84,7 +84,7 @@ class AdvancedReportController extends Controller
           $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
        }])->paginate(50)->appends(request()->query());
        $elects = $this->electoralProperty->with(['bills'=>function($query) use ($year) {
-          $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
+          $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->orderBy('account_no', 'asc');
        }])->get();
       // return ['result'=>$elects->bills];
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
@@ -123,7 +123,7 @@ class AdvancedReportController extends Controller
       $electoral = $this->electoralProperty->where('code', $loc)->whereHas('bills', function($q) use ($year) {
         $q->where('year', $year);
       })->with(['bills' => function($query) use ($year) {
-        $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
+        $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->orderBy('account_no', 'asc');
       }])->first();
       $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $url, $options = []) : [];
       $info = $electoral ? $electoral->description : '';
@@ -145,7 +145,7 @@ class AdvancedReportController extends Controller
       $electoral = $this->electoralProperty->where('code', $code)->whereHas('bills', function($q) use ($year) {
         $q->where('year', $year);
       })->with(['bills' => function($query) use ($year) {
-        $query->with('properties')->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
+        $query->with('properties')->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->orderBy('account_no', 'asc');
       }])->first();
 
       $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $request->url().'/', $options = []) : [];
@@ -207,7 +207,7 @@ class AdvancedReportController extends Controller
        $electorals = $this->electoralBusiness->whereHas('bills', function($q) use ($year) {
          $q->where('year', $year);
        })->with(['bills'=>function($query) use ($year) {
-          $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('b'));
+          $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('b'))->orderBy('account_no', 'asc');
        }])->paginate(10)->appends(request()->query());
       // return ['result'=>$electorals];
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
@@ -246,7 +246,7 @@ class AdvancedReportController extends Controller
       $electoral = $this->electoralBusiness->where('code', $loc)->whereHas('bills', function($q) use ($year) {
         $q->where('year', $year);
       })->with(['bills' => function($query) use ($year) {
-        $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('b'));
+        $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('b'))->orderBy('account_no', 'asc');
       }])->first();
       $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $url, $options = []) : [];
       $info = $electoral ? $electoral->description : '';
@@ -268,7 +268,7 @@ class AdvancedReportController extends Controller
       $electoral = $this->electoralBusiness->where('code', $code)->whereHas('bills', function($q) use ($year) {
         $q->where('year', $year);
       })->with(['bills' => function($query) use ($year) {
-        $query->with('businesses')->where('year', $year)->where(strtoupper('bill_type'), strtoupper('b'));
+        $query->with('businesses')->where('year', $year)->where(strtoupper('bill_type'), strtoupper('b'))->orderBy('account_no', 'asc');
       }])->first();
 
       $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 20, $page = null, $baseUrl = $request->url().'/', $options = []) : [];
