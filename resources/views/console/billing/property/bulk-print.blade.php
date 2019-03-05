@@ -10,8 +10,8 @@
         <div class="card-box table-responsive">
             <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                 <div class="row">
-                    <div class="col-sm-6">
-                      <h3 style="color: brown; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Account List (<?php echo count($bills); ?>)</h3>
+                    <div class="col-sm-8">
+                      <h3 style="color: brown; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Account List (<?php echo count($bills); ?>) - <span style="color:#3f69b5;">FILTERED BY <?php echo $tag; ?> </span> </h3>
                     </div>
                 </div>
                 <div id="mainContent" class="row">
@@ -127,6 +127,16 @@
                               for ($i=date('Y'); $i>2017; $i--) {?>
                                 <option value="<?= $i; ?>"><?= $i; ?></option>
                               <?php }?>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="">Category</label>
+                          <?php $categories = App\PropertyCategory::orderBy('description', 'asc')->get(); ?>
+                          <select class="form-control" name="category">
+                            <option value="">SELECT</option>
+                            <?php foreach ($categories as $key => $category): ?>
+                              <option value="<?php echo $category->code; ?>"><?php echo $category->description; ?></option>
+                            <?php endforeach; ?>
                           </select>
                         </div>
                         <div class="form-group">

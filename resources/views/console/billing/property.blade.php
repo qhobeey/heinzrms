@@ -135,6 +135,71 @@
                     </div>
                 </div>
 
+                <hr>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                      <h3 style="color: brown; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Generate Category Range Bills Module</h3>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form autocomplete="false" class="" action="{{route('account.bills.category')}}" method="post">
+                          @csrf
+                          <div class="row">
+                            <div class="col-md-2">
+                              <div class="form-group">
+                                <label for="">use fee fixing</label>
+                                <select style="width: 100%;" class="form-control" name="feefixing">
+                                  <?php
+                                  for ($i=date('Y'); $i>2017; $i--) {?>
+                                    <option value="<?= $i; ?>"><?= $i; ?></option>
+                                  <?php }?>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-2">
+                              <div class="form-group">
+                                <label for="">for year</label>
+                                <select style="width: 100%;" class="form-control" name="year">
+                                  <?php
+                                  for ($i=date('Y'); $i>2017; $i--) {?>
+                                    <option value="<?= $i; ?>"><?= $i; ?></option>
+                                  <?php }?>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-2">
+                              <div class="form-group">
+                                <label for="">for account</label>
+                                <select style="width: 100%;" class="form-control" name="account">
+                                  <option value="property">property</option>
+                                  <option value="business">business</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="form-group">
+                                <label for="">Category</label>
+                                <?php $categories = App\PropertyCategory::orderBy('description', 'asc')->get(); ?>
+                                <select required class="form-control" name="category" style="font-size:12px;width:100%;">
+                                  <option value="">SELECT</option>
+                                  <?php foreach ($categories as $key => $category): ?>
+                                    <option value="<?php echo $category->code; ?>"><?php echo $category->description; ?></option>
+                                  <?php endforeach; ?>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="form-group">
+                                <button type="submit" style="margin-top: 25px;" class="btn btn-warning">Generate account bills</button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                    </div>
+                </div>
+
             </div>
 
         </div>

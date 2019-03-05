@@ -147,6 +147,7 @@ Route::prefix('console')->group(function () {
     Route::get('account/bills/filter', 'BillingController@filterBillsByColumn')->name('bills.filter.column');
     Route::post('account/bills', 'BillingController@postBills')->name('account.bills');
     Route::post('account/bills/single', 'BillingController@postBillsPerUnit')->name('account.bills.single');
+    Route::post('account/bills/category', 'BillingController@postBillsPerCategory')->name('account.bills.category');
 
     Route::get('processing/response', 'BillingController@processing')->name('processing');
 
