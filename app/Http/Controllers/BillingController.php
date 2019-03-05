@@ -41,9 +41,10 @@ class BillingController extends Controller
     public function propertyBillPrepareBulk()
     {
       $bills = [];
+      $tag = '';
       $setting = Setting::latest()->first();
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
-      return view('console.billing.property.bulk-print', compact('bills', 'setting', 'wcpScript'));
+      return view('console.billing.property.bulk-print', compact('bills', 'setting', 'wcpScript','tag'));
     }
 
     public function filterBillsQuery(Request $request, $query=null)

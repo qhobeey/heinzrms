@@ -19,7 +19,7 @@
                           <span><?php
                             $count = 0.0;
                             $dataType = "b";
-                            $datas = \App\Payment::where('data_type', 'LIKE', "%{$dataType}%")->latest()->get();
+                            $datas = \App\Payment::where('data_type', 'LIKE', "%{$dataType}%")->where('payment_year', date('Y'))->get();
                             foreach ($datas as $data) {
                               $count += $data->amount_paid;
                             }
@@ -45,7 +45,7 @@
                           <span><?php
                             $count = 0.0;
                             $dataType = "b";
-                            $datas = \App\Payment::where('data_type', 'LIKE', "%{$dataType}%")->latest()->get();
+                            $datas = \App\Payment::where('data_type', 'LIKE', "%{$dataType}%")->where('payment_year', date('Y'))->get();
                             foreach ($datas as $data) {
                               if ($data->created_at == "" || $data->created_at == NULL || $data->created_at == "NULL") continue;
                               if($data->created_at->toDateString() == \Carbon\Carbon::now()->toDateString()):
@@ -59,7 +59,7 @@
                         <h5 class="t-align-right">Estimated revenue:
                           <span><?php
                             $dataType = "b";
-                            $count = \App\Bill::where('bill_type', 'LIKE', "%{$dataType}%")->sum('current_amount');
+                            $count = \App\Bill::where('bill_type', 'LIKE', "%{$dataType}%")->where('year', date('Y'))->sum('current_amount');
 
                             echo "GHc". \App\Repositories\ExpoFunction::formatMoney($count, true);
                            ?></span>
@@ -84,7 +84,7 @@
                             <span><?php
                               $count = 0.0;
                               $dataType = "p";
-                              $datas = \App\Payment::where('data_type', 'LIKE', "%{$dataType}%")->latest()->get();
+                              $datas = \App\Payment::where('data_type', 'LIKE', "%{$dataType}%")->where('payment_year', date('Y'))->get();
                               foreach ($datas as $data) {
                                 $count += $data->amount_paid;
                               }
@@ -110,7 +110,7 @@
                             <span><?php
                               $count = 0.0;
                               $dataType = "p";
-                              $datas = \App\Payment::where('data_type', 'LIKE', "%{$dataType}%")->latest()->get();
+                              $datas = \App\Payment::where('data_type', 'LIKE', "%{$dataType}%")->where('payment_year', date('Y'))->get();
                               foreach ($datas as $data) {
                                 if ($data->created_at == "" || $data->created_at == NULL || $data->created_at == "NULL") continue;
                                 if($data->created_at->toDateString() == \Carbon\Carbon::now()->toDateString()):
@@ -124,7 +124,7 @@
                           <h5 class="t-align-right">Estimated revenue:
                             <span><?php
                               $dataType = "p";
-                              $count = \App\Bill::where('bill_type', 'LIKE', "%{$dataType}%")->sum('current_amount');
+                              $count = \App\Bill::where('bill_type', 'LIKE', "%{$dataType}%")->where('year', date('Y'))->sum('current_amount');
 
                               echo "GHc". \App\Repositories\ExpoFunction::formatMoney($count, true);
                              ?></span>

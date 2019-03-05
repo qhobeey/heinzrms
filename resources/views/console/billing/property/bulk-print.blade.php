@@ -11,7 +11,7 @@
             <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                 <div class="row">
                     <div class="col-sm-8">
-                      <h3 style="color: brown; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Account List (<?php echo count($bills); ?>) - <span style="color:#3f69b5;">FILTERED BY <?php echo $tag; ?> </span> </h3>
+                      <h3 style="color: brown; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Account List (<?php echo count($bills); ?>) - <span style="color:#3f69b5;">FILTERED BY <?php echo $tag ?: ''; ?> </span> </h3>
                     </div>
                 </div>
                 <div id="mainContent" class="row">
