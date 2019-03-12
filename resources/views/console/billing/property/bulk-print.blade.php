@@ -49,11 +49,11 @@
                                       </td>
                                       <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->account_no; ?></a></td>
                                       <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->bill_type; ?></a></td>
-                                      <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->rate_pa; ?></a></td>
-                                      <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->current_amount; ?></a></td>
-                                      <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->arrears; ?></a></td>
-                                      <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->account_balance; ?></a></td>
-                                      <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->total_paid; ?></a></td>
+                                      <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo $bill->rate_pa; ?></a></td>
+                                      <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo $bill->current_amount; ?></a></td>
+                                      <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo $bill->arrears; ?></a></td>
+                                      <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo $bill->account_balance; ?></a></td>
+                                      <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo $bill->total_paid; ?></a></td>
                                       <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->year; ?></a></td>
 
                                   </tr>
@@ -193,7 +193,7 @@
                 </div>
 
                 <div id="cardcont" style="display:none;">
-                  <div id="card" style="width: 1000px; height: 100%; padding-top: 35px; padding-bottom: 20px; border-radius: 0px; background-color:white; margin-top: 60px; margin-bottom: 50px;">
+                  <div id="card" style="width: 1000px; height: 100%; padding-top: 30px; padding-bottom: 20px; border-radius: 0px; background-color:white; margin-top: 60px; margin-bottom: 50px;">
                       <div style="width: 880px; background-color:white; margin:auto;">
                         <div style="background-color:white; width:880px; display: flex; flex-direction: row;">
                           <img src="{{$setting->logo}}" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">

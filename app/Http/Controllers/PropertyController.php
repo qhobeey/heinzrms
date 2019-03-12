@@ -69,7 +69,7 @@ class PropertyController extends Controller
         //
         // $truesave = Property::create($data);
         $props = $request->validate([
-            'name' => 'required',
+            'name' => 'required', 'valuation_no' => '',
             'phone' => '', 'address' => '','building_permit_no' => '',
             'serial_no' => '', 'property_type' => 'required',
             'property_category' => 'required', 'zonal_id' => '',
@@ -97,11 +97,17 @@ class PropertyController extends Controller
         $tkn->property = $addedValue;
         $tkn->save();
 
-        if($props['zonal_id'] == null || $props['zonal_id'] == "no zonal data" || $props['zonal_id'] == ""){
-          $props = array_merge($props, ['property_no' => 'PR-'.env('ASSEMBLY_CODE').sprintf('%05d', $addedValue)]);
-        }else{
-          $props = array_merge($props, ['property_no' => 'PR-'.strtoupper($props['zonal_id']).sprintf('%05d', $addedValue)]);
-        }
+        if($props['valuation_no'] || $props['valuation_no'] != null || $props['valuation_no'] != ''):
+          if($props['zonal_id'] == null || $props['zonal_id'] == "no zonal data" || $props['zonal_id'] == ""){
+            $props = array_merge($props, ['property_no' => 'PR-'.env('ASSEMBLY_CODE').sprintf('%05d', $addedValue)]);
+          }else{
+            $props = array_merge($props, ['property_no' => 'PR-'.strtoupper($props['zonal_id']).sprintf('%05d', $addedValue)]);
+          }
+        else:
+          $props = array_merge($props, ['property_no' => $props['valuation_no']);
+        endif;
+
+
 
         $props = array_merge($props, ['client' => 'office@gmail.com']);
 

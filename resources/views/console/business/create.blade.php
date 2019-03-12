@@ -39,7 +39,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Business Type</label>
-                                        <select class="form-control" name="business_type" id="" required="required">
+                                        <select class="form-control" name="business_type" id="business_type" required="required" @blur="getFilteredCategories()">
                                             <option value="">-choose-</option>
                                             <option value="none">No Business Type</option>
                                             <template v-for="data in types">
@@ -55,7 +55,7 @@
                                             <option value="">-choose-</option>
                                             <option value="none">No Business Category</option>
                                             <template v-for="data in categories">
-                                                <option :value="data.code">@{{data.description}}</option>
+                                                <option :value="data.code">@{{data.description}} - @{{data.rate_pa}}</option>
                                             </template>
                                         </select>
                                     </div>
@@ -292,11 +292,43 @@
           streets: [],
           units: [],
           owners: [],
-          properties: []
+          properties: [],
+          business_type_name: '',
+          business_cat_name: '',
+          business_owner_name:'',
+          business_zonal: ''
       },
       methods: {
         calcEndSerial(){
             this.end_serial = parseInt(this.start_serial) + 99
+        },
+        getFilteredCategories () {
+          var pid = document.querySelector("#business_type").value
+          console.log(pid);
+          axios.get(`/api/v1/console/get_categories_business/${pid}`)
+              .then(response => {console.table(response.data.props), this.categories = response.data.props})
+              .catch(error => console.error(error));
+        },
+        getFilteredTas () {
+          var pid = document.querySelector("#zonal_id").value
+          console.log(pid);
+          axios.get(`/api/v1/console/get_tas_location/${pid}`)
+              .then(response => {console.table(response.data.props), this.tas = response.data.props})
+              .catch(error => console.error(error));
+        },
+        getFilteredElectorals () {
+          var pid = document.querySelector("#tas_id").value
+          console.log(pid);
+          axios.get(`/api/v1/console/get_electorals_location/${pid}`)
+              .then(response => {console.table(response.data.props), this.electorals = response.data.props})
+              .catch(error => console.error(error));
+        },
+        getFilteredCommunities () {
+          var pid = document.querySelector("#electoral_id").value
+          console.log(pid);
+          axios.get(`/api/v1/console/get_communities_location/${pid}`)
+              .then(response => {console.table(response.data.props), this.communities = response.data.props})
+              .catch(error => console.error(error));
         },
       },
       created() {

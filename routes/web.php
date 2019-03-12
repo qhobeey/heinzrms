@@ -46,6 +46,8 @@ Route::prefix('console')->group(function () {
     Route::get('constuction', 'ConsoleController@construction')->name('console.construction');
     Route::get('constuction2', 'ConsoleController@construction2');
     Route::get('constuction4', 'ConsoleController@construction4');
+    Route::get('constuction5', 'ConsoleController@construction5');
+    Route::get('constuction6', 'ConsoleController@construction6');
     Route::get('clean/bills/location', 'ConsoleController@construction3');
     Route::resource('accountants', 'AccountantController');
     Route::resource('supervisors', 'SupervisorController');

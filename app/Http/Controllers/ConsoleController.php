@@ -8,6 +8,7 @@ use App\Jobs\CleanBillsTable;
 use App\Jobs\FloatCleanBills;
 use App\Jobs\SetBillLocation;
 use App\Jobs\ReplaceAccountBalance;
+use App\Jobs\PropertyOwnerFix;
 
 class ConsoleController extends Controller
 {
@@ -78,5 +79,23 @@ class ConsoleController extends Controller
         $business->update();
       }
       dd('all done');
+    }
+    public function construction5()
+    {
+      $bns = \App\BusinessCategory::latest()->get();
+      foreach ($bns as $bn) {
+        if($bn->rate_pa == '' || $bn->rate_pa == null){
+          $bn->rate_pa = $bn->min_charge;
+          $bn->update();
+        }
+
+      }
+      dd('all done');
+    }
+
+    public function construction6()
+    {
+      PropertyOwnerFix::dispatch();
+      return redirect()->route('processing');
     }
 }

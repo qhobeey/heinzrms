@@ -19,15 +19,16 @@
     <div class="row" style="border-bottom: 2px solid black;">
       <h4 style="text-align: center; font-size: 14px; color: black; font-weight: 600;">Property Listing Grouped by <?= ucwords($info); ?> <?= ucwords($location); ?> for <?= ucwords($year); ?></h4>
     </div>
-    <table id="fBill2" class="display" cellspacing="0" width="100%">
+    <table id="fBill2" class="display" cellspacing="0" width="100%" style="table-layout: fixed;">
         <thead>
             <tr>
               <th></th>
               <th style="font-size: 10px;color: black;">Electoral Area</th>
-              <th style="font-size: 10px;color: black;">Account No</th>
+              <th style="font-size: 10px;color: black;width: 10%;">Account No</th>
               <th style="font-size: 10px;color: black;">Owner Name</th>
               <th style="font-size: 10px;color: black;">Property Address</th>
               <th style="font-size: 10px;color: black;">Property cat</th>
+              <th style="font-size: 10px;color: black;">Rateable Value</th>
               <th style="font-size: 10px;color: black;">Arrears</th>
               <th style="font-size: 10px;color: black;">Current Bill</th>
               <th style="font-size: 10px;color: black;">Total Bill</th>
@@ -40,7 +41,7 @@
           <div class="tableInner">
             <tr class="odd2 heyy" style="background: #f5f5dc;">
                 <td><a href="{{ URL::previous() }}"><img src="/advanced/1/minus-sign.png"></a></td>
-                <td colspan="3"><a style="color:brown; font-weight: 600;" href="{{ URL::previous() }}"><?= $info; ?>&nbsp; [<?= $totalBill; ?>]</a></td>
+                <td colspan="4"><a style="color:brown; font-weight: 600;" href="{{ URL::previous() }}"><?= $info; ?>&nbsp; [<?= $totalBill; ?>]</a></td>
                 <td></td>
                 <td></td>
                 <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('arrears'), true); ?></td>
@@ -61,6 +62,7 @@
                 <td class="text-number" style="font-size: 11px;"><?= $bill->property ? ($bill->property->owner ? $bill->property->owner->name: 'NA'): 'NA'; ?></td>
                 <td class="text-number" style="font-size: 11px;"><?= $bill->property ? ($bill->property->address ?: 'NA'): 'NA'; ?></td>
                 <td class="text-number" style="font-size: 11px;"><?= $bill->property ? ($bill->property->category ? $bill->property->category->description: 'NA'): 'NA'; ?></td>
+                <td class="text-number" style="font-size: 11px;"><?= \App\Repositories\ExpoFunction::formatMoney($bill->property->rateable_value, true); ?></td>
                 <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($bill->arrears, true); ?></td>
                 <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($bill->current_amount, true); ?></td>
                 <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($bill->arrears + $bill->current_amount), true); ?></td>
@@ -75,7 +77,7 @@
         <tbody>
           <div class="tableInner">
             <tr class="odd2 heyy gtotal">
-                <td colspan="6" style="font-size: 18px;">GRAND TOTAL</td>
+                <td colspan="7" style="font-size: 18px;">GRAND TOTAL</td>
                 <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('arrears'), true); ?></td>
                 <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($electoral->bills->sum('current_amount'), true); ?></td>
                 <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($electoral->bills->sum('arrears') + $electoral->bills->sum('current_amount')), true); ?></td>

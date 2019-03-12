@@ -203,7 +203,7 @@ class StockController extends Controller
                         $enumGcrs = EnumGcr::where('stock_id', $data['stock_id'])->get();
                         foreach($enumGcrs as $enumGcr):
                             $enumGcr->id_collector = $collector->collector_id;
-                            $enumGcr->save();
+                            $enumGcr->update();
                         endforeach;
                     endif;
                 endif;
