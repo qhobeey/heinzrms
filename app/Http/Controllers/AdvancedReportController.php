@@ -201,7 +201,7 @@ class AdvancedReportController extends Controller
       $data = \App\TemporalFiles::first();
       $data->available = 0;
       $data->save();
-      return Response::download(public_path('reports/temp/'.$link));
+      return Response::download(public_path('storage/'.$link));
     }
 
     public function checkLinkAvailable()

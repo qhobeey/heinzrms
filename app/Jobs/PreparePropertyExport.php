@@ -39,7 +39,6 @@ class PreparePropertyExport implements ShouldQueue
     public function handle()
     {
       \App\TemporalFiles::truncate();
-      // $path = public_path('images/kbills')."/". $filename;
       (new NorminalRowExportProperty($this->year, $this->electoral))->store($this->name);
       \App\TemporalFiles::create(['file_name' => $this->name]);
     }

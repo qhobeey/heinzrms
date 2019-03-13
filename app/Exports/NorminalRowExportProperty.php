@@ -25,6 +25,9 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use \Maatwebsite\Excel\Sheet;
 use \Maatwebsite\Excel\Writer;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class NorminalRowExportProperty implements FromCollection, ShouldAutoSize, WithEvents, ShouldQueue, WithHeadings
 {
     use Exportable;
