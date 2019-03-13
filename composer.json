@@ -60,10 +60,7 @@
         ],
         "post-install-cmd": [
           "ln -sr storage/app/public public/storage",
-          "chmod -R 777 storage/"
-      ],
-      "compile": [
-        "chmod -R 777 storage/"
+          "chmod -R 777 storage"
       ]
     },
     "config": {
