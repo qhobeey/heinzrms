@@ -28,7 +28,7 @@ use \Maatwebsite\Excel\Writer;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class NorminalRowExportProperty implements FromCollection, ShouldAutoSize, WithEvents, ShouldQueue, WithHeadings
+class NorminalRowExportProperty implements FromCollection, ShouldAutoSize, WithEvents, WithHeadings
 {
     use Exportable;
 

@@ -39,7 +39,7 @@ class PreparePropertyExport implements ShouldQueue
     public function handle()
     {
       \App\TemporalFiles::truncate();
-      (new NorminalRowExportProperty($this->year, $this->electoral))->store($this->name);
+      (new NorminalRowExportProperty($this->year, $this->electoral))->queue($this->name);
       \App\TemporalFiles::create(['file_name' => $this->name]);
     }
 }
