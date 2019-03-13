@@ -22,13 +22,14 @@
     <table id="fBill2" class="display" cellspacing="0" width="100%" style="table-layout: fixed;">
         <thead>
             <tr>
-              <th></th>
-              <th style="font-size: 10px;color: black;">Electoral Area</th>
+              <th style="width:5%;"></th>
+              <!-- <th style="font-size: 10px;color: black;">Electoral Area</th> -->
               <th style="font-size: 10px;color: black;width: 10%;">Account No</th>
               <th style="font-size: 10px;color: black;">Owner Name</th>
               <th style="font-size: 10px;color: black;">Property Address</th>
-              <th style="font-size: 10px;color: black;">Property cat</th>
+              <th style="font-size: 10px;color: black;width:10%;">Property cat</th>
               <th style="font-size: 10px;color: black;">Rateable Value</th>
+              <th style="font-size: 10px;color: black;">Rate Imposed</th>
               <th style="font-size: 10px;color: black;">Arrears</th>
               <th style="font-size: 10px;color: black;">Current Bill</th>
               <th style="font-size: 10px;color: black;">Total Bill</th>
@@ -56,13 +57,13 @@
         <tbody>
           @foreach($bills as $key => $bill)
             <tr class="odd2 heyy">
-                <td></td>
                 <td><?= $key+1; ?></td>
                 <td><?= $bill->account_no; ?></td>
                 <td class="text-number" style="font-size: 11px;"><?= $bill->property ? ($bill->property->owner ? $bill->property->owner->name: 'NA'): 'NA'; ?></td>
                 <td class="text-number" style="font-size: 11px;"><?= $bill->property ? ($bill->property->address ?: 'NA'): 'NA'; ?></td>
                 <td class="text-number" style="font-size: 11px;"><?= $bill->property ? ($bill->property->category ? $bill->property->category->description: 'NA'): 'NA'; ?></td>
                 <td class="text-number" style="font-size: 11px;"><?= \App\Repositories\ExpoFunction::formatMoney($bill->property->rateable_value, true); ?></td>
+                <td class="text-number" style="font-size: 11px;"><?= $bill->property->category->rate_pa; ?></td>
                 <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($bill->arrears, true); ?></td>
                 <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($bill->current_amount, true); ?></td>
                 <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($bill->arrears + $bill->current_amount), true); ?></td>
@@ -103,6 +104,7 @@
   <div class="row">
     <div class="col-md-6">
       <button type="button" onclick="javascript:showRsp()" id="repPrintBtn" class="btn btn-xs" style="background: black; color: white;">Print Report</button>
+      <a href="{{route('property.export.excel', [$year, $code])}}">Export to excel</a>
     </div>
     <div class="col-md-6">
       <div class="row"  style="width: 84%; margin: auto;">

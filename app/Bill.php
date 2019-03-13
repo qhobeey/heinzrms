@@ -27,4 +27,12 @@ class Bill extends Model
     {
       return $this->hasMany(Business::class, 'business_no', 'account_no');
     }
+    public function getOutstndAttribute()
+    {
+      return ($this->arrears + $this->current_amount) - $this->total_paid;
+    }
+    public function getTbillAttribute()
+    {
+      return ($this->arrears + $this->current_amount);
+    }
 }

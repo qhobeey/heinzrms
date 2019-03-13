@@ -10,6 +10,8 @@ use App\PropertyCategory;
 use App\PropertyOwner;
 use App\Bill;
 use QrCode;
+use Excel;
+use App\Exports\NorminalRowExportProperty;
 
 use Carbon\Carbon;
 
@@ -27,6 +29,15 @@ class PropertyController extends Controller
      */
     public function index($array=null)
     {
+      (new NorminalRowExportProperty(2019, '1401'))->queue('uin.xlsx');
+
+      // $export = new NorminalRowExportProperty(2019, '1401');
+
+      // return Excel::download($export, 'invoices.xlsx');
+      // return $export->download('invoices.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+
+      // return Excel::download(new NorminalRowExportProperty, 'invoices.xlsx');
+      // return (new NorminalRowExportProperty)->forYear(2019)->forElectoral('1401')->download('invoices.xlsx');
       // dd(public_path());
       // http://res.cloudinary.com/dzsvcvdes/image/upload/c_fit,h_640,w_640/omxlufmmebxhtu3xr7ap.png
         $properties = Property::with(['type', 'category', 'owner'])->orderBy('property_no', 'asc')->paginate(30);
@@ -98,13 +109,14 @@ class PropertyController extends Controller
         $tkn->save();
 
         if($props['valuation_no'] || $props['valuation_no'] != null || $props['valuation_no'] != ''):
+          $props = array_merge($props, ['property_no' => $props['valuation_no']]);
+        else:
           if($props['zonal_id'] == null || $props['zonal_id'] == "no zonal data" || $props['zonal_id'] == ""){
             $props = array_merge($props, ['property_no' => 'PR-'.env('ASSEMBLY_CODE').sprintf('%05d', $addedValue)]);
           }else{
             $props = array_merge($props, ['property_no' => 'PR-'.strtoupper($props['zonal_id']).sprintf('%05d', $addedValue)]);
           }
-        else:
-          $props = array_merge($props, ['property_no' => $props['valuation_no']);
+
         endif;
 
 

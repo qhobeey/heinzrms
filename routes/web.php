@@ -177,6 +177,7 @@ Route::prefix('console')->group(function () {
     Route::get('advanced/report/property', 'AdvancedReportController@propertyListing')->name('advanced.report.property');
     Route::get('advanced/report/property/{location}/{query}/{year}', 'AdvancedReportController@propertyListingDetails')->name('advanced.report.property.details');
     Route::get('/api/advanced/report/property', 'AdvancedReportController@test');
+    Route::get('/advanced/property/export/{year}/{electoral}', 'AdvancedReportController@exportProperty')->name('property.export.excel');
 
     Route::get('advanced/report/search/business', 'AdvancedReportController@businessListingSearch')->name('advanced.report.search.business');
     Route::get('advanced/report/business', 'AdvancedReportController@businessListing')->name('advanced.report.business');

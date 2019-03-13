@@ -259,7 +259,7 @@ class ApiController extends Controller
     {
         // dd('ok');
         $data = $request->validate(['code' => 'required', 'description' => '', 'rate_pa' => '', 'min_charge' => '']);
-        $category = PropertyCategory::where('code', $id)->first();
+        $category = PropertyCategory::where('code', 'LIKE', "%{$id}%")->first();
         $category->update($data);
         return response()->json(['status' => 'success', 'data' => $category]);
     }

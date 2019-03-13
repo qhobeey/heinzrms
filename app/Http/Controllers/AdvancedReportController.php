@@ -19,6 +19,9 @@ use App\Bill;
 use DB;
 use URL;
 
+use Excel;
+use App\Exports\NorminalRowExportProperty;
+
 use App\WebClientPrint\WebClientPrint;
 use App\WebClientPrint\Utils;
 use App\WebClientPrint\DefaultPrinter;
@@ -128,10 +131,11 @@ class AdvancedReportController extends Controller
       $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $url, $options = []) : [];
       $info = $electoral ? $electoral->description : '';
       $totalBill = $electoral ? $electoral->bills->count(): '';
+      $code = $loc;
       // dd($electoral->bills->count());
 
       // return ['result'=>$bills];
-      return view('advanced.report.property.property-listing-details', compact('bills', 'year', 'location', 'wcpScript', 'info', 'totalBill', 'electoral'));
+      return view('advanced.report.property.property-listing-details', compact('bills', 'year', 'location', 'wcpScript', 'info', 'totalBill', 'electoral', 'code'));
     }
 
 
@@ -153,7 +157,7 @@ class AdvancedReportController extends Controller
       $totalBill = $electoral ? $electoral->bills->count(): '';
       // return ['result'=> $bills->currentPage()];
       // dd($year, $location, $code, $info);
-      return view('advanced.report.property.property-listing-details', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill', 'electoral'));
+      return view('advanced.report.property.property-listing-details', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill', 'electoral', 'code'));
     }
 
     public function apiPropertyListing()
@@ -178,7 +182,14 @@ class AdvancedReportController extends Controller
     // }
 
 
-
+    public function exportProperty(Request $request, $year, $electoral)
+    {
+      // dd($year, $electoral);
+      $elct = Electoral::where('code', $electoral)->first();
+      $export = new NorminalRowExportProperty(2019, '1401');
+      $name = strtoupper($elct->description.' property-norminal-row-'.$year).'.xlsx';
+      return Excel::download($export, $name);
+    }
 
 
 
