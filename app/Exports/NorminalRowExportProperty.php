@@ -2,11 +2,16 @@
 
 namespace App\Exports;
 
+use Illuminate\Support\Collection;;
+
 use App\Reports\ElectoralPropertyReport;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\FromCollection;
 
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -20,7 +25,7 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use \Maatwebsite\Excel\Sheet;
 use \Maatwebsite\Excel\Writer;
 
-class NorminalRowExportProperty implements FromArray, WithHeadings, ShouldAutoSize, WithEvents
+class NorminalRowExportProperty implements FromCollection, ShouldAutoSize, WithEvents, ShouldQueue, WithHeadings
 {
     use Exportable;
 
@@ -33,31 +38,37 @@ class NorminalRowExportProperty implements FromArray, WithHeadings, ShouldAutoSi
         $this->electoral = $electoral;
     }
 
+    // public function collection()
+    // {
+    //   $response = \App\PropertyCategory::all();
+    //   // dd($response);
+    //   return $response;
+    // }
 
-    public function array(): array
+    public function collection()
     {
-      $response = array();
-      $year = $this->year;
-      $bills = ElectoralPropertyReport::query()->where('code', $this->electoral)->whereHas('bills', function($q) use ($year) {
-        $q->where('year', $year);
-      })->with(['bills' => function($query) use ($year) {
-        $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->orderBy('account_no', 'asc');
-      }])->first()->bills;
-      foreach ($bills as $key => $bill) {
-        if(!$bill->property) continue;
-        // dd($bill->property);
-        $newData = [
-          $key + 1, $bill->account_no, $bill->property->owner ? $bill->property->owner->name : 'NO NAME', $bill->property->address,
-          $bill->property->category ? $bill->property->category->description : 'NA',
-          $bill->property->category ? ($bill->property->category->rate_pa ?: floatval(0)) : floatval(0), \App\Repositories\ExpoFunction::formatMoney(floatval($bill->property->rateable_value), true), \App\Repositories\ExpoFunction::formatMoney(floatval($bill->arrears), true),
-          \App\Repositories\ExpoFunction::formatMoney(floatval($bill->current_amount), true), \App\Repositories\ExpoFunction::formatMoney(floatval($bill->arrears + $bill->current_amount), true), \App\Repositories\ExpoFunction::formatMoney(floatval($bill->total_paid), true),
-          \App\Repositories\ExpoFunction::formatMoney(floatval(($bill->arrears + $bill->current_amount) - $bill->total_paid), true)
-        ];
-        array_push($response, $newData);
-        // dd($response);
-      }
-      // dd($response);
-      return $response;
+        $response = array();
+        $year = $this->year;
+        $bills = ElectoralPropertyReport::where('code', $this->electoral)->whereHas('bills', function($q) use ($year) {
+          $q->where('year', $year);
+        })->with(['bills' => function($query) use ($year) {
+          $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->orderBy('account_no', 'asc');
+        }])->first()->bills;
+
+        foreach ($bills as $key => $bill) {
+          if(!$bill->property) continue;
+          $newData = [
+            $key + 1, $bill->account_no, $bill->property->owner ? $bill->property->owner->name : 'NO NAME', $bill->property->address,
+            $bill->property->category ? $bill->property->category->description : 'NA',
+            $bill->property->category ? ($bill->property->category->rate_pa ?: floatval(0)) : floatval(0), floatval($bill->property->rateable_value), floatval($bill->arrears),
+            floatval($bill->current_amount), floatval($bill->arrears + $bill->current_amount), floatval($bill->total_paid),
+            floatval(($bill->arrears + $bill->current_amount) - $bill->total_paid)
+          ];
+          array_push($response, $newData);
+          // dd(collect($response));
+        }
+        // dd(collect($response));
+        return collect($response);
     }
 
     public function headings(): array

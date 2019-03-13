@@ -18,7 +18,9 @@ use App\Bill;
 
 use DB;
 use URL;
+use Response;
 
+use Illuminate\Support\Facades\Storage;
 use Excel;
 use App\Exports\NorminalRowExportProperty;
 
@@ -34,6 +36,8 @@ use Cloudder;
 
 // use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
+
+use App\Jobs\PreparePropertyExport;
 
 class AdvancedReportController extends Controller
 {
@@ -186,9 +190,25 @@ class AdvancedReportController extends Controller
     {
       // dd($year, $electoral);
       $elct = Electoral::where('code', $electoral)->first();
-      $export = new NorminalRowExportProperty(2019, '1401');
+      // $export = new NorminalRowExportProperty(2019, '1401');
       $name = strtoupper($elct->description.' property-norminal-row-'.$year).'.xlsx';
-      return Excel::download($export, $name);
+      PreparePropertyExport::dispatch($year, $electoral, $name);
+      return redirect()->back();
+    }
+
+    public function downloadLink($link)
+    {
+      $data = \App\TemporalFiles::first();
+      $data->available = 0;
+      $data->save();
+      return Response::download(public_path('reports/temp/'.$link));
+    }
+
+    public function checkLinkAvailable()
+    {
+      $data = [];
+      $data = \App\TemporalFiles::first();
+      return response()->json(['data' => $data]);
     }
 
 

@@ -152,6 +152,7 @@ Route::prefix('console')->group(function () {
     Route::post('account/bills/category', 'BillingController@postBillsPerCategory')->name('account.bills.category');
 
     Route::get('processing/response', 'BillingController@processing')->name('processing');
+    Route::get('download/links/{link?}', 'AdvancedReportController@downloadLink')->name('download.link');
 
     /** */
     Route::get('reports/property/account', 'ReportController@propertyAccountIndex')->name('report.property.account');
@@ -295,6 +296,6 @@ Route::prefix('api/v1/console')->group(function () {
 
 
     Route::get('check_process_status', 'ApiController@checkProcessStatus');
-
+    Route::get('check/link/available', 'AdvancedReportController@checkLinkAvailable');
 
 });

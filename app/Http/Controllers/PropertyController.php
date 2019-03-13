@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use App\Property;
 use App\PropertyType;
@@ -12,6 +13,7 @@ use App\Bill;
 use QrCode;
 use Excel;
 use App\Exports\NorminalRowExportProperty;
+use App\Jobs\PreparePropertyExport;
 
 use Carbon\Carbon;
 
@@ -29,7 +31,9 @@ class PropertyController extends Controller
      */
     public function index($array=null)
     {
-      (new NorminalRowExportProperty(2019, '1401'))->queue('uin.xlsx');
+      // return Storage::download('aabbcc.xlsx');
+      PreparePropertyExport::dispatch(2019, '1401', 'aaabbbccc.xlsx');
+      // (new NorminalRowExportProperty(2019, '1401'))->queue('uin.xlsx');
 
       // $export = new NorminalRowExportProperty(2019, '1401');
 
