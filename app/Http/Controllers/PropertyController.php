@@ -16,6 +16,7 @@ use App\Exports\NorminalRowExportProperty;
 use App\Jobs\PreparePropertyExport;
 
 use Carbon\Carbon;
+use File;
 
 class PropertyController extends Controller
 {
@@ -48,7 +49,9 @@ class PropertyController extends Controller
 
       $gt = Excel::raw(new NorminalRowExportProperty(2019, '1021'), \Maatwebsite\Excel\Excel::XLSX);
       // dd($gt);
-      $path = Storage::disk('public')->put('test.xlsx', $gt);
+      // $path = Storage::disk('public')->put('reports/temp/test.xlsx', $gt);
+      $page = File::put('reports/temp/test.xlsx', $gt);
+      dd($page);
         $properties = Property::with(['type', 'category', 'owner'])->orderBy('property_no', 'asc')->paginate(30);
         // dd($properties);
         return view('console.property.index', compact('properties', 'array'));
