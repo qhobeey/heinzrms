@@ -191,7 +191,7 @@ class AdvancedReportController extends Controller
       // dd($year, $electoral);
       $elct = Electoral::where('code', $electoral)->first();
       // $export = new NorminalRowExportProperty(2019, '1401');
-      $name = strtoupper($elct->description.' property-norminal-row-'.$year).'.xlsx';
+      $name = strtoupper(str_slug($elct->description).'-property-norminal-row-'.$year).'.xlsx';
       PreparePropertyExport::dispatch($year, $electoral, $name);
       return redirect()->back();
     }
