@@ -17,6 +17,7 @@ use App\Jobs\PreparePropertyExport;
 
 use Carbon\Carbon;
 use File;
+use Response;
 
 class PropertyController extends Controller
 {
@@ -52,7 +53,7 @@ class PropertyController extends Controller
       $path = Storage::disk('public')->put('images/kbills/test5.txt', 'hahahahha');
       File::put('images/kbills/test4.txt', 'hello');
       $page = File::put('images/kbills/test.xlsx', $gt);
-      dd($page);
+      return Response::download(public_path('images/kbills/test.xlsx'));
         $properties = Property::with(['type', 'category', 'owner'])->orderBy('property_no', 'asc')->paginate(30);
         // dd($properties);
         return view('console.property.index', compact('properties', 'array'));
