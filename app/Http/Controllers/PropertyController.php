@@ -32,12 +32,13 @@ class PropertyController extends Controller
     public function index($array=null)
     {
       // return Storage::download('aabbcc.xlsx');
-      PreparePropertyExport::dispatch(2019, '1401', 'aaabbbccc.xlsx');
+      // PreparePropertyExport::dispatch(2019, '1401', 'aaabbbccc.xlsx');
       // (new NorminalRowExportProperty(2019, '1401'))->queue('uin.xlsx');
 
       // $export = new NorminalRowExportProperty(2019, '1401');
 
-      // return Excel::download($export, 'invoices.xlsx');
+      // $fr = (new NorminalRowExportProperty(2019, '1401'))->download('hjhkj.xlsx');
+      // Excel::store(new NorminalRowExportProperty(2019, '1401'), 'invoices.xlsx', 'public');
       // return $export->download('invoices.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
 
       // return Excel::download(new NorminalRowExportProperty, 'invoices.xlsx');

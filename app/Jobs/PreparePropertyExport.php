@@ -11,6 +11,9 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Excel;
 use App\Exports\NorminalRowExportProperty;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+
 class PreparePropertyExport implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -39,7 +42,8 @@ class PreparePropertyExport implements ShouldQueue
     public function handle()
     {
       \App\TemporalFiles::truncate();
-      (new NorminalRowExportProperty($this->year, $this->electoral))->queue($this->name);
+      // (new NorminalRowExportProperty($this->year, $this->electoral))->download($this->name);
+      Excel::store(new NorminalRowExportProperty($this->year, $this->electoral), $this->name, 'public');
       \App\TemporalFiles::create(['file_name' => $this->name]);
     }
 }
