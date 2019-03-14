@@ -12,7 +12,8 @@ use Excel;
 use App\Exports\NorminalRowExportProperty;
 
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
+use File;
+use Response;
 
 class PreparePropertyExport implements ShouldQueue
 {
