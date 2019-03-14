@@ -49,7 +49,8 @@ class PropertyController extends Controller
 
       $gt = Excel::raw(new NorminalRowExportProperty(2019, '1021'), \Maatwebsite\Excel\Excel::XLSX);
       // dd($gt);
-      // $path = Storage::disk('public')->put('reports/temp/test.xlsx', $gt);
+      $path = Storage::disk('public')->put('reports/temp/test5.txt', 'hahahahha');
+      File::put('reports/temp/test4.txt', 'hello');
       $page = File::put('reports/temp/test.xlsx', $gt);
       dd($page);
         $properties = Property::with(['type', 'category', 'owner'])->orderBy('property_no', 'asc')->paginate(30);
