@@ -259,25 +259,19 @@ $(document).ready(function() {
     function checkLinkAvailable() {
       document.querySelector('#link span').style.display = "block";
       axios.get('/api/v1/console/check/link/available')
-            .then(response => relateLink(response.data))
+            .then(response => relateLink(response.status))
             .catch(error => console.error(error));
     }
 
     function relateLink(data) {
-      console.log("{{ (route('download.link')) }}/"+data.data.file_name);
-      if (data == null || data.data == null) {
+      if (data == 'failed') {
         document.querySelector('#link a').style.display = "none";
         document.querySelector('#link span').style.display = "block";
         return
       }else{
-        if(data.data.available == 0) {
-          document.querySelector('#link a').style.display = "none";
-          document.querySelector('#link span').style.display = "none";
-          return
-        }
         document.querySelector('#link a').style.display = "block";
         document.querySelector('#link span').style.display = "none";
-        document.querySelector('#link a').href = `{{ route('download.link') }}/${data.data.file_name}`;
+        document.querySelector('#link a').href = `{{ route('download.link') }}`;
         window.clearInterval(timer)
       }
 

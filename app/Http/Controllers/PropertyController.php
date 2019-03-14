@@ -49,11 +49,15 @@ class PropertyController extends Controller
       // http://res.cloudinary.com/dzsvcvdes/image/upload/c_fit,h_640,w_640/omxlufmmebxhtu3xr7ap.png
 
       $gt = Excel::raw(new NorminalRowExportProperty(2019, '1021'), \Maatwebsite\Excel\Excel::XLSX);
+      // \App\TemporalFiles::truncate();
+      // \App\TemporalFiles::create(['file_name' => $gt]);
       // dd($gt);
-      $path = Storage::disk('public')->put('images/kbills/test5.txt', 'hahahahha');
-      File::put('images/kbills/test4.txt', 'hello');
-      $page = File::put('images/kbills/test.xlsx', $gt);
-      return Response::download(public_path('images/kbills/test.xlsx'));
+      $data = \App\TemporalFiles::first();
+      // dd($data->file_name, $gt);
+      // $path = Storage::disk('public')->put('images/kbills/test5.txt', 'hahahahha');
+      // File::put('images/kbills/test4.txt', 'hello');
+      $page = File::put('images/kbills/test777.xlsx', $data->file_name);
+      return Response::download(public_path('images/kbills/test777.xlsx'));
         $properties = Property::with(['type', 'category', 'owner'])->orderBy('property_no', 'asc')->paginate(30);
         // dd($properties);
         return view('console.property.index', compact('properties', 'array'));

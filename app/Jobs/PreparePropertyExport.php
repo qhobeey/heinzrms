@@ -45,10 +45,10 @@ class PreparePropertyExport implements ShouldQueue
       \App\TemporalFiles::truncate();
       // (new NorminalRowExportProperty($this->year, $this->electoral))->download($this->name);
       $gt = Excel::raw(new NorminalRowExportProperty($this->year, $this->electoral), \Maatwebsite\Excel\Excel::XLSX);
+      \App\TemporalFiles::create(['file' => $gt, 'filename' => $this->name]);
+      // $page = File::put(public_path('images/kbills/'.$this->name), $gt);
 
-      $page = File::put(public_path('images/kbills/'.$this->name), $gt);
-
-      \App\TemporalFiles::create(['file_name' => $this->name]);
-      return Response::download(public_path('images/kbills/'.$this->name));
+      // \App\TemporalFiles::create(['file_name' => $gt]);
+      // return Response::download(public_path('images/kbills/'.$this->name));
     }
 }

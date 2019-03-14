@@ -18,6 +18,7 @@ use App\Bill;
 
 use DB;
 use URL;
+use File;
 use Response;
 
 use Illuminate\Support\Facades\Storage;
@@ -196,19 +197,20 @@ class AdvancedReportController extends Controller
       return redirect()->back();
     }
 
-    public function downloadLink($link)
+    public function downloadLink()
     {
       $data = \App\TemporalFiles::first();
       $data->available = 0;
       $data->save();
-      return Response::download(public_path('images/kbills/'.$link));
+      // dd($data);
+      $page = File::put('images/kbills/'.$data->filename, $data->file);
+      return Response::download(public_path('images/kbills/'.$data->filename));
     }
 
     public function checkLinkAvailable()
     {
-      $data = [];
       $data = \App\TemporalFiles::first();
-      return response()->json(['data' => $data]);
+      return response()->json(['status' => $data ? 'success' : 'failed']);
     }
 
 

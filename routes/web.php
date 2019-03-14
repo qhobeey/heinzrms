@@ -152,7 +152,7 @@ Route::prefix('console')->group(function () {
     Route::post('account/bills/category', 'BillingController@postBillsPerCategory')->name('account.bills.category');
 
     Route::get('processing/response', 'BillingController@processing')->name('processing');
-    Route::get('download/links/{link?}', 'AdvancedReportController@downloadLink')->name('download.link');
+    Route::get('download/links', 'AdvancedReportController@downloadLink')->name('download.link');
 
     /** */
     Route::get('reports/property/account', 'ReportController@propertyAccountIndex')->name('report.property.account');
