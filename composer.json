@@ -59,7 +59,9 @@
             "@php artisan package:discover"
         ],
         "post-install-cmd": [
-          "ln -sr storage/app/public public/storage"
+          "ln -sr storage/app/public public/storage",
+          "chmod -R 775 public/",
+          "chmod -R 775 storage/"
       ]
     },
     "config": {
