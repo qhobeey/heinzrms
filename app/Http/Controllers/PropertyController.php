@@ -38,7 +38,7 @@ class PropertyController extends Controller
       // $export = new NorminalRowExportProperty(2019, '1401');
 
       // $fr = (new NorminalRowExportProperty(2019, '1401'))->download('hjhkj.xlsx');
-      // Excel::store(new NorminalRowExportProperty(2019, '1401'), 'invoices.xlsx', 'public');
+      Excel::store(new NorminalRowExportProperty(2019, '1401'), 'invoices.xlsx', 'public');
       // return $export->download('invoices.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
 
       // return Excel::download(new NorminalRowExportProperty, 'invoices.xlsx');
