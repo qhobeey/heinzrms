@@ -38,13 +38,17 @@ class PropertyController extends Controller
       // $export = new NorminalRowExportProperty(2019, '1401');
 
       // $fr = (new NorminalRowExportProperty(2019, '1401'))->download('hjhkj.xlsx');
-      Excel::store(new NorminalRowExportProperty(2019, '1021'), 'invoices.xlsx', 'public');
+      // Excel::store(new NorminalRowExportProperty(2019, '1021'), 'invoices.xlsx', 'public');
       // return $export->download('invoices.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
 
       // return Excel::download(new NorminalRowExportProperty, 'invoices.xlsx');
       // return (new NorminalRowExportProperty)->forYear(2019)->forElectoral('1401')->download('invoices.xlsx');
       // dd(public_path());
       // http://res.cloudinary.com/dzsvcvdes/image/upload/c_fit,h_640,w_640/omxlufmmebxhtu3xr7ap.png
+
+      $gt = Excel::raw(new NorminalRowExportProperty(2019, '1021'), \Maatwebsite\Excel\Excel::XLSX);
+      // dd($gt);
+      Storage::disk('public')->put('test.xlsx', $gt);
         $properties = Property::with(['type', 'category', 'owner'])->orderBy('property_no', 'asc')->paginate(30);
         // dd($properties);
         return view('console.property.index', compact('properties', 'array'));
