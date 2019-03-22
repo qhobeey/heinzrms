@@ -180,9 +180,11 @@ Route::prefix('console')->group(function () {
     Route::get('/api/advanced/report/property', 'AdvancedReportController@test');
     Route::get('/advanced/property/export/{year}/{electoral}', 'AdvancedReportController@exportProperty')->name('property.export.excel');
 
+
     Route::get('advanced/report/search/business', 'AdvancedReportController@businessListingSearch')->name('advanced.report.search.business');
     Route::get('advanced/report/business', 'AdvancedReportController@businessListing')->name('advanced.report.business');
     Route::get('advanced/report/business/{location}/{query}/{year}', 'AdvancedReportController@businessListingDetails')->name('advanced.report.business.details');
+    Route::get('/advanced/business/export/{year}/{electoral}', 'AdvancedReportController@exportBusiness')->name('business.export.excel');
 
     Route::get('advanced/report/search/feefixing', 'AdvancedReportController@feefixingListingSearch')->name('advanced.report.search.feefixing');
     Route::get('advanced/report/feefixing', 'AdvancedReportController@feefixingListing')->name('advanced.report.feefixing');

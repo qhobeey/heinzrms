@@ -38,26 +38,27 @@ class PropertyController extends Controller
       // (new NorminalRowExportProperty(2019, '1401'))->queue('uin.xlsx');
 
       // $export = new NorminalRowExportProperty(2019, '1401');
+      // dd($export);
 
-      // $fr = (new NorminalRowExportProperty(2019, '1401'))->download('hjhkj.xlsx');
+      // $fr = (new NorminalRowExportProperty(2019, 'EK011'))->download('hjhkj.xlsx');
       // Excel::store(new NorminalRowExportProperty(2019, '1021'), 'invoices.xlsx', 'public');
       // return $export->download('invoices.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
 
-      // return Excel::download(new NorminalRowExportProperty, 'invoices.xlsx');
+      // return Excel::download(new NorminalRowExportProperty(2019, '1021'), 'invoices.xlsx');
       // return (new NorminalRowExportProperty)->forYear(2019)->forElectoral('1401')->download('invoices.xlsx');
       // dd(public_path());
       // http://res.cloudinary.com/dzsvcvdes/image/upload/c_fit,h_640,w_640/omxlufmmebxhtu3xr7ap.png
 
-      $gt = Excel::raw(new NorminalRowExportProperty(2019, '1021'), \Maatwebsite\Excel\Excel::XLSX);
+      // return Excel::raw(new NorminalRowExportProperty(2019, '1021'), \Maatwebsite\Excel\Excel::XLSX);
       // \App\TemporalFiles::truncate();
       // \App\TemporalFiles::create(['file_name' => $gt]);
       // dd($gt);
-      $data = \App\TemporalFiles::first();
+      // $data = \App\TemporalFiles::first();
       // dd($data->file_name, $gt);
       // $path = Storage::disk('public')->put('images/kbills/test5.txt', 'hahahahha');
       // File::put('images/kbills/test4.txt', 'hello');
-      $page = File::put('images/kbills/test777.xlsx', $data->file_name);
-      return Response::download(public_path('images/kbills/test777.xlsx'));
+      // $page = File::put('images/kbills/test777.xlsx', $data->file_name);
+      // return Response::download(public_path('images/kbills/test777.xlsx'));
         $properties = Property::with(['type', 'category', 'owner'])->orderBy('property_no', 'asc')->paginate(30);
         // dd($properties);
         return view('console.property.index', compact('properties', 'array'));

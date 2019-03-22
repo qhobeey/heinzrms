@@ -257,17 +257,20 @@ $(document).ready(function() {
     }
 
     function checkLinkAvailable() {
-      document.querySelector('#link span').style.display = "block";
       axios.get('/api/v1/console/check/link/available')
-            .then(response => relateLink(response.status))
+            .then(response => relateLink(response.data.status))
             .catch(error => console.error(error));
     }
 
-    function relateLink(data) {
+    function relateLink(data){
       if (data == 'failed') {
         document.querySelector('#link a').style.display = "none";
+        return false
         document.querySelector('#link span').style.display = "block";
-        return
+
+      }else if(data == 'none'){
+        document.querySelector('#link a').style.display = "none";
+        document.querySelector('#link span').style.display = "block";
       }else{
         document.querySelector('#link a').style.display = "block";
         document.querySelector('#link span').style.display = "none";

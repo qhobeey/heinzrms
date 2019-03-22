@@ -4,7 +4,7 @@ namespace App\Exports;
 
 use Illuminate\Support\Collection;;
 
-use App\Reports\ElectoralPropertyReport;
+use App\Reports\ElectoralBusinessReport;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -32,7 +32,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 
-class NorminalRowExportProperty implements FromCollection, ShouldAutoSize, ShouldQueue, WithEvents, WithHeadings, WithTitle, WithColumnFormatting
+class NorminalRowExportBusiness implements FromCollection, ShouldAutoSize, ShouldQueue, WithEvents, WithHeadings, WithTitle, WithColumnFormatting
 {
     use Exportable;
 
@@ -58,11 +58,12 @@ class NorminalRowExportProperty implements FromCollection, ShouldAutoSize, Shoul
         $response = array();
         $footer = array();
         $year = $this->year;
-        $bills = ElectoralPropertyReport::where('code', $this->electoral)->whereHas('bills', function($q) use ($year) {
-          $q->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
+        $bills = ElectoralBusinessReport::where('code', $this->electoral)->whereHas('bills', function($q) use ($year) {
+          $q->where('year', $year)->where(strtoupper('bill_type'), strtoupper('b'));
         })->with(['bills' => function($query) use ($year) {
-          $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->orderBy('account_no', 'asc');
+          $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('b'))->orderBy('account_no', 'asc');
         }])->first()->bills;
+
         \App\Processing::create(['total' => $bills->count(), 'count' => 0, 'percentage' => 0]);
 
         $sumArrears = 0.0;
@@ -73,15 +74,15 @@ class NorminalRowExportProperty implements FromCollection, ShouldAutoSize, Shoul
 
         foreach ($bills->chunk(1000) as $key => $chunk) {
           foreach ($chunk as $bill) {
-            if(!$bill->property) continue;
+            if(!$bill->business) continue;
             if($bill->current_amount == '' || $bill->current_amount == 0) continue;
             if($bill->account_balance == '' || $bill->account_balance == 0) continue;
             $newData = [
-              $key + 1, $bill->account_no, $bill->property->electoral ? $bill->property->electoral->description : 'NA',
-              $bill->property->owner ? $bill->property->owner->name : 'NO NAME', $bill->property->address,
-              $bill->property->type ? $bill->property->type->description : 'NA',
-              $bill->property->category ? $bill->property->category->description : 'NA', floatval($bill->rate_imposed),
-              floatval($bill->property->rateable_value), floatval($bill->arrears),
+              $key + 1, $bill->account_no, $bill->business->business_name, $bill->business->electoral ? $bill->business->electoral->description : 'NA',
+              $bill->business->owner ? $bill->business->owner->name : 'NO NAME', $bill->business->address,
+              $bill->business->type ? $bill->business->type->description : 'NA',
+              $bill->business->category ? $bill->business->category->description : 'NA', floatval($bill->rate_imposed),
+              floatval($bill->business->rateable_value), floatval($bill->arrears),
               floatval($bill->current_amount), floatval($bill->arrears + $bill->current_amount), floatval($bill->total_paid),
               floatval(($bill->arrears + $bill->current_amount) - $bill->total_paid)
             ];
@@ -103,7 +104,7 @@ class NorminalRowExportProperty implements FromCollection, ShouldAutoSize, Shoul
           }
         }
         $footer = [
-          '', '', '', '', '', '', '', '', '', $sumArrears, $sumCurrentBill, $sumTotalBill,$sumPayment, $sumOutstanding
+          '', '', '', '', '', '', '', '', '', '', $sumArrears, $sumCurrentBill, $sumTotalBill,$sumPayment, $sumOutstanding
         ];
         array_push($response, $footer);
         // dd(collect($response), $footer);
@@ -115,11 +116,12 @@ class NorminalRowExportProperty implements FromCollection, ShouldAutoSize, Shoul
         return [
             '#',
             'ACCOUNT NO.',
+            'BUSINESS NAME',
             'ELECTORAL',
             'OWNER NAME	',
-            'PROPERTY ADDRESS',
-            'PROPERTY TYPE.',
-            'PROPERTY CAT.',
+            'BUSINESS ADDRESS',
+            'BUSINESS TYPE.',
+            'BUSINESS CAT.',
             'RATE IMPOSED',
             'RATEABLE VALUE',
             'ARREARS',
@@ -132,7 +134,7 @@ class NorminalRowExportProperty implements FromCollection, ShouldAutoSize, Shoul
 
     public function title(): string
     {
-        return 'property listings';
+        return 'business listings';
     }
 
     public function columnFormats(): array

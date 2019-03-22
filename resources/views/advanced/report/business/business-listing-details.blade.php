@@ -86,6 +86,7 @@
   <div class="row">
     <div class="col-md-6">
       <button type="button" onclick="javascript:showRsp()" id="repPrintBtn" class="btn btn-xs" style="background: black; color: white;">Print Report</button>
+      <a href="{{route('business.export.excel', [$year, $code])}}">Export to excel</a>
     </div>
     <div class="col-md-6">
       <div class="row"  style="width: 84%; margin: auto;">
@@ -106,6 +107,10 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="row" id="link">
+    <span style="margin-left: 13px;display:none;"><img src="/backend/images/25.gif" alt="" style="width: 19px;margin-right: 4px;">Loading...</span>
+    <a href="#" style="color: #d62424; margin-left: 13px; text-decoration: underline; font-size: 13px; display:none;">Click the here to download prepared excel file file..</a>
   </div>
 </div>
 
@@ -230,6 +235,38 @@ $(document).ready(function() {
         // Do something if printers cannot be got from the client
         alert("No printers are installed in your system.");
     }
+
+    function checkLinkAvailable() {
+      axios.get('/api/v1/console/check/link/available')
+            .then(response => relateLink(response.data.status))
+            .catch(error => console.error(error));
+    }
+
+    function relateLink(data){
+      if (data == 'failed') {
+        document.querySelector('#link a').style.display = "none";
+        return false
+        document.querySelector('#link span').style.display = "block";
+
+      }else if(data == 'none'){
+        document.querySelector('#link a').style.display = "none";
+        document.querySelector('#link span').style.display = "block";
+      }else{
+        document.querySelector('#link a').style.display = "block";
+        document.querySelector('#link span').style.display = "none";
+        document.querySelector('#link a').href = `{{ route('download.link') }}`;
+        window.clearInterval(timer)
+      }
+
+    }
+
+    var timer = function () {
+      return window.setInterval(function() {
+        checkLinkAvailable()
+      }, 5000);
+    }
+
+    window.onload = timer();
 </script>
 <script type="text/javascript">
     var wcppGetPrintersTimeout_ms = 10000; //10 sec

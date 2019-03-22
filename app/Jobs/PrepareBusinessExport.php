@@ -9,13 +9,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 use Excel;
-use App\Exports\NorminalRowExportProperty;
+use App\Exports\NorminalRowExportBusiness;
 
 use Illuminate\Support\Facades\Storage;
 use File;
 use Response;
 
-class PreparePropertyExport implements ShouldQueue
+class PrepareBusinessExport implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -45,8 +45,8 @@ class PreparePropertyExport implements ShouldQueue
       ini_set('memory_limit','256M');
       \App\TemporalFiles::truncate();
       // \App\TemporalFiles::create(['file' => 'gt', 'filename' => $this->name]);
-      (new NorminalRowExportProperty($this->year, $this->electoral))->queue($this->name);
-      $gt = Excel::raw(new NorminalRowExportProperty($this->year, $this->electoral), \Maatwebsite\Excel\Excel::XLSX);
+      // (new NorminalRowExportBusiness($this->year, $this->electoral))->queue($this->name);
+      $gt = Excel::raw(new NorminalRowExportBusiness($this->year, $this->electoral), \Maatwebsite\Excel\Excel::XLSX);
       \App\TemporalFiles::create(['file' => $gt, 'filename' => $this->name]);
       // $page = File::put(public_path('images/kbills/'.$this->name), $gt);
 

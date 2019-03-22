@@ -39,6 +39,7 @@ use Cloudder;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
 use App\Jobs\PreparePropertyExport;
+use App\Jobs\PrepareBusinessExport;
 
 class AdvancedReportController extends Controller
 {
@@ -197,6 +198,16 @@ class AdvancedReportController extends Controller
       return redirect()->back();
     }
 
+    public function exportBusiness(Request $request, $year, $electoral)
+    {
+      // dd($year, $electoral);
+      $elct = Electoral::where('code', $electoral)->first();
+      // $export = new NorminalRowExportProperty(2019, '1401');
+      $name = strtoupper(str_slug($elct->description).'-business-norminal-row-'.$year).'.xlsx';
+      PrepareBusinessExport::dispatch($year, $electoral, $name);
+      return redirect()->back();
+    }
+
     public function downloadLink()
     {
       $data = \App\TemporalFiles::first();
@@ -209,8 +220,19 @@ class AdvancedReportController extends Controller
 
     public function checkLinkAvailable()
     {
+      $response;
       $data = \App\TemporalFiles::first();
-      return response()->json(['status' => $data ? 'success' : 'failed']);
+      if($data) {
+        if($data->available == 1) {
+          $response = 'success';
+        }else {
+          $response = 'failed';
+        }
+      }else{
+        $response = 'none';
+      }
+
+      return response()->json(['status' => $response]);
     }
 
 
@@ -284,10 +306,11 @@ class AdvancedReportController extends Controller
       $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $url, $options = []) : [];
       $info = $electoral ? $electoral->description : '';
       $totalBill = $electoral ? $electoral->bills->count() : '';
+      $code = $loc;
       // dd($electoral->bills->count());
 
       // return ['result'=>$bills];
-      return view('advanced.report.business.business-listing-details', compact('bills', 'year', 'location', 'wcpScript', 'info', 'totalBill', 'electoral'));
+      return view('advanced.report.business.business-listing-details', compact('bills', 'year', 'location', 'wcpScript', 'info', 'totalBill', 'electoral', 'code'));
     }
 
 
@@ -309,7 +332,7 @@ class AdvancedReportController extends Controller
       $totalBill = $electoral ? $electoral->bills->count() : '';
       // return ['result'=>$bills];
       // dd($year, $location, $code, $info);
-      return view('advanced.report.business.business-listing-details', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill', 'electoral'));
+      return view('advanced.report.business.business-listing-details', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill', 'electoral', 'code'));
     }
 
     public function apiBusinessListing()
