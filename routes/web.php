@@ -150,6 +150,7 @@ Route::prefix('console')->group(function () {
     Route::post('account/bills', 'BillingController@postBills')->name('account.bills');
     Route::post('account/bills/single', 'BillingController@postBillsPerUnit')->name('account.bills.single');
     Route::post('account/bills/category', 'BillingController@postBillsPerCategory')->name('account.bills.category');
+    Route::get('adjust/arrears', 'BillingController@adjustArrears')->name('adjust.arrears');
 
     Route::get('processing/response', 'BillingController@processing')->name('processing');
     Route::get('download/links', 'AdvancedReportController@downloadLink')->name('download.link');

@@ -293,6 +293,7 @@ class ApiController extends Controller
       $max = Bill::where('account_no', $query)->max('year');
       $bill = Bill::where('account_no', $query)->where('year', $max)->first();
       // dd($bill);
+      if(!$bill) return response()->json(['status' => 'success', 'data' => 'false']);
       $owner;
       if (strtoupper($bill->bill_type) == strtoupper('p')) {
         $bill = Bill::with('property')->where('account_no', $query)->where('year', $max)->first();
@@ -305,6 +306,8 @@ class ApiController extends Controller
         $owner = ($own == 'NA') ? 'NA' : $own->owner;
         $zonal = ($own == 'NA') ? 'NA' : $own->zonal;
       }
+
+
 
       // $bill = Bill::where('account_no', $query)->first() ?: 'no data found';
       // dd($owner);

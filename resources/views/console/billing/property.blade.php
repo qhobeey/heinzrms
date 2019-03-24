@@ -49,7 +49,7 @@
                             </div>
                             <div class="col-md-3">
                               <div class="form-group">
-                                <button type="submit" style="margin-top: 25px;" class="btn btn-danger" disabled>Generate account bills</button>
+                                <button type="submit" style="margin-top: 25px;" class="btn btn-danger">Generate account bills</button>
                               </div>
                             </div>
                           </div>

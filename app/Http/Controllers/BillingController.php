@@ -78,6 +78,11 @@ class BillingController extends Controller
       return redirect()->back();
     }
 
+    public function adjustArrears()
+    {
+      return view('console.billing.adjust-arrears');
+    }
+
 
     public function propertyBills()
     {

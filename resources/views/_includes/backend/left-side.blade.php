@@ -71,6 +71,7 @@
                         <li><a href="{{route('cashiers.index')}}">{{__('Cashier Payments')}}</a></li>
 
                         <li><a href="{{route('collectors.payment')}}">{{__('Collectors Payments')}}</a></li>
+                        <li><a href="{{route('adjust.arrears')}}">{{__('Adjust Arrears')}}</a></li>
                     </ul>
                 </li>
 

@@ -523,3 +523,16 @@ table.dataTable.feefixing thead th, table.dataTable thead td {
   color: brown;
   font-weight: 600;
 }
+.a-dd, .a-dd:hover, .a-dd:active{
+  font-size: 11px;
+  position: relative;
+  top: 8px;
+  color: #ffe4c4;
+  font-family: monospace;
+  letter-spacing: 0px;
+  left: -15px;
+}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
+  background-color: #bbb5b5;
+  border-color: #bbb5b5;
+}
