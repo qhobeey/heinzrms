@@ -35,4 +35,9 @@ class Bill extends Model
     {
       return ($this->arrears + $this->current_amount);
     }
+    public function getArrearsAttribute()
+    {
+      $bool = ($this->adjust_arrears == null) ? $this->arrears : floatval($this->adjust_arrears);
+      return $bool;
+    }
 }

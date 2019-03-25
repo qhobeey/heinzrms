@@ -8,7 +8,7 @@
       <div id="menuProperty" class="tab-pane fade in active">
         <h3 style="font-size: 19px; text-transform: uppercase;margin-left: 10px; margin-right: 10px;text-align:center;">Adjust Arrears</h3>
         <hr style="border-top: 1px solid #ebeff2;margin-bottom: 10px;margin-top: 10px;width: 76%;">
-        <form class="" action="{{route('advanced.report.feefixing')}}" method="get">
+        <form class="" action="{{route('adjust.arrears')}}" method="post">
           @csrf
           <div class="row search-cont">
 
@@ -18,7 +18,7 @@
               </div>
               <div class="col-md-8">
                 <div class="form-group">
-                  <input type="text" class="form-control" disabled name="" id="year" value="<?php echo date('Y'); ?>">
+                  <input type="text" class="form-control" disabled name="year" id="year" value="<?php echo date('Y'); ?>">
                 </div>
               </div>
             </div>
@@ -28,7 +28,7 @@
               </div>
               <div class="col-md-8">
                 <div class="form-group">
-                  <input type="text" class="form-control" required name="" id="account_no" v-model="account_no" @keyup="filteredList()" value="">
+                  <input type="text" class="form-control" required name="account_no" id="account_no" v-model="account_no" @keyup="filteredList()" value="">
                 </div>
 
                 <small style="color: red;position: relative;top: -11px;display:none;" id="error">Account not found</small>
@@ -38,7 +38,7 @@
               </div> -->
             </div>
 
-            <div class="row">
+            <div class="row" id="flist">
               <div class="col-md-12" style="box-shadow: 1px 1px 8px #ccc;padding: 15px; width:50%;width: 98%;background: #faebd7;margin: auto;max-height: 120px;overflow: auto;" v-if="showFilter">
                 <div class="data-table card filter-table" v-if="showFilter">
                   <table>
@@ -46,7 +46,7 @@
                       <template v-for="data in filterList" v-if="account_no.length > 3">
                         <tr>
                           <td class="label-cell">
-                            <a href="#" @click.prevent="updateSearchField(data.property_no)"><span style="color:red;" v-text="data.property_no"></span>&nbsp; - @{{data.owner.name}}</a>
+                            <a type="button" href="#" onclick="ajaxBillInfo();"><span style="color:red;" v-text="data.property_no"></span>&nbsp; - @{{data.owner.name}}</a>
                           </td>
                         </tr>
                       </template>
@@ -72,12 +72,12 @@
               </div>
               <div class="col-md-8">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="" value="">
+                  <input type="number" required class="form-control" name="adjust_arrears" value="">
                 </div>
               </div>
             </div>
             <div class="col-md-12">
-              <button type="submit" class="form-control btn btn-xs">Preview</button>
+              <button type="submit" class="form-control btn btn-xs">save</button>
             </div>
           </div>
         </form>
@@ -111,16 +111,6 @@
         showFilter: false
       },
       methods: {
-          getPBills(query){
-            axios.get(`/api/v1/console/get_account_bills/${query}`)
-                 .then(response => {this.popDataSet(response)})
-                 .catch(error => console.error(error));
-          },
-          getCStocks(query){
-            axios.get(`/api/v1/console/get_collectors_stock/${query}`)
-                 .then(response => {console.log(response.data), this.gcrs = response.data.data})
-                 .catch(error => console.error(error));
-          },
           filteredList () {
             if(this.account_no.length > 4){
               this.showFilter = true
@@ -133,6 +123,8 @@
           updateSearchField (req) {
             this.account_no = req
             this.showFilter = false
+            // document.getElementById('current_arrears').value = parseFloat(this.filterList.arrears).toFixed(2)
+            // document.getElementById('year').value = this.filterList.year
           },
           popDataSet(response) {
 
@@ -156,6 +148,7 @@
     }
 
     function relateLink(data){
+      document.getElementById('flist').style.display = "none"
       if(data == 'false') {
         document.getElementById('error').style.display = "block";
         document.getElementById('account_no').value = ""

@@ -82,6 +82,15 @@ class BillingController extends Controller
     {
       return view('console.billing.adjust-arrears');
     }
+    public function postAdjustArrears(Request $request)
+    {
+      $max = \App\Bill::where('account_no', $request->account_no)->max('year');
+      $bill = \App\Bill::where('account_no', $request->account_no)->where('year', $max)->first();
+      $bill->adjust_arrears = $request->adjust_arrears;
+      $bill->update();
+
+      return redirect()->back();
+    }
 
 
     public function propertyBills()
