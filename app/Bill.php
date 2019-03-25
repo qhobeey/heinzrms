@@ -37,7 +37,11 @@ class Bill extends Model
     }
     public function getArrearsAttribute()
     {
-      $bool = ($this->adjust_arrears == null) ? $this->arrears : floatval($this->adjust_arrears);
-      return $bool;
+      // dd($this->attribute['arrears']);
+      if($this->adjust_arrears != null || $this->adjust_arrears != '') {
+        return floatval($this->adjust_arrears);
+      }
+      return $this->attributes['arrears'];
+
     }
 }
