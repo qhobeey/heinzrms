@@ -25,6 +25,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                              <div class="form-group">
+                                  <label for="">Password</label>
+                                  <input type="text" name="password" class="form-control" value="" placeholder="Update Password">
+                              </div>
+                            </div>
 
                             <div class="row">
                                 <button type="submit" class="form-control btn btn-primary">Add Entry</button>

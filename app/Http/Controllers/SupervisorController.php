@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Supervisor;
 
 class SupervisorController extends Controller
@@ -47,6 +48,15 @@ class SupervisorController extends Controller
           $res->supervisor_id = strtoupper(env('ASSEMBLY_CODE')[0].$res->name[0].sprintf('%03d', $supervisors));
           $res->save();
         }
+        if($request->password):
+          $user = \App\User::where('user_id', $res->supervisor_id)->first();
+          if($user):
+            $user->password = Hash::make($request->password);
+            $user->update();
+          else:
+            \App\User::create(['name' => $res->name, 'user_id' => $res->supervisor_id, 'email' => $res->email, 'password' => Hash::make($request->password)]);
+          endif;
+        endif;
         return redirect()->route('supervisors.create');
     }
 
@@ -87,6 +97,19 @@ class SupervisorController extends Controller
       $data = $request->validate(['name' => 'required', 'email' => 'required']);
 
       $res = $supervisor->update($data);
+
+      if($request->password):
+        $user = \App\User::where('user_id', $supervisor->supervisor_id)->first();
+        if($user):
+          // dd('pp');
+          $user->password = Hash::make($request->password);
+          $user->update();
+        else:
+          // dd($supervisor->supervisor_id);
+          $i = \App\User::create(['name' => $supervisor->name, 'user_id' => $supervisor->supervisor_id, 'email' => $supervisor->email, 'password' => Hash::make($request->password)]);
+          // dd($i);
+        endif;
+      endif;
       return view('console.supervisor.edit', compact('supervisor'));
     }
 
