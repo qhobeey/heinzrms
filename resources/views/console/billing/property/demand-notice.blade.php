@@ -152,7 +152,7 @@
                     <div class="col-md-12" style="background: #f1efec;padding-top: 5px;margin-top: 15px;padding-left: 15px;border: 1px solid #ccc;min-height: 90px;">
                       <div class="col-md-3">
                         <div class="form-group">
-                          <select id="tselect"  class="form-control" onchange="toggleView();" style=" width: 100%;height: 30px;position: relative;top: 6px;">
+                          <select id="tselect" disabled class="form-control" onchange="toggleView();" style=" width: 100%;height: 30px;position: relative;top: 6px;">
                             <option value="bills">Bills</option>
                             <option value="demand">Demand Notice</option>
                           </select>
@@ -202,7 +202,7 @@
 
                 <div id="cardcont" style="display:block;">
                   <article id="bill2">
-                    <div id="bills21" style="width: 1000px; height: 100%; padding-top: 30px; padding-bottom: 20px; border-radius: 0px; background-color:white; margin-top: 60px; margin-bottom: 50px;">
+                    <div id="card" style="width: 1000px; height: 100%; padding-top: 30px; padding-bottom: 20px; border-radius: 0px; background-color:white; margin-top: 60px; margin-bottom: 50px;">
                       <div style="display:flex;">
                         <div style="width:250px;border-right: 2px dashed #000;height: 100%;">
                           <div style="text-align: center;">
@@ -381,7 +381,7 @@
                           <div style="background-color:white; width: 100%; font-size: 11px; color: black; margin-top:0px;">
                             <p>{{$setting->enforce_law_text}}</p>
                             <h4 style="color: black; text-transform: uppercase; font-weight: 600; text-align: center; margin-top: -3px; font-size: 22px;">payment should be made with the bill</h4>
-                            <h5 style="text-align: center; text-transform: uppercase; font-weight: 600; color: black; font-size: 16px; margin-top: -5px; letter-spacing: 2px;">pay your bills promptly and help keep the city clean</h5>
+                            <h5 style="text-align: center; text-transform: uppercase; font-weight: 600; color: black; font-size: 16px; margin-top: -5px; letter-spacing: 2px;">pay your bills promptly and help the city clean</h5>
                             <hr style="border-top: 2px dashed black;">
                           </div>
 
@@ -390,7 +390,7 @@
                   </div>
                   </article>
                   <article id="demand2">
-                    <div id="demand21" style="width: 1000px; height: 100%; padding-top: 50px; padding-bottom: 20px; border-radius: 0px; background-color:white; margin-top: 100px; margin-bottom: 50px;">
+                    <div id="card" style="width: 1000px; height: 100%; padding-top: 50px; padding-bottom: 20px; border-radius: 0px; background-color:white; margin-top: 100px; margin-bottom: 50px;">
                         <div style="width: 804px; background-color:white; margin:auto; border: 2px solid #000;">
                           <div style="background-color:white; width:800px; display: flex; flex-direction: row;">
                             <img src="{{$setting->logo}}" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
@@ -458,10 +458,10 @@
                             </div>
                             <div style="background-color:white; width:60%; text-align: right;">
                               <ul style="list-style: none; padding-left: 2px; margin-bottom: 0px; width: 90%; margin-left: auto;">
-                                <li style="font-size: 13px; font-weight: 500; height:25px; color: black; "><span id="r_ac_arrears_3">150.00</span> </li>
-                                <li style="font-size: 13px; font-weight: 500; height:25px; color: black; "><span id="r_ac_current_3">100.00</span> </li>
-                                <li style="font-size: 13px; font-weight: 500; height:25px; color: black; background-color: antiquewhite;"><span id="r_ac_tpaid_3">100.00</span></li>
-                                <li style="font-size: 16px; font-weight: 600; height: 25px; color: black; background-color: antiquewhite; margin-top: 3px; border-top: 1px solid #000; border-bottom: 1px solid #000;"><span id="r_ac_total_3">250.00</span> </li>
+                                <li style="font-size: 13px; font-weight: 500; height:25px; color: black; ">GHc&nbsp;&nbsp;<span id="r_ac_arrears_3">150.00</span> </li>
+                                <li style="font-size: 13px; font-weight: 500; height:25px; color: black; ">GHc&nbsp;&nbsp;<span id="r_ac_current_3">100.00</span> </li>
+                                <li style="font-size: 13px; font-weight: 500; height:25px; color: black; background-color: antiquewhite;">GHc&nbsp;&nbsp;0.00</li>
+                                <li style="font-size: 16px; font-weight: 600; height: 25px; color: black; background-color: antiquewhite; margin-top: 3px; border-top: 1px solid #000; border-bottom: 1px solid #000;">GHc&nbsp;&nbsp;<span id="r_ac_total_3">250.00</span> </li>
                               </ul>
                             </div>
                           </div>
@@ -671,7 +671,6 @@ $(document).ready(function(){
         document.getElementById('r_acc_no').innerHTML = parentParse.property_no
         document.getElementById('r_acc_name_2').innerHTML = parentParse.owner ? parentParse.owner.name : ''
         document.getElementById('r_acc_no_2').innerHTML = parentParse.property_no
-        document.getElementById('r_acc_no_3').innerHTML = parentParse.property_no
         document.getElementById('r_acc_name').innerHTML = parentParse.owner ? parentParse.owner.name : ''
         document.getElementById('r_acc_hsno').innerHTML = (parentParse.house_no && parentParse.house_no != 'NULL') ? parentParse.house_no : ''
         document.getElementById('r_acc_address').innerHTML = parentParse.address ? parentParse.address : ''
@@ -713,7 +712,6 @@ $(document).ready(function(){
         document.getElementById('r_ac_arrears_3').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(currentBill.arrears))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_current_3').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_total_3').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
-        document.getElementById('r_ac_tpaid_3').innerHTML = currentBill.total_paid ? `${formatDollar(parseFloat(currentBill.total_paid))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_year').innerHTML = currentBill.year
 
         // if((parentParse.address == '' || parentParse.address == null) && (parentParse.house_no == '' || parentParse.house_no == null)){
@@ -806,8 +804,8 @@ $(document).ready(function(){
     }
 
     function startPrinting() {
-      var card = "#" + document.getElementById('tselect').value + "21"
-      console.log("card ID:....." + card);
+      console.log('priniting');
+      var card = "#" + document.getElementById('tselect').value + "2"
       html2canvas(document.querySelector(card)).then(canvas => {
         var b64Prefix = "data:image/png;base64,";
         var imgBase64DataUri = canvas.toDataURL("image/jpg");

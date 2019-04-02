@@ -46,7 +46,7 @@
                       <template v-for="data in filterList" v-if="account_no.length > 3">
                         <tr>
                           <td class="label-cell">
-                            <a type="button" href="#" onclick="ajaxBillInfo();"><span style="color:red;" v-text="data.property_no"></span>&nbsp; - @{{data.owner.name}}</a>
+                            <a type="button" href="#" @click="updateSearchField(data.property_no);"><span style="color:red;" v-text="data.property_no"></span>&nbsp; - @{{data.owner.name}}</a>
                           </td>
                         </tr>
                       </template>
@@ -114,6 +114,7 @@
           filteredList () {
             if(this.account_no.length > 4){
               this.showFilter = true
+              document.getElementById('flist').style.display = "block"
               axios.get(`/api/v1/console/filter_bill_by_ac/${this.account_no.toUpperCase()}/p`)
               .then(response => {this.filterList = response.data.data})
               .catch(error => {console.error(error)});
@@ -123,10 +124,27 @@
           updateSearchField (req) {
             this.account_no = req
             this.showFilter = false
+            this.ajaxBillInfo(req)
             // document.getElementById('current_arrears').value = parseFloat(this.filterList.arrears).toFixed(2)
             // document.getElementById('year').value = this.filterList.year
           },
-          popDataSet(response) {
+          ajaxBillInfo(bill) {
+            // let bill = document.getElementById('account_no').value
+            axios.get(`/api/v1/console/get_account_bills/${bill}`)
+                  .then(response => this.relateLink(response.data.data))
+                  .catch(error => console.error(error));
+          },
+
+          relateLink(data){
+            document.getElementById('flist').style.display = "none"
+            if(data == 'false') {
+              document.getElementById('error').style.display = "block";
+              document.getElementById('account_no').value = ""
+              return false
+            }
+            document.getElementById('error').style.display = "none";
+            document.getElementById('current_arrears').value = parseFloat(data.arrears).toFixed(2)
+            document.getElementById('year').value = data.year
 
           }
       },
@@ -140,25 +158,7 @@
 
 <script type="text/javascript">
 
-    function ajaxBillInfo() {
-      let bill = document.getElementById('account_no').value
-      axios.get(`/api/v1/console/get_account_bills/${bill}`)
-            .then(response => relateLink(response.data.data))
-            .catch(error => console.error(error));
-    }
 
-    function relateLink(data){
-      document.getElementById('flist').style.display = "none"
-      if(data == 'false') {
-        document.getElementById('error').style.display = "block";
-        document.getElementById('account_no').value = ""
-        return false
-      }
-      document.getElementById('error').style.display = "none";
-      document.getElementById('current_arrears').value = parseFloat(data.arrears).toFixed(2)
-      document.getElementById('year').value = data.year
-
-    }
 
 </script>
 

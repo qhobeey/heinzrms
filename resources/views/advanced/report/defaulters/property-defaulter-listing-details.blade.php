@@ -19,16 +19,16 @@
       <h1 style="font-weight: 600; text-align: center; text-transform: uppercase; color: black; font-size: 28px;"><?= env('ASSEMBLY_SMS_NAME'); ?></h1>
     </div>
     <div class="row" style="border-bottom: 2px solid black;">
-      <h4 style="text-align: center; font-size: 14px; color: black; font-weight: 600;">Property Listing Grouped by <?= ucwords($info); ?> <?= ucwords($location); ?> for <?= ucwords($year); ?></h4>
+      <h4 style="text-align: center; font-size: 14px; color: black; font-weight: 600;">Defaulters Listing Grouped by <?= ucwords($info); ?> <?= ucwords($location); ?> for <?= ucwords($year); ?></h4>
     </div>
     <table id="fBill2" class="display" cellspacing="0" width="100%" style="table-layout: fixed;">
         <thead>
             <tr>
-              <th style="width:5%;"></th>
+              <th style="width:4%;"></th>
               <!-- <th style="font-size: 10px;color: black;">Electoral Area</th> -->
-              <th style="font-size: 10px;color: black;width: 10%;">Account No</th>
-              <th style="font-size: 10px;color: black;">Owner Name</th>
-              <th style="font-size: 10px;color: black;">Property Address</th>
+              <th style="font-size: 10px;color: black;width: 12%;">Account No</th>
+              <th style="font-size: 10px;color: black;width: 10%;">Owner Name</th>
+              <th style="font-size: 10px;color: black;width: 6%;">Property Address</th>
               <th style="font-size: 10px;color: black;width:10%;">Property cat</th>
               <th style="font-size: 10px;color: black;">Rateable Value</th>
               <th style="font-size: 10px;color: black;">Rate Imposed</th>
@@ -103,12 +103,12 @@
   {{$bills->links()}}
   @endif
 
-  <p class="lead"><button id="json" class="btn btn-primary">TO JSON</button> <button id="csv" class="btn btn-info">TO CSV</button>  <button id="pdf" class="btn btn-danger">TO PDF</button></p>
+  <!-- <p class="lead"><button id="json" class="btn btn-primary">TO JSON</button> <button id="csv" class="btn btn-info">TO CSV</button>  <button id="pdf" class="btn btn-danger">TO PDF</button></p> -->
 
   <div class="row">
     <div class="col-md-6">
       <button type="button" onclick="javascript:showRsp()" id="repPrintBtn" class="btn btn-xs" style="background: black; color: white;">Print Report</button>
-      <a href="{{route('property.export.excel', [$year, $code])}}">Export to excel</a>
+      <!-- <a href="{{route('defaulter.property.export.excel', [$year, $code, $amount, $operator])}}">Export to excel</a> -->
     </div>
     <div class="col-md-6">
       <div class="row"  style="width: 84%; margin: auto;">

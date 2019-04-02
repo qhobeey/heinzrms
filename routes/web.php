@@ -104,8 +104,10 @@ Route::prefix('console')->group(function () {
 
     /** */
     Route::get('property/lgt/prepare/bill', 'BillingController@propertyBillPrepare')->name('lgt.property.bills');
-    Route::get('property/lgt/prepare/bill/bulk', 'BillingController@propertyBillPrepareBulk')->name('lgt.property.bills.bulk');
-    Route::get('account/bills/advanced/{query?}', 'BillingController@filterBillsQuery')->name('lgt.property.bills.bulk.query');
+    Route::get('property/lgt/prepare/bill/property/bulk', 'BillingController@propertyBillPrepareBulk')->name('lgt.property.bills.bulk');
+    Route::get('account/bills/advanced/account/{query?}', 'BillingController@filterBillsQuery')->name('lgt.property.bills.bulk.query');
+    Route::get('property/lgt/prepare/bill/business/bulk', 'BillingController@businessBillPrepareBulk')->name('lgt.business.bills.bulk');
+    // Route::get('account/bills/advanced/business/{query?}', 'BillingController@filterBillsQuery')->name('lgt.property.bills.bulk.query');
     Route::get('property/lgt/custom/sms', 'SetupController@propertySMS')->name('lgt.property.sms');
     Route::post('property/lgt/custom/sms', 'SetupController@postPropertySMS')->name('lgt.property.sms');
     Route::get('property/lgt/custom/bg/{query?}', 'SetupController@filterPropertySMSQuery')->name('lgt.property.sms.query');
@@ -150,8 +152,9 @@ Route::prefix('console')->group(function () {
     Route::post('account/bills', 'BillingController@postBills')->name('account.bills');
     Route::post('account/bills/single', 'BillingController@postBillsPerUnit')->name('account.bills.single');
     Route::post('account/bills/category', 'BillingController@postBillsPerCategory')->name('account.bills.category');
-    Route::get('adjust/arrears', 'BillingController@adjustArrears')->name('adjust.arrears');
     Route::post('adjust/arrears', 'BillingController@postAdjustArrears')->name('adjust.arrears');
+    Route::get('adjust/arrears/property', 'BillingController@adjustArrearsP')->name('adjust.arrears.property');
+    Route::get('adjust/arrears/business', 'BillingController@adjustArrearsB')->name('adjust.arrears.business');
 
     Route::get('processing/response', 'BillingController@processing')->name('processing');
     Route::get('download/links', 'AdvancedReportController@downloadLink')->name('download.link');
@@ -163,6 +166,10 @@ Route::prefix('console')->group(function () {
     Route::post('reports/business/account', 'ReportController@businessAccountIndexPost')->name('report.business.account');
     Route::get('reports/bills/account', 'ReportController@billsAccountIndex')->name('report.bills.account');
     Route::post('reports/bills/account', 'ReportController@billsAccountIndexPost')->name('report.bills.account');
+    Route::get('reports/defaulters', 'AdvancedReportController@defaultersReport')->name('report.defaulters');
+    Route::get('reports/adv/defaulters', 'AdvancedReportController@defaultersReportPost')->name('report.defaulters.get');
+    Route::get('reports/adv/defaulters/{location}/{query}/{year}/{amount}/{operator}', 'AdvancedReportController@defaultersReportPostPropertyDetails')->name('report.defaulters.get.property.details');
+    Route::get('reports/adv/defaulters/export/{year}/{electoral}/{amount}/{operator}', 'AdvancedReportController@exportDefaultersProperty')->name('defaulter.property.export.excel');
 
     /** */
     // Route::get('print/bills', 'PrintingCardController@bills');

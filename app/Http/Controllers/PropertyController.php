@@ -18,6 +18,14 @@ use App\Jobs\PreparePropertyExport;
 use Carbon\Carbon;
 use File;
 use Response;
+use Session;
+
+use App\WebClientPrint\WebClientPrint;
+use App\WebClientPrint\Utils;
+use App\WebClientPrint\DefaultPrinter;
+use App\WebClientPrint\InstalledPrinter;
+use App\WebClientPrint\PrintFile;
+use App\WebClientPrint\ClientPrintJob;
 
 class PropertyController extends Controller
 {
@@ -61,6 +69,9 @@ class PropertyController extends Controller
       // return Response::download(public_path('images/kbills/test777.xlsx'));
         $properties = Property::with(['type', 'category', 'owner'])->orderBy('property_no', 'asc')->paginate(30);
         // dd($properties);
+        $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
+
+        // return view('console.prints.demand-notice-card', compact('wcpScript'));
         return view('console.property.index', compact('properties', 'array'));
     }
 

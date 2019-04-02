@@ -17,7 +17,7 @@
       <h1 style="font-weight: 600; text-align: center; text-transform: uppercase; color: black; font-size: 28px;"><?= env('ASSEMBLY_SMS_NAME'); ?></h1>
     </div>
     <div class="row" style="border-bottom: 2px solid black;">
-      <h4 style="text-align: center; font-size: 14px; color: black; font-weight: 600;">Property Listing Grouped by <?= ucwords($location); ?> Area for <?= ucwords($year); ?></h4>
+      <h4 style="text-align: center; font-size: 14px; color: black; font-weight: 600;">Defaulters Listing Grouped by <?= ucwords($location); ?> Area for <?= ucwords($year); ?></h4>
     </div>
   <table id="fBill1" class="display" cellspacing="0" width="100%">
       <thead>
@@ -37,10 +37,10 @@
           <div class="tableInner">
             <tr class="odd2 heyy">
                 <td>
-                  <a href="{{route('advanced.report.property.details', ['electoral', $electoral->code, $year])}}"><img src="/advanced/1/add-square-button.png"></a>
+                  <a href="{{route('report.defaulters.get.property.details', ['electoral', $electoral->code, $year,$amount,$operator])}}"><img src="/advanced/1/add-square-button.png"></a>
                 </td>
                 <td>
-                  <a style="color:blue; font-weight: 400;" href="{{route('advanced.report.property.details', ['electoral', $electoral->code, $year])}}">
+                  <a style="color:blue; font-weight: 400;" href="{{route('report.defaulters.get.property.details', ['electoral', $electoral->code, $year,$amount,$operator])}}">
                     <?= $electoral->description; ?>&nbsp; [<?= $electoral->bills->count(); ?>]
                   </a>
                 </td>

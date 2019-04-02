@@ -63,11 +63,26 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                      <label for="">Business Owner</label>
-                                      <input disabled="true" type="text" value="<?= $business->owner ? $business->owner->name : $business->business_owner; ?>" name="business_owner" class="form-control">
-                                  </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="">Telephone Number</label>
+                                        <input type="text" name="phone_number" value="<?= $business->owner ? $business->owner->phone : '' ?>" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="">Business Owner</label>
+                                        <input type="text" name="business_owner" value="<?= $business->owner ? $business->owner->name : $business->business_owner ?>" class="form-control">
+
+                                    </div>
+                                </div>
+                                <input type="hidden" name="owner_id" value="<?= $business->owner ? $business->owner->owner_id : '' ?>">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <button class="btn btn-owner form-control">Add new Owner</button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">

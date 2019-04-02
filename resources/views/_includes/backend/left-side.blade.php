@@ -31,11 +31,12 @@
                         <li><a href="{{route('property.types')}}">{{__('Property Type')}}</a></li>
                         <li><a href="{{route('property.categories')}}">{{__('Property Category')}}</a></li>
                         <!-- <li><a href="{{route('stock.return')}}">{{__('Fee Fixing')}}</a></li> -->
-                        <li><a href="{{route('property.owners')}}">{{__('Property Owners')}}</a></li>
+                        <!-- <li><a href="{{route('property.owners')}}">{{__('Property Owners')}}</a></li> -->
                         <li><a href="{{route('property.payments.payment')}}">{{__('Property Payments')}}</a></li>
                         <!-- <li><a href="{{route('print.property.bills')}}">{{__('Print Bills old')}}</a></li> -->
                         <li><a href="{{route('lgt.property.bills.bulk')}}">{{__('Print Bills')}}</a></li>
                         <li><a href="{{route('lgt.property.sms')}}">{{__('Property SMS')}}</a></li>
+                        <li><a href="{{route('adjust.arrears.property')}}">{{__('Adjust Arrears')}}</a></li>
                     </ul>
                 </li>
 
@@ -48,10 +49,12 @@
                         <li><a href="{{route('business.types')}}">{{__('Business Type')}}</a></li>
                         <li><a href="{{route('business.categories')}}">{{__('Business Category')}}</a></li>
                         <!-- <li><a href="{{route('stock.return')}}">{{__('Fee Fixing')}}</a></li> -->
-                        <li><a href="{{route('business.owners')}}">{{__('Business Owners')}}</a></li>
+                        <!-- <li><a href="{{route('business.owners')}}">{{__('Business Owners')}}</a></li> -->
                         <li><a href="{{route('business.payments.payment')}}">{{__('Business Payments')}}</a></li>
-                        <li><a href="{{route('print.business.bills')}}">{{__('Bulk Bills Printing')}}</a></li>
+                        <li><a href="{{route('lgt.business.bills.bulk')}}">{{__('Print Bills')}}</a></li>
+                        <!-- <li><a href="{{route('print.business.bills')}}">{{__('Bulk Bills Printing')}}</a></li> -->
                         <li><a href="{{route('lgt.business.sms')}}">{{__('Business SMS')}}</a></li>
+                        <li><a href="{{route('adjust.arrears.business')}}">{{__('Adjust Arrears')}}</a></li>
                     </ul>
                 </li>
 
@@ -71,7 +74,7 @@
                         <li><a href="{{route('cashiers.index')}}">{{__('Cashier Payments')}}</a></li>
 
                         <li><a href="{{route('collectors.payment')}}">{{__('Collectors Payments')}}</a></li>
-                        <li><a href="{{route('adjust.arrears')}}">{{__('Adjust Arrears')}}</a></li>
+
                     </ul>
                 </li>
 
@@ -125,6 +128,7 @@
                       <li><a href="{{route('advanced.report.search.property')}}">{{__('Property Listings')}}</a></li>
                       <li><a href="{{route('advanced.report.search.business')}}">{{__('Business Listings')}}</a></li>
                       <li><a href="{{route('advanced.report.search.feefixing')}}">{{__('Feefixing Listings')}}</a></li>
+                      <li><a href="{{route('report.defaulters')}}">{{__('Defaulters Report')}}</a></li>
                     </ul>
                 </li>
 

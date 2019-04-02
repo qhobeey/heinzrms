@@ -57,6 +57,11 @@ class RecordController extends Controller
 
         $collector = \App\Collector::where('id', $payment['collector_id'])->first();
         unset($payment[1]);
+        if($request->cashier_id):
+          $cashier = \App\Cashier::where('id', $payment['cashier_id'])->first();
+          unset($payment[2]);
+          $payment = array_merge($payment, ['cashier_id' => $cashier->cashier_id]);
+        endif;
         // $payment = array_merge($payment, ['payment_year' => Carbon::now()->year,
         //     'payment_type' => 'P', 'account_no' => 'empty',
         //     'amount_paid' => floatval($payment['amount_paid']),
@@ -118,6 +123,11 @@ class RecordController extends Controller
 
         $collector = \App\Collector::where('id', $payment['collector_id'])->first();
         unset($payment[1]);
+        if($request->cashier_id):
+          $cashier = \App\Cashier::where('id', $payment['cashier_id'])->first();
+          unset($payment[2]);
+          $payment = array_merge($payment, ['cashier_id' => $cashier->cashier_id]);
+        endif;
         // $payment = array_merge($payment, ['payment_year' => Carbon::now()->year,
         //     'payment_type' => 'P', 'account_no' => 'empty',
         //     'amount_paid' => floatval($payment['amount_paid']),

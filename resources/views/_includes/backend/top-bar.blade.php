@@ -53,6 +53,7 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right pull-right">
+
                     <li class="dropdown top-menu-item-xs">
                         <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown"
                            aria-expanded="true"><img src="/backend/images/users/boy.png" alt="user-img"
@@ -76,8 +77,16 @@
                             </li>
                         </ul>
                     </li>
+
                 </ul>
                 <ul class="nav navbar-nav hidden-xs nav-right pull-right">
+                  <li>
+                    <a href="" class="waves-effect waves-light ass-name">
+                      <span style="font-size: 12px;letter-spacing: 0px;font-weight: 400;text-transform:initial;color: #cdaa80;">Logged in as:&nbsp;</span>
+
+                      <span style="font-size: 12px;letter-spacing: 1px;font-weight: 400;"><?php echo auth()->user()->name; ?></span>
+                    </a>
+                  </li>
                     <li><a href="" class="waves-effect waves-light" style="font-size: 10px;">Powered by: <span style="color: #dcb686;font-size: 10px;">Heinz Integrated System</span> </a></li>
                 </ul>
             </div>

@@ -42,9 +42,18 @@ class BillingController extends Controller
     {
       $bills = [];
       $tag = '';
+      $view = env('ASSEMBLY_CODE') == 'KKMA' ? 'console.billing.property.bulk-print' : 'console.billing.property.t';
       $setting = Setting::latest()->first();
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
-      return view('console.billing.property.bulk-print', compact('bills', 'setting', 'wcpScript','tag'));
+      return view($view, compact('bills', 'setting', 'wcpScript','tag'));
+    }
+    public function businessBillPrepareBulk()
+    {
+      $bills = [];
+      $tag = '';
+      $setting = Setting::latest()->first();
+      $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
+      return view('console.billing.business.bulk-print', compact('bills', 'setting', 'wcpScript','tag'));
     }
 
     public function filterBillsQuery(Request $request, $query=null)
@@ -52,18 +61,19 @@ class BillingController extends Controller
       // dd($request->all());
       $setting = Setting::latest()->first();
       $tag = '';
+      $view = $request->bill_type == 'p' ? env('ASSEMBLY_CODE') == 'KKMA' ? 'console.billing.property.bulk-print' : 'console.billing.property.t' : 'console.billing.business.bulk-print';
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
       if($request->account_no):
         $tag = '';
         $bills = \App\Bill::where('account_no', $request->account_no)->where('bill_type', 'LIKE', "%{$request->bill_type}%")->where('year', $request->year)->get();
 
-        return view('console.billing.property.bulk-print', compact('bills', 'setting', 'wcpScript', 'tag'));
+        return view($view, compact('bills', 'setting', 'wcpScript', 'tag'));
       endif;
       if($request->electoral_id):
         $tag = \App\Models\Location\Electoral::where('code', $request->electoral_id)->pluck('description');
         $bills = \App\Bill::where('electoral_id', $request->electoral_id)->where('bill_type', $request->bill_type)->where('year', $request->year)->orderBy('account_no', 'asc')->get();
         // dd($bills);
-        return view('console.billing.property.bulk-print', compact('bills', 'setting', 'wcpScript', 'tag'));
+        return view($view, compact('bills', 'setting', 'wcpScript', 'tag'));
       endif;
       if($request->category):
         $tag = \App\PropertyCategory::where('code', $request->category)->pluck('description');
@@ -73,14 +83,18 @@ class BillingController extends Controller
         // dd($tag,$properties,$bills);
         // $bills = \App\Bill::where('electoral_id', $request->electoral_id)->where('bill_type', $request->bill_type)->where('year', $request->year)->orderBy('account_no', 'asc')->get();
         // dd($bills);
-        return view('console.billing.property.bulk-print', compact('bills', 'setting', 'wcpScript', 'tag'));
+        return view($view, compact('bills', 'setting', 'wcpScript', 'tag'));
       endif;
       return redirect()->back();
     }
 
-    public function adjustArrears()
+    public function adjustArrearsP()
     {
-      return view('console.billing.adjust-arrears');
+      return view('console.billing.adjust-arrears-property');
+    }
+    public function adjustArrearsB()
+    {
+      return view('console.billing.adjust-arrears-business');
     }
     public function postAdjustArrears(Request $request)
     {

@@ -22,7 +22,7 @@ class CashierController extends Controller
      */
     public function index()
     {
-        $payments = DB::table('payments')->where('is_verfied', 0)->orderBy('id')->paginate(50);
+        $payments = DB::table('payments')->where('is_verfied', 0)->orderBy('id')->paginate(100);
         $sumTotal = floatval($payments->sum('amount_paid'));
         return view('console.cashier.index', compact('payments', 'sumTotal'));
     }
