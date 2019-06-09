@@ -406,128 +406,26 @@ class AdvancedReportController extends Controller
 
     public function defaultersReportPost(Request $request)
     {
-      $r = $this->propertyDefaulters($request->all());
-      $electorals = $r;
-      $year = $request->bill_year;
-      $amount = $request->amount;
-      $operator = $request->operator;
-      $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
-      $location = "";
-      // return ['result'=>$r];
-      return view('advanced.report.defaulters.property-defaulter-listing', compact('electorals', 'location', 'year', 'wcpScript', 'amount', 'operator'));
+      $this->propertyDefaulters($request->all());
     }
 
     private function propertyDefaulters($request)
     {
-      // dd($request['bill_year']);
+      dd($request['bill_year']);
       $year = $request['bill_year'];
       $operator = $request['operator'];
       $amount = $request['amount'];
 
-      switch ($operator) {
-        case '<':
-          $electorals = $this->electoralProperty->whereHas('bills', function($q) use ($year, $amount) {
-            $q->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->whereBetween('arrears',  [0.1, (floatval($amount) - 0.1)]);
-          })->with(['bills'=>function($query) use ($year, $amount) {
-             $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->whereBetween('arrears',  [0.1, (floatval($amount) - 0.1)]);
-          }])->paginate(50);
-          break;
+      $electorals = $this->electoralProperty->with(['bills'=>function($query) use ($year,$operator,$amount) {
+         $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->where('arrears', "%{$operator}%", $amount);
+      }])->paginate(50);
+      // $elects = $this->electoralProperty->with(['bills'=>function($query) use ($year) {
+      //    $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->orderBy('account_no', 'asc');
+      // }])->get();
+     return ['result'=>$electorals];
+     // $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
 
-          case '>':
-            $electorals = $this->electoralProperty->whereHas('bills', function($q) use ($year, $amount) {
-              $q->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->where('arrears', '>',  $amount);
-            })->with(['bills'=>function($query) use ($year, $amount) {
-               $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->where('arrears', '>',  $amount);
-            }])->paginate(50);
-            break;
-
-            case '=':
-              $electorals = $this->electoralProperty->whereHas('bills', function($q) use ($year, $amount) {
-                $q->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->where('arrears', '=',  $amount);
-              })->with(['bills'=>function($query) use ($year, $amount) {
-                 $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->where('arrears', '=',  $amount);
-              }])->paginate(50);
-              break;
-
-        default:
-          echo 'OutOfRangeException';
-          break;
-      }
-
-      return $electorals;
-
-
-    }
-
-    public function defaultersReportPostPropertyDetails(Request $request, $location, $code, $year,$amount,$operator)
-    {
-      // $array = ['amount' => $amount, 'bill_year' => $year, 'operator' => $operator];
-      $r = $this->propertyDefaultersDetails($code,$amount,$operator,$year);
-      $electoral = $r;
-      // $year = $request->bill_year;
-      // $amount = $request->amount;
-      // $operator = $request->operator;
-      $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
-      // $location = "";
-
-      $bills = $electoral ? $this->paginate($electoral->bills, $perPage = 30, $page = null, $baseUrl = $request->url().'/', $options = []) : [];
-      $info = $electoral ? $electoral->description : '';
-      $totalBill = $electoral ? $electoral->bills->count(): '';
-      // return ['result'=> $bills->currentPage()];
-      // dd($year, $location, $code, $info);
-      return view('advanced.report.defaulters.property-defaulter-listing-details', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill', 'electoral', 'code', 'operator', 'amount'));
-    }
-
-    private function propertyDefaultersDetails($code, $amount, $operator, $year)
-    {
-      // dd($request['bill_year']);
-      // $year = $request['bill_year'];
-      // $operator = $request['operator'];
-      // $amount = $request['amount'];
-
-      // dd($operator);
-
-      switch ($operator) {
-        case '<':
-          $electoral = $this->electoralProperty->where('code', $code)->whereHas('bills', function($q) use ($year, $amount) {
-            $q->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->whereBetween('arrears',  [0.1, (floatval($amount) - 0.1)]);
-          })->with(['bills' => function($query) use ($year, $amount) {
-            $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->whereBetween('arrears',  [0.1, (floatval($amount) - 0.1)]);
-          }])->first();
-          break;
-
-          case '>':
-            $electoral = $this->electoralProperty->where('code', $code)->whereHas('bills', function($q) use ($year, $amount) {
-              $q->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->where('arrears', '>',  $amount);
-            })->with(['bills' => function($query) use ($year, $amount) {
-              $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->where('arrears', '>',  $amount);
-            }])->first();
-            break;
-
-            case '=':
-              $electoral = $this->electoralProperty->where('code', $code)->whereHas('bills', function($q) use ($year, $amount) {
-                $q->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->where('arrears', '=',  $amount);
-              })->with(['bills' => function($query) use ($year, $amount) {
-                $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->where('arrears', '=',  $amount);
-              }])->first();
-              break;
-
-        default:
-          echo 'OutOfRangeException';
-          break;
-      }
-
-      return $electoral;
-
-
-    }
-
-    public function exportDefaultersProperty(Request $request, $year, $electoral, $amount,$operator)
-    {
-      $elct = Electoral::where('code', $electoral)->first();
-      $name = strtoupper(str_slug($elct->description).'-property-norminal-row-'.$year).'.xlsx';
-      // PreparePropertyExport::dispatch($year, $electoral, $name);
-      return redirect()->back();
+     return view('advanced.report.property.property-listing', compact('electorals', 'location', 'year', 'wcpScript'));
     }
 
 

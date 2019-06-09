@@ -29,7 +29,7 @@
             <th style="font-size: 11px;color: black;">Current Bill</th>
             <th style="font-size: 11px;color: black;">Total Bill</th>
             <th style="font-size: 11px;color: black;">Total Payment</th>
-            <th style="font-size: 11px;color: black;">Account Balance</th>
+            <th style="font-size: 11px;color: black;">Outstanding Arrears</th>
           </tr>
       </thead>
       <tbody>

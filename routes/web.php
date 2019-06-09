@@ -168,8 +168,6 @@ Route::prefix('console')->group(function () {
     Route::post('reports/bills/account', 'ReportController@billsAccountIndexPost')->name('report.bills.account');
     Route::get('reports/defaulters', 'AdvancedReportController@defaultersReport')->name('report.defaulters');
     Route::get('reports/adv/defaulters', 'AdvancedReportController@defaultersReportPost')->name('report.defaulters.get');
-    Route::get('reports/adv/defaulters/{location}/{query}/{year}/{amount}/{operator}', 'AdvancedReportController@defaultersReportPostPropertyDetails')->name('report.defaulters.get.property.details');
-    Route::get('reports/adv/defaulters/export/{year}/{electoral}/{amount}/{operator}', 'AdvancedReportController@exportDefaultersProperty')->name('defaulter.property.export.excel');
 
     /** */
     // Route::get('print/bills', 'PrintingCardController@bills');

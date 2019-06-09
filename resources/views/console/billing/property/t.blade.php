@@ -627,7 +627,7 @@ $(document).ready(function(){
         document.getElementById('r_ac_arrears').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(currentBill.arrears))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_current').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_total').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
-        
+
         document.getElementById('r_ac_arrears_3').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(currentBill.arrears))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_current_3').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_total_3').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
@@ -657,9 +657,10 @@ $(document).ready(function(){
 
     function formatDollar(num) {
         var p = num.toFixed(2).split(".");
-        return "GHc " + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
-            return  num=="-" ? acc : num + (i && !(i % 3) ? "," : "") + acc;
-        }, "") + "." + p[1];
+        return "GHc " + num;
+        // return "GHc " + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
+        //     return  num=="-" ? acc : num + (i && !(i % 3) ? "," : "") + acc;
+        // }, "") + "." + p[1];
     }
 
     function reloadPage() {
