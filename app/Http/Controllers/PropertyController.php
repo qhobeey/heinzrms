@@ -404,10 +404,9 @@ class PropertyController extends Controller
               'street_id' => ''
           ]);
 
-          dd($data);
-
           $owner = \App\PropertyOwner::where('owner_id', $request->owner_id)->first();
           $property = Property::where('property_no', $id)->first();
+          dd($owner, $property);
           if($owner):
             if($request->phone_number) {
               $owner->phone = $request->phone_number;
