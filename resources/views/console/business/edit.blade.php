@@ -75,7 +75,6 @@
                                     <div class="form-group">
                                         <label for="">Business Owner</label>
                                         <input type="text" name="business_owner" value="<?= $business->owner ? $business->owner->name : $business->business_owner ?>" class="form-control">
-
                                     </div>
                                 </div>
                                 <input type="hidden" name="owner_id" value="<?= $business->owner ? $business->owner->owner_id : '' ?>">

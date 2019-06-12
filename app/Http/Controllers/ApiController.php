@@ -603,6 +603,8 @@ class ApiController extends Controller
            $collector = Collector::where('username', $request->email)->first();
          }
 
+         if(!$collector) return response()->json(['status' => 'success', 'data' => 'fraud'], 201);
+
 
          if ($collector && Hash::check($request->password, $collector->password)) {
             $res = 'verified';

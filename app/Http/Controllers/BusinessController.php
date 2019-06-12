@@ -56,7 +56,7 @@ class BusinessController extends Controller
         // dd($request->all());
         $data = $request->validate([
             'business_no' => '', 'business_name' => '',
-            'business_owner' => 'required', 'business_type' => 'required',
+            'name' => 'required', 'business_type' => 'required',
             'business_category' => 'required', 'zonal_id' => '', 'tas_id' => '',
             'street_id' => '', 'loc_longitude' => '', 'loc_latitude' => '',
             'electoral_id' => '', 'tin_number' => '', 'vat_no' => '', 'industry' => '',
@@ -64,7 +64,34 @@ class BusinessController extends Controller
             'employee_no' => '', 'male_employed' => '', 'female_employed' => '', 'property_no' => '',
             'valuation_no' => '', 'store_number' => '', 'gps_code' => '','client' => ''
         ]);
-        $data = array_merge($data, ['business_owner' => (string) $request->business_owner, 'client' => 'none', 'business_no' => 'BB-'.env('ASSEMBLY_CODE').mt_rand(10000,100000)]);
+        $owns = array(
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'address' => $request->address
+        );
+        $res = BusinessOwner::create($owns);
+        if($res) {
+          $owners = BusinessOwner::latest()->count();
+          $res->owner_id = strtoupper(env('ASSEMBLY_CODE')[0].$res->name[0].sprintf('%03d', $owners));
+          $res->save();
+        }
+        unset($data['phone'], $data['name']);
+        $data = array_merge($data, ['business_owner' => $res->owner_id, 'client' => 'office@gmail.com']);
+        $tkn = \App\TrackAccountNumber::first();
+        $addedValue = $tkn->business + 1;
+        $tkn->property = $addedValue;
+        $tkn->save();
+
+        if($data['valuation_no'] || $data['valuation_no'] != null || $data['valuation_no'] != ''):
+          $data = array_merge($data, ['business_no' => $data['valuation_no']]);
+        else:
+          if($data['zonal_id'] == null || $data['zonal_id'] == "no zonal data" || $data['zonal_id'] == ""){
+            $data = array_merge($data, ['business_no' => 'BB-'.env('ASSEMBLY_CODE').sprintf('%05d', $addedValue)]);
+          }else{
+            $data = array_merge($data, ['business_no' => 'BB-'.strtoupper($data['zonal_id']).sprintf('%05d', $addedValue)]);
+          }
+
+        endif;
 
         $truesave = Business::create($data);
         // if ($truesave) $this->initBusinessBill($truesave);
@@ -197,6 +224,17 @@ class BusinessController extends Controller
           }
 
           $owner->save();
+        else:
+          $owns = array(
+              'name' => $request->business_owner,
+          );
+          $res = BusinessOwner::create($owns);
+          if($res) {
+            $owners = BusinessOwner::latest()->count();
+            $res->owner_id = strtoupper(env('ASSEMBLY_CODE')[0].$res->name[0].sprintf('%03d', $owners));
+            $res->save();
+          }
+          $data = array_merge($data, ['business_owner' => $res->owner_id]);
         endif;
         $business->update($data);
 

@@ -154,12 +154,12 @@ class PropertyController extends Controller
         $props = array_merge($props, ['client' => 'office@gmail.com']);
 
         $property = Property::create($props);
-        if($property):
-          $tkn = \App\TrackAccountNumber::first();
-          $addedValue = $tkn->property + 1;
-          $tkn->property = $addedValue;
-          $tkn->save();
-        endif;
+        // if($property):
+        //   $tkn = \App\TrackAccountNumber::first();
+        //   $addedValue = $tkn->property + 1;
+        //   $tkn->property = $addedValue;
+        //   $tkn->save();
+        // endif;
         return redirect()->route('property.create');
     }
 
@@ -415,6 +415,17 @@ class PropertyController extends Controller
             }
 
             $owner->save();
+          else:
+            $owns = array(
+                'name' => $request->property_owner,
+            );
+            $res = PropertyOwner::create($owns);
+            if($res) {
+              $owners = PropertyOwner::latest()->count();
+              $res->owner_id = strtoupper(env('ASSEMBLY_CODE')[0].$res->name[0].sprintf('%03d', $owners));
+              $res->save();
+            }
+            $data = array_merge($data, ['property_owner' => $res->owner_id]);
           endif;
           $property->update($data);
           // if ($truesave) $this->initPropertyBill($truesave);

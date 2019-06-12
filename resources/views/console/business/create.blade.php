@@ -60,7 +60,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <!-- <div class="col-md-4">
                                   <div class="form-group">
                                       <label for="">Business Owner</label>
                                       <select class="form-control" required="required" name="business_owner" id="">
@@ -70,8 +70,26 @@
                                           </template>
                                       </select>
                                   </div>
-                                </div>
+                                </div> -->
                             </div>
+                            <h4 class="form-desc">Business Owner</h4>
+
+                            <div class="row">
+                              <div class="col-md-4">
+                                <label for="">Business Owner Name</label>
+                                <input type="text" name="name" class="form-control">
+                              </div>
+                              <div class="col-md-4">
+                                <label for="">Business Address</label>
+                                <input type="text" name="address" class="form-control">
+                              </div>
+                              <div class="col-md-4">
+                                <label for="">Business Owner Number</label>
+                                <input type="text" name="phone" class="form-control">
+                              </div>
+                            </div>
+                            <br>
+
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
