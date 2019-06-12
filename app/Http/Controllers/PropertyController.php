@@ -406,7 +406,7 @@ class PropertyController extends Controller
 
           $owner = \App\PropertyOwner::where('owner_id', $request->owner_id)->first();
           $property = Property::where('property_no', $id)->first();
-          dd($owner, $property);
+          dd($request->owner_id, $owner, $property);
           if($owner):
             if($request->phone_number) {
               $owner->phone = $request->phone_number;
