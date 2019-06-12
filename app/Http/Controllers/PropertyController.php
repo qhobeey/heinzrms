@@ -416,14 +416,14 @@ class PropertyController extends Controller
 
             $owner->save();
           else:
-            $owns = array('name' => $request->property_owner);
-            $res = PropertyOwner::create($owns);
+            $res = PropertyOwner::create(['name' => $request->property_owner]);
             if($res) {
               $owners = PropertyOwner::latest()->count();
               $res->owner_id = strtoupper(env('ASSEMBLY_CODE')[0].$res->name[0].sprintf('%03d', $owners));
               $res->save();
             }
             $data = array_merge($data, ['property_owner' => $res->owner_id]);
+            dd($res);
           endif;
           $property->update($data);
           // if ($truesave) $this->initPropertyBill($truesave);
