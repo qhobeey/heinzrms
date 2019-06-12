@@ -416,9 +416,7 @@ class PropertyController extends Controller
 
             $owner->save();
           else:
-            $owns = array(
-                'name' => $request->property_owner,
-            );
+            $owns = array('name' => $request->property_owner);
             $res = PropertyOwner::create($owns);
             if($res) {
               $owners = PropertyOwner::latest()->count();
