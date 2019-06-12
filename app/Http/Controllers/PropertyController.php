@@ -406,7 +406,6 @@ class PropertyController extends Controller
 
           $owner = \App\PropertyOwner::where('owner_id', $request->owner_id)->first();
           $property = Property::where('property_no', $id)->first();
-          dd($request->owner_id, $owner, $property);
           if($owner):
             if($request->phone_number) {
               $owner->phone = $request->phone_number;
@@ -424,7 +423,6 @@ class PropertyController extends Controller
               $res->save();
             }
             $data = array_merge($data, ['property_owner' => $res->owner_id]);
-            dd($res);
           endif;
           $property->update($data);
           // if ($truesave) $this->initPropertyBill($truesave);
