@@ -910,17 +910,17 @@ class ApiController extends Controller
        $st = Street::where('code', $streetCode)->first();
        if($st):
          $unit = Unit::where('code', $st->unit_id)->first();
-         $community = Community::where('code', $unit->community_id)->first();
-         $electoral = Electoral::where('code', $community->electoral_id)->first();
-         $tas = Ta::where('code', $electoral->zonal_id)->first();
-         $zonal = Zonal::where('code', $tas->zonal_id)->first();
+         $community = $unit ? Community::where('code', $unit->community_id)->first() : null;
+         $electoral = $community ? Electoral::where('code', $community->electoral_id)->first() : null;
+         $tas = $electoral ? Ta::where('code', $electoral->zonal_id)->first() : null;
+         $zonal = $tas ? Zonal::where('code', $tas->zonal_id)->first() : null;
 
          return response()->json(['status' => 'success',
-            'zonal' => ['name' => $zonal->description, 'code' => $zonal->code],
-            'tas' => ['name' => $tas->description, 'code' => $tas->code],
-            'electoral' => ['name' => $electoral->description, 'code' => $electoral->code],
-            'community' => ['name' => $community->description, 'code' => $community->code],
-            'unit' => ['name' => $unit->description, 'code' => $unit->code],
+            'zonal' => $zonal ? ['name' => $zonal->description, 'code' => $zonal->code] : null,
+            'tas' => $tas ? ['name' => $tas->description, 'code' => $tas->code] : null,
+            'electoral' => $electoral ? ['name' => $electoral->description, 'code' => $electoral->code] : null,
+            'community' => $community ? ['name' => $community->description, 'code' => $community->code] : null,
+            'unit' => $unit ? ['name' => $unit->description, 'code' => $unit->code] : null,
           ], 201);
        else:
          return response()->json(['status' => 'failed', 'data' => ''], 201);
