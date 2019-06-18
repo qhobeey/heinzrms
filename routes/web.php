@@ -269,6 +269,8 @@ Route::prefix('api/v1/console')->group(function () {
     Route::get('get_properties_from_mobile/{email}/{number?}', 'ApiController@getPropertiesFromMobile');
     Route::put('update_property_from_mobile/{property}/{owner}', 'ApiController@updatePropertyFromMobile');
 
+    Route::get('get_bulk_location/{street}', 'ApiController@getLocationDataSet');
+
 
     /** */
     Route::get('get_businesses', 'BusinessApiController@getBusinesses');

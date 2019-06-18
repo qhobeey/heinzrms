@@ -904,4 +904,51 @@ class ApiController extends Controller
        $bill->update();
        return response()->json(['status' => 'success']);
      }
+
+     public function getLocationDataSet(Request $request, $streetCode)
+     {
+       $st = Street::where('code', $streetCode)->first();
+       if($st):
+         $unit = Unit::where('code', $st->unit_id)->first();
+         $community = Community::where('code', $unit->community_id)->first();
+         $electoral = Electoral::where('code', $community->electoral_id)->first();
+         $tas = Ta::where('code', $electoral->zonal_id)->first();
+         $zonal = Zonal::where('code', $tas->zonal_id)->first();
+
+         return response()->json(['status' => 'success',
+            'zonal' => ['name' => $zonal->description, 'code' => $zonal->code],
+            'tas' => ['name' => $tas->description, 'code' => $tas->code],
+            'electoral' => ['name' => $electoral->description, 'code' => $electoral->code],
+            'community' => ['name' => $community->description, 'code' => $community->code],
+            'unit' => ['name' => $unit->description, 'code' => $unit->code],
+          ], 201);
+       else:
+         return response()->json(['status' => 'failed', 'data' => ''], 201);
+       endif;
+     }
 }
+
+// public function getPropertyTC($id)
+// {
+//    $props = PropertyCategory::where('type_id', $id)->get();
+//
+//    return response()->json(['status' => 'success', 'props' => $props], 201);
+// }
+// public function getTasLocation($id)
+// {
+//    $props = Ta::where('zonal_id', $id)->get();
+//
+//    return response()->json(['status' => 'success', 'props' => $props], 201);
+// }
+// public function getElectoralsLocation($id)
+// {
+//    $props = Electoral::where('tas_id', $id)->get();
+//
+//    return response()->json(['status' => 'success', 'props' => $props], 201);
+// }
+// public function getCommunitiesLocation($id)
+// {
+//    $props = Community::where('electoral_id', $id)->get();
+//
+//    return response()->json(['status' => 'success', 'props' => $props], 201);
+// }
