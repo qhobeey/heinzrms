@@ -40,10 +40,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Business Type</label>
-                                        <select class="form-control" name="business_type" id="" required="required">
-                                            <option value="">-choose-</option>
-                                            <option value="none">No Business Type</option>
-                                            <option selected="true" value="{{$business->business_type}}">@{{business_type_name}}</option>
+                                        <select class="form-control" name="business_type" id="business_type" @blur="getFilteredCategories()">
+                                          <option selected="true" disabled value="{{$business->business_type}}"><?= $business->type ? $business->type->description : $business->business_type ?></option>
                                             <template v-for="data in types">
                                                 <option :value="data.code">@{{data.description}}</option>
                                             </template>
@@ -53,10 +51,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Business Category</label>
-                                        <select class="form-control" name="business_category" id="" required="required">
-                                            <option value="">-choose-</option>
-                                            <option value="none">No Business Category</option>
-                                            <option selected="true" value="{{$business->business_category}}">@{{business_cat_name}}</option>
+                                        <select class="form-control" name="business_category" id="">
+                                            <option selected="true" disabled value="{{$business->business_category}}"><?= $business->category ? $business->category->description : $business->business_category ?></option>
                                             <template v-for="data in categories">
                                                 <option :value="data.code">@{{data.description}}</option>
                                             </template>
@@ -239,9 +235,10 @@
                                         <select class="form-control" name="unit_id" id="">
                                             <option value="<?= $business->unit_id; ?>">-choose-</option>
                                             <option value="none">No unit</option>
-                                            <template v-for="data in units">
-                                                <option :value="data.code">@{{data.description}}</option>
-                                            </template>
+                                            <?php $units = \App\Models\Location\Unit::orderBy('description', 'asc')->get(); ?>
+                                            <?php foreach ($units as $key => $unit): ?>
+                                              <option value="<?php echo $unit->code; ?>"><?php echo $unit->description; ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -325,6 +322,7 @@
       el: '#heinz',
       data: {
           date: new Date().toJSON().slice(0,10),
+          pt: '',
           categories: [],
           types: [],
           zonals: [],
@@ -340,8 +338,33 @@
           business_zonal: ''
       },
       methods: {
-        calcEndSerial(){
-            this.end_serial = parseInt(this.start_serial) + 99
+        getFilteredCategories () {
+          var pid = document.querySelector("#business_type").value
+          console.log(pid);
+          axios.get(`/api/v1/console/get_categories_business/${pid}`)
+              .then(response => {console.table(response.data.props), this.categories = response.data.props})
+              .catch(error => console.error(error));
+        },
+        getFilteredTas () {
+          var pid = document.querySelector("#zonal_id").value
+          console.log(pid);
+          axios.get(`/api/v1/console/get_tas_location/${pid}`)
+              .then(response => {console.table(response.data.props), this.tas = response.data.props})
+              .catch(error => console.error(error));
+        },
+        getFilteredElectorals () {
+          var pid = document.querySelector("#tas_id").value
+          console.log(pid);
+          axios.get(`/api/v1/console/get_electorals_location/${pid}`)
+              .then(response => {console.table(response.data.props), this.electorals = response.data.props})
+              .catch(error => console.error(error));
+        },
+        getFilteredCommunities () {
+          var pid = document.querySelector("#electoral_id").value
+          console.log(pid);
+          axios.get(`/api/v1/console/get_communities_location/${pid}`)
+              .then(response => {console.table(response.data.props), this.communities = response.data.props})
+              .catch(error => console.error(error));
         },
       },
       created() {
@@ -377,18 +400,6 @@
             .catch(error => console.error(error));
         axios.get('/api/v1/console/get_units/')
             .then(response => this.units = response.data.data)
-            .catch(error => console.error(error));
-        axios.get(`/api/v1/console/get_business_type_name/${p_type_name}`)
-            .then(response => this.business_type_name = response.data.data)
-            .catch(error => console.error(error));
-        axios.get(`/api/v1/console/get_business_cat_name_2/${p_cat_name}`)
-            .then(response => this.business_cat_name = response.data.data)
-            .catch(error => console.error(error));
-        axios.get(`/api/v1/console/get_business_owner_name/${p_owner_name}`)
-            .then(response => this.business_owner_name = response.data.data)
-            .catch(error => console.error(error));
-        axios.get(`/api/v1/console/get_business_zonal/${p_zonal}`)
-            .then(response => this.business_zonal = response.data.data)
             .catch(error => console.error(error));
       }
 

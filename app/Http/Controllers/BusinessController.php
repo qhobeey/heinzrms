@@ -201,16 +201,14 @@ class BusinessController extends Controller
     {
         $data = $request->validate([
           'business_no' => '', 'business_name' => '',
-          'business_type' => 'required', 'community_id' => '',
-          'business_category' => 'required', 'zonal_id' => '', 'tas_id' => '',
+          'business_type' => '', 'community_id' => '',
+          'business_category' => '', 'zonal_id' => '', 'tas_id' => '',
           'street_id' => '', 'loc_longitude' => '', 'loc_latitude' => '',
           'electoral_id' => '', 'tin_number' => '', 'vat_no' => '', 'industry' => '',
           'image' => '', 'reg_no' => '', 'email' => '', 'phone' => '', 'address' => '',
           'employee_no' => '', 'male_employed' => '', 'female_employed' => '', 'property_no' => '',
           'valuation_no' => '', 'gps_code' => '', 'store_number' => '', 'client' => 'none'
         ]);
-
-        // dd($data);
 
         $business = Business::where('business_no', $id)->first();
         $owner = \App\BusinessOwner::where('owner_id', $request->owner_id)->first();
@@ -305,8 +303,6 @@ class BusinessController extends Controller
       else:
         $businesses = Business::where($request->column, 'LIKE', "%{$query}%")->paginate(30);
       endif;
-
-      // dd($businesses);
 
       if($request->column == 'electoral_id' || $request->column == 'business_owner' || $request->column == 'zonal_id'):
         $businesses = $this->paginateArrayCollecction(collect($businesses), $perPage = 30, $page = null, $options = []);

@@ -39,9 +39,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Business Type</label>
-                                        <select class="form-control" name="business_type" id="business_type" required="required" @blur="getFilteredCategories()">
-                                            <option value="">-choose-</option>
-                                            <option value="none">No Business Type</option>
+                                        <select class="form-control" name="business_type" id="business_type" @blur="getFilteredCategories()">
+                                          <option value="">-choose-</option>
                                             <template v-for="data in types">
                                                 <option :value="data.code">@{{data.description}}</option>
                                             </template>
@@ -51,26 +50,14 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Business Category</label>
-                                        <select class="form-control" name="business_category" required="required" id="">
-                                            <option value="">-choose-</option>
-                                            <option value="none">No Business Category</option>
+                                        <select class="form-control" name="business_category" id="">
+                                          <option value="">-choose-</option>
                                             <template v-for="data in categories">
-                                                <option :value="data.code">@{{data.description}} - @{{data.rate_pa}}</option>
+                                                <option :value="data.code">@{{data.description}}</option>
                                             </template>
                                         </select>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-4">
-                                  <div class="form-group">
-                                      <label for="">Business Owner</label>
-                                      <select class="form-control" required="required" name="business_owner" id="">
-                                          <option value="">-choose-</option>
-                                          <template v-for="data in owners">
-                                              <option :value="data.id">@{{data.firstname}} @{{data.lastname}}</option>
-                                          </template>
-                                      </select>
-                                  </div>
-                                </div> -->
                             </div>
                             <h4 class="form-desc">Business Owner</h4>
 
@@ -176,11 +163,11 @@
                                     <div class="form-group">
                                         <label for="">Sub Metro</label>
                                         <select class="form-control" name="zonal_id" id="">
-                                            <option value="">-choose-</option>
-                                            <option value="none">No sub metro</option>
-                                            <template v-for="data in zonals">
-                                                <option :value="data.id">@{{data.description}}</option>
-                                            </template>
+                                          <option value="">-choose-</option>
+                                            <?php $zonals = \App\Models\Location\Zonal::orderBy('description', 'asc')->get(); ?>
+                                            <?php foreach ($zonals as $key => $zonal): ?>
+                                              <option value="<?php echo $zonal->code; ?>"><?php echo $zonal->description; ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -188,11 +175,11 @@
                                     <div class="form-group">
                                         <label for="">Town Area Council</label>
                                         <select class="form-control" name="tas_id" id="">
-                                            <option value="">-choose-</option>
-                                            <option value="none">No Town Area</option>
-                                            <template v-for="data in tas">
-                                                <option :value="data.id">@{{data.description}}</option>
-                                            </template>
+                                          <option value="">-choose-</option>
+                                            <?php $tas = \App\Models\Location\Ta::orderBy('description', 'asc')->get(); ?>
+                                            <?php foreach ($tas as $key => $ta): ?>
+                                              <option value="<?php echo $ta->code; ?>"><?php echo $ta->description; ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -200,11 +187,11 @@
                                     <div class="form-group">
                                         <label for="">Electoral Area</label>
                                         <select class="form-control" name="electoral_id" id="">
-                                            <option value="">-choose-</option>
-                                            <option value="none">No Electoral Area</option>
-                                            <template v-for="data in electorals">
-                                                <option :value="data.id">@{{data.description}}</option>
-                                            </template>
+                                          <option value="">-choose-</option>
+                                          <?php $electorals = \App\Models\Location\Electoral::orderBy('description', 'asc')->get(); ?>
+                                          <?php foreach ($electorals as $key => $electoral): ?>
+                                            <option value="<?php echo $electoral->code; ?>"><?php echo $electoral->description; ?></option>
+                                          <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -215,11 +202,11 @@
                                     <div class="form-group">
                                         <label for="">Community</label>
                                         <select class="form-control" name="community_id" id="">
-                                            <option value="">-choose-</option>
-                                            <option value="none">No community</option>
-                                            <template v-for="data in communities">
-                                                <option :value="data.id">@{{data.description}}</option>
-                                            </template>
+                                          <option value="">-choose-</option>
+                                          <?php $communities = \App\Models\Location\Community::orderBy('description', 'asc')->get(); ?>
+                                          <?php foreach ($communities as $key => $community): ?>
+                                            <option value="<?php echo $community->code; ?>"><?php echo $community->description; ?></option>
+                                          <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -227,11 +214,12 @@
                                     <div class="form-group">
                                         <label for="">Unit</label>
                                         <select class="form-control" name="unit_id" id="">
-                                            <option value="">-choose-</option>
+                                          <option value="">-choose-</option>
                                             <option value="none">No unit</option>
-                                            <template v-for="data in units">
-                                                <option :value="data.id">@{{data.description}}</option>
-                                            </template>
+                                            <?php $units = \App\Models\Location\Unit::orderBy('description', 'asc')->get(); ?>
+                                            <?php foreach ($units as $key => $unit): ?>
+                                              <option value="<?php echo $unit->code; ?>"><?php echo $unit->description; ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -239,11 +227,11 @@
                                     <div class="form-group">
                                         <label for="">Street</label>
                                         <select class="form-control" name="street_id" id="">
-                                            <option value="">-choose-</option>
-                                            <option value="none">No street</option>
-                                            <template v-for="data in streets">
-                                                <option :value="data.id">@{{data.description}}</option>
-                                            </template>
+                                          <option value="">-choose-</option>
+                                          <?php $streets = \App\Models\Location\Street::orderBy('description', 'asc')->get(); ?>
+                                          <?php foreach ($streets as $key => $street): ?>
+                                            <option value="<?php echo $street->code; ?>"><?php echo $street->description; ?></option>
+                                          <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -301,6 +289,7 @@
       el: '#heinz',
       data: {
           date: new Date().toJSON().slice(0,10),
+          pt: '',
           categories: [],
           types: [],
           zonals: [],
@@ -310,16 +299,12 @@
           streets: [],
           units: [],
           owners: [],
-          properties: [],
           business_type_name: '',
           business_cat_name: '',
           business_owner_name:'',
           business_zonal: ''
       },
       methods: {
-        calcEndSerial(){
-            this.end_serial = parseInt(this.start_serial) + 99
-        },
         getFilteredCategories () {
           var pid = document.querySelector("#business_type").value
           console.log(pid);
@@ -350,6 +335,8 @@
         },
       },
       created() {
+
+
         axios.get('/api/v1/console/get_business_categories/')
             .then(response => this.categories = response.data.data)
             .catch(error => console.error(error));
@@ -376,9 +363,6 @@
             .catch(error => console.error(error));
         axios.get('/api/v1/console/get_units/')
             .then(response => this.units = response.data.data)
-            .catch(error => console.error(error));
-        axios.get('/api/v1/console/get_properties_d/')
-            .then(response => this.properties = response.data.data)
             .catch(error => console.error(error));
       }
 

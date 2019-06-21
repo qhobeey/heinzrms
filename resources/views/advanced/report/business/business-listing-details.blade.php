@@ -26,6 +26,7 @@
               <th style="font-size: 10px;color: black;">Electoral Area</th>
               <th style="font-size: 10px;color: black;">Account No</th>
               <th style="font-size: 10px;color: black;">Business Name</th>
+              <th style="font-size: 10px;color: black;">Store No</th>
               <th style="font-size: 10px;color: black;">Owner Name</th>
               <th style="font-size: 10px;color: black;">Business Address</th>
               <th style="font-size: 10px;color: black;">Business cat</th>
@@ -63,6 +64,7 @@
                 <td><?= $key+1; ?></td>
                 <td style="font-size: 11px;"><?= $bill->account_no; ?></td>
                 <td style="font-size: 11px;"><?= $bill->business ? ($bill->business->business_name ?: 'NA'): 'NA'; ?></td>
+                <td style="font-size: 11px;"><?= $bill->business ? ($bill->business->store_number ?: 'NA'): 'NA'; ?></td>
                 <td style="font-size: 11px;"><?= $bill->business ? ($bill->business->owner ? $bill->business->owner->name: 'NA'): 'NA'; ?></td>
                 <td style="font-size: 11px;"><?= $bill->business ? ($bill->business->address ?: 'NA'): 'NA'; ?></td>
                 <td style="font-size: 11px;"><?= $bill->business ? ($bill->business->category ? $bill->business->category->description: 'NA'): 'NA'; ?></td>

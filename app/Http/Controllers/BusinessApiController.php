@@ -436,6 +436,6 @@ class BusinessApiController extends Controller
      {
         $cats = BusinessCategory::where('type_id', $id)->get();
 
-        return response()->json(['status' => 'success', 'cats' => $cats], 201);
+        return response()->json(['status' => 'success', 'props' => $cats], 201);
      }
 }

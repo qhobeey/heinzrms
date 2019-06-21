@@ -920,35 +920,26 @@ class ApiController extends Controller
             'tas' => $tas ? ['name' => $tas->description, 'code' => $tas->code] : '',
             'electoral' => $electoral ? ['name' => $electoral->description, 'code' => $electoral->code] : '',
             'community' => $community ? ['name' => $community->description, 'code' => $community->code] : '',
-            'unit' => $unit ? ['name' => $unit->description, 'code' => $unit->code] : ''
+            'unit' => $unit ? ['name' => $unit->description, 'code' => $unit->code] : '',
+            'street' => $st ? ['name' => $st->description, 'code' => $st->code] : ''
+          ], 201);
+       else:
+         return response()->json(['status' => 'failed', 'data' => ''], 201);
+       endif;
+     }
+
+     public function getDetailsDataSet(Request $request, $categoryType)
+     {
+       $category = PropertyCategory::where('code', $streetCode)->first();
+       if($category):
+         $type = PropertyType::where('code', $category->type_id)->first();
+
+         return response()->json(['status' => 'success',
+            'category' => $category ? ['name' => $category->description, 'code' => $category->code] : '',
+            'type' => $type ? ['name' => $type->description, 'code' => $type->code] : ''
           ], 201);
        else:
          return response()->json(['status' => 'failed', 'data' => ''], 201);
        endif;
      }
 }
-
-// public function getPropertyTC($id)
-// {
-//    $props = PropertyCategory::where('type_id', $id)->get();
-//
-//    return response()->json(['status' => 'success', 'props' => $props], 201);
-// }
-// public function getTasLocation($id)
-// {
-//    $props = Ta::where('zonal_id', $id)->get();
-//
-//    return response()->json(['status' => 'success', 'props' => $props], 201);
-// }
-// public function getElectoralsLocation($id)
-// {
-//    $props = Electoral::where('tas_id', $id)->get();
-//
-//    return response()->json(['status' => 'success', 'props' => $props], 201);
-// }
-// public function getCommunitiesLocation($id)
-// {
-//    $props = Community::where('electoral_id', $id)->get();
-//
-//    return response()->json(['status' => 'success', 'props' => $props], 201);
-// }
