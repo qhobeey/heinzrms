@@ -309,7 +309,7 @@
           var pid = document.querySelector("#business_type").value
           console.log(pid);
           axios.get(`/api/v1/console/get_categories_business/${pid}`)
-              .then(response => {console.table(response.data.props), this.categories = response.data.props})
+              .then(response => {console.table(response.data.cats), this.categories = response.data.cats})
               .catch(error => console.error(error));
         },
         getFilteredTas () {

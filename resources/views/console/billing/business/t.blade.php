@@ -554,8 +554,7 @@ $(document).ready(function(){
     }
 
     function formatDollar(num) {
-      var p = num.toFixed(2).split(".");
-      return "GHc " + num;
+      return "GHc " + num.toFixed(2);
         // var p = num.toFixed(2).split(".");
         // return "GHc " + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
         //     return  num=="-" ? acc : num + (i && !(i % 3) ? "," : "") + acc;
