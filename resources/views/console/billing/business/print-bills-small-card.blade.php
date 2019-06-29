@@ -280,6 +280,10 @@
                         <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_arrears">GHc 0.00</span> &nbsp;&nbsp;</p>
                       </article>
                       <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
+                        <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Added Arrears:</p>
+                        <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_adjust_arrears">GHc 0.00</span> &nbsp;&nbsp;</p>
+                      </article>
+                      <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
                         <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Current Fee:</p>
                         <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_current">GHc 225.00</span> &nbsp;&nbsp;</p>
                       </article>
