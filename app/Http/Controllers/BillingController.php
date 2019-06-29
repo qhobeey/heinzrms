@@ -347,12 +347,13 @@ class BillingController extends Controller
       $totalPaid = \App\Payment::where('account_no', $account)->where('payment_year', $year)->sum('amount_paid');
       $lastYearTotalPaid = \App\Payment::where('account_no', $account)->where('payment_year', (string)(intval($year) - 1))->sum('amount_paid');
       $lastYearBill = $previousBill ? floatval($previousBill->rate_pa) : floatval(0);
+      $lastYearArrears = $previousBill ? floatval($previousBill->arrears) : floatval(0);
       unset($params['rate_pa']);
 
       $bill = array_merge($params, ['account_no' => $account,
           'account_balance' => number_format(floatval(($ans + $arrears) - $totalPaid), 2, '.', ''), 'arrears' => $arrears, 'current_amount' => $ans,
           'bill_type' => $type, 'prepared_by' => 'admin', 'year' => $year, 'bill_date' => Carbon::now()->toDateString(), 'rate_imposed' => $imposed,
-          'rate_pa' => number_format((float)$ans, 2, '.', ''), 'total_paid' => number_format((float)$totalPaid, 2, '.', ''), 'p_year_bill' => $lastYearBill,
+          'rate_pa' => number_format((float)$ans, 2, '.', ''), 'total_paid' => number_format((float)$totalPaid, 2, '.', ''), 'p_year_bill' => $lastYearBill + $lastYearArrears,
           'p_year_total_paid' => $lastYearTotalPaid, 'printed' => 0
       ]);
       unset($bill['min_charge']);

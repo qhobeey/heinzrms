@@ -79,7 +79,7 @@ class NorminalRowExportBusiness implements FromCollection, ShouldAutoSize, Shoul
             if($bill->account_balance == '' || $bill->account_balance == 0) continue;
             $newData = [
               $key + 1, $bill->account_no, $bill->business->business_name, $bill->business->electoral ? $bill->business->electoral->description : 'NA',
-              $bill->business->owner ? $bill->business->owner->name : 'NO NAME', $bill->business->address,
+              $bill->business->owner ? $bill->business->owner->name : 'NO NAME', $bill->business->address, $bill->business->store_number,
               $bill->business->type ? $bill->business->type->description : 'NA',
               $bill->business->category ? $bill->business->category->description : 'NA', floatval($bill->rate_imposed),
               floatval($bill->business->rateable_value), floatval($bill->arrears),
@@ -120,6 +120,7 @@ class NorminalRowExportBusiness implements FromCollection, ShouldAutoSize, Shoul
             'ELECTORAL',
             'OWNER NAME	',
             'BUSINESS ADDRESS',
+            'STORE NUMBER',
             'BUSINESS TYPE.',
             'BUSINESS CAT.',
             'RATE IMPOSED',
