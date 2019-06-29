@@ -292,7 +292,7 @@
                                 <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_arrears">GHc 0.00</span> &nbsp;&nbsp;</p>
                               </article>
                               <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
-                                <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Added Arrears:</p>
+                                <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Adjusted Arrears:</p>
                                 <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_adjust_arrears">GHc 0.00</span> &nbsp;&nbsp;</p>
                               </article>
                               <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
@@ -559,7 +559,7 @@ document.getElementById('r_adjust_arrears').innerHTML = currentBill.arrears ? `$
     }
 
     function formatDollar(num) {
-      return "GHc " + num.toFixed(2);
+      return "GHc " + (num == NaN) ? 0.0 : num.toFixed(2)
         // var p = num.toFixed(2).split(".");
         // return "GHc " + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
         //     return  num=="-" ? acc : num + (i && !(i % 3) ? "," : "") + acc;
