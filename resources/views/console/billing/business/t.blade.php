@@ -559,7 +559,11 @@ $(document).ready(function(){
     }
 
     function formatDollar(num) {
-      return "GHc " + (parseFloat(num) == NaN || parseFloat(num) == null || parseFloat(num) == '') ? 0.0 : num.toFixed(2)
+      if(parseFloat(num) == NaN){
+  return "GHc 0.00"
+}else{
+  return "GHc " + num.toFixed(2)
+}
         // var p = num.toFixed(2).split(".");
         // return "GHc " + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
         //     return  num=="-" ? acc : num + (i && !(i % 3) ? "," : "") + acc;
