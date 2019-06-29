@@ -740,7 +740,7 @@ document.getElementById('r_adjust_arrears').innerHTML = currentBill.arrears ? `$
 
     function formatDollar(num) {
         var p = num.toFixed(2);
-        return "GHc " + (num == NaN) ? 0.0 : num.toFixed(2)
+        return "GHc " + (parseFloat(num) == NaN || parseFloat(num) == null || parseFloat(num) == '') ? 0.0 : num.toFixed(2)
         // return "GHc " + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
         //     return  num=="-" ? acc : num + (i && !(i % 3) ? "," : "") + acc;
         // }, "") + "." + p[1];
