@@ -372,7 +372,7 @@ class BillingController extends Controller
       if($billRes):
         if($billRes->adjust_arrears != null || $billRes->adjust_arrears != ''):
           unset($bill['account_balance']);
-          $bill = array_merge($bill, ['account_balance' => number_format(floatval(($ans + $billRes->adjust_arrears) - $totalPaid), 2, '.', '')]);
+          $bill = array_merge($bill, ['account_balance' => number_format(floatval(($ans + $billRes->adjust_arrears + $arrears) - $totalPaid), 2, '.', '')]);
         endif;
         // $bill = array_merge($bill, ['arrears' => $arrears, 'account_balance' => $ans + $arrears]);
         $billRes->update($bill);
