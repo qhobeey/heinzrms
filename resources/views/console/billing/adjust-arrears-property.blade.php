@@ -72,7 +72,7 @@
               </div>
               <div class="col-md-8">
                 <div class="form-group">
-                  <input type="number" required class="form-control" name="adjust_arrears" value="">
+                  <input type="number" step="any" required class="form-control" name="adjust_arrears" value="">
                 </div>
               </div>
             </div>

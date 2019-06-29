@@ -98,11 +98,21 @@ class BillingController extends Controller
     }
     public function postAdjustArrears(Request $request)
     {
+      $adjustedValue = (float) $request->adjust_arrears;
       $max = \App\Bill::where('account_no', $request->account_no)->max('year');
       $bill = \App\Bill::where('account_no', $request->account_no)->where('year', $max)->first();
-      $bill->adjust_arrears = $request->adjust_arrears;
-      $bill->update();
-
+      $adjustTable = \App\AdjustArrears::create([
+        'account_no' => $request->account_no,
+        'bill_year' => $bill->year,
+        'amount' => $adjustedValue,
+        'adjusted_by' => auth()->user()->name.'-'.auth()->user()->user_id,
+        'bill_type' => $bill->bill_type,
+        'date' => date("m-d-y")
+      ]);
+      if($adjustTable):
+        $bill->adjust_arrears = (float)$bill->adjust_arrears + (float)$request->adjust_arrears;
+        $bill->update();
+      endif;
       return redirect()->back();
     }
 
@@ -354,7 +364,7 @@ class BillingController extends Controller
           'account_balance' => number_format(floatval(($ans + $arrears) - $totalPaid), 2, '.', ''), 'arrears' => $arrears, 'current_amount' => $ans,
           'bill_type' => $type, 'prepared_by' => 'admin', 'year' => $year, 'bill_date' => Carbon::now()->toDateString(), 'rate_imposed' => $imposed,
           'rate_pa' => number_format((float)$ans, 2, '.', ''), 'total_paid' => number_format((float)$totalPaid, 2, '.', ''), 'p_year_bill' => $lastYearBill + $lastYearArrears,
-          'p_year_total_paid' => $lastYearTotalPaid, 'printed' => 0
+          'p_year_total_paid' => $lastYearTotalPaid, 'printed' => 0, 'original_arrears' => $arrears
       ]);
       unset($bill['min_charge']);
 
