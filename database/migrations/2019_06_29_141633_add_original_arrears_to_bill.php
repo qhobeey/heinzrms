@@ -14,7 +14,7 @@ class AddOriginalArrearsToBill extends Migration
     public function up()
     {
         Schema::table('bills', function (Blueprint $table) {
-            $table->float('original_arrears')->after('arrears')->default(0.00);
+            $table->double('original_arrears')->after('arrears')->nullable();
         });
     }
 
