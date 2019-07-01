@@ -285,6 +285,9 @@ class BusinessController extends Controller
         case 'zonal_id':
           $queryArray = \App\Zonal::where('description', 'LIKE', "%{$reqs['query']}%")->pluck('code');
           break;
+          case 'store_number':
+            $query = $reqs['query'];
+            break;
 
         default:
           $query = '';
@@ -301,13 +304,17 @@ class BusinessController extends Controller
           }
         }
       else:
+        // $businesses = Business::where($request->column, 'LIKE', "%{$query}%")->paginate(30);
         $businesses = Business::where($request->column, 'LIKE', "%{$query}%")->paginate(30);
+        // dd($businesses);
       endif;
 
       if($request->column == 'electoral_id' || $request->column == 'business_owner' || $request->column == 'zonal_id'):
         $businesses = $this->paginateArrayCollecction(collect($businesses), $perPage = 30, $page = null, $options = []);
         return view('console.business.index', compact('businesses', 'array'));
       endif;
+
+
 
       return view('console.business.index', compact('businesses', 'array'));
     }

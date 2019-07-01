@@ -21,6 +21,12 @@ class RedirectIfAuthenticated
             return redirect('/home');
         }
 
-        return $next($request);
+        if(env('APP_ERROR') == true):
+          return redirect('/server');
+        else:
+          return $next($request);
+        endif;
+
+
     }
 }

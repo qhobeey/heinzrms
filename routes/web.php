@@ -11,9 +11,9 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('auth.login');
-// });
+Route::get('server', function () {
+    return view('application-error');
+});
 
 Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index');
