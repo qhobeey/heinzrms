@@ -536,11 +536,11 @@ $(document).ready(function(){
     }
 
     function formatAmount(amount) {
-      return (amount == "NaN" || amount == NaN) ? ~~NaN : amount
+      return (amount == "NaN" || amount == NaN) ? 0 : amount
     }
 
     function formatDollar(num) {
-      return "GHc " + parseFloat(num).toFixed(2)
+      return "GHc " + num.toFixed(2)
       }
         // var p = num.toFixed(2).split(".");
         // return "GHc " + p[0].split("").reverse().reduce(function(acc, num, i, orig) {

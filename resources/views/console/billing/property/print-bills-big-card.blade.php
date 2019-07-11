@@ -535,7 +535,7 @@ $(document).ready(function(){
     }
 
     function formatDollar(num) {
-      return "GHc " + parseFloat(num).toFixed(2)
+      return "GHc " + num.toFixed(2)
       }
         // var p = num.toFixed(2).split(".");
         // return "GHc " + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
