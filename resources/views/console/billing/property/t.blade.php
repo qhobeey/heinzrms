@@ -656,10 +656,11 @@ $(document).ready(function(){
     }
 
     function formatAmount(amount) {
-       if(amount == "NaN" || amount == NaN || isNaN(amount) || amount == "null" || amount == null){
-         amount = ~~NaN
+      console.log(`......amount......before....->${amount}`);
+       if(!amount || amount == "NaN" || amount == NaN || isNaN(amount) || amount == "null" || amount == null || amount == ''){
+         amount = 0.00
        }
-       console.log(`......amount......is....->${amount}`);
+       console.log(`......amount......after....->${amount}`);
        return amount
     }
 
