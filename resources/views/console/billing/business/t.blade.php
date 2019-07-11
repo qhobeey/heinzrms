@@ -523,9 +523,9 @@ $(document).ready(function(){
         document.getElementById('r_ac_com').innerHTML = parentParse.community ? parentParse.community.description : 'NO NAME'
         document.getElementById('r_ac_tas').innerHTML = parentParse.tas ? parentParse.tas.description : "NO NAME"
         document.getElementById('r_ac_street').innerHTML = parentParse.street ? parentParse.street.description : "NO NAME"
-        document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(currentBill.p_year_bill) + parseFloat(currentBill.adjust_arrears))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(formatAmount(currentBill.p_year_bill)) + parseFloat(formatAmount(currentBill.adjust_arrears)))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_amountpaid').innerHTML = currentBill.p_year_total_paid ? `${formatDollar(parseFloat(currentBill.p_year_total_paid))} ` : `${formatDollar(0.0)} `
-        document.getElementById('r_ac_arrears').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(currentBill.original_arrears))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_arrears').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(formatAmount(currentBill.original_arrears))) + parseFloat(formatAmount(currentBill.adjust_arrears))) } ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_current').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_total').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_year').innerHTML = currentBill.year
@@ -553,12 +553,13 @@ $(document).ready(function(){
 
     }
 
+    function formatAmount(amount) {
+      return (amount == "NaN" || amount == NaN) ? ~~NaN : amount
+    }
+
     function formatDollar(num) {
-      if(parseFloat(num) == NaN){
-  return "GHc 0.00"
-}else{
-  return "GHc " + num.toFixed(2)
-}
+      return "GHc " + parseFloat(num).toFixed(2)
+      }
         // var p = num.toFixed(2).split(".");
         // return "GHc " + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
         //     return  num=="-" ? acc : num + (i && !(i % 3) ? "," : "") + acc;
