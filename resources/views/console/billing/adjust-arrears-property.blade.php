@@ -143,7 +143,7 @@
               return false
             }
             document.getElementById('error').style.display = "none";
-            document.getElementById('current_arrears').value = (parseFloat(data.adjust_arrears) + parseFloat(data.original_arrears)).toFixed(2)
+            document.getElementById('current_arrears').value = (parseFloat(data.original_arrears) - parseFloat(data.adjust_arrears)).toFixed(2)
             document.getElementById('year').value = data.year
 
           }
