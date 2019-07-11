@@ -656,7 +656,7 @@ $(document).ready(function(){
     }
 
     function formatAmount(amount) {
-      return (amount == "NaN" || amount == NaN) ? ~~NaN : amount
+      return (amount == "NaN" || amount == NaN || isNaN(amount)) ? 0 : amount
     }
 
     function formatDollar(num) {
