@@ -597,7 +597,7 @@ $(document).ready(function(){
         var zeroRatedBox = document.querySelector('#zeroRated').checked;
         console.log(parentParse)
         console.table(currentBill)
-        console.log(`.............${currentBill.original_arrears}`);
+        console.log(`.............${parseFloat(currentBill.p_year_total_paid > 0) ? 'jk' : 'ol'}`);
         document.getElementById('r_acc_no').innerHTML = parentParse.property_no
 
         document.getElementById('r_acc_no_3').innerHTML = parentParse.property_no
@@ -623,7 +623,7 @@ $(document).ready(function(){
         document.getElementById('r_ac_street_3').innerHTML = parentParse.street ? parentParse.street.description : "NO NAME"
 
         document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(currentBill.p_year_bill))} ` : `${formatDollar(0.0)} `
-        document.getElementById('r_ac_amountpaid').innerHTML = currentBill.p_year_total_paid ? `${formatDollar(parseFloat(formatAmount(currentBill.p_year_total_paid)) + parseFloat(formatAmount(currentBill.adjust_arrears)))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_amountpaid').innerHTML = (currentBill.p_year_total_paid || parseFloat(currentBill.p_year_total_paid) == parseFloat(0)) ? `${formatDollar(parseFloat(formatAmount(currentBill.p_year_total_paid)) + parseFloat(formatAmount(currentBill.adjust_arrears)))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_current').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_arrears').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(formatAmount(currentBill.original_arrears)) - parseFloat(formatAmount(currentBill.adjust_arrears))) } ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_total').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
