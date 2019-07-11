@@ -624,11 +624,11 @@ $(document).ready(function(){
 
         document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(currentBill.p_year_bill))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_amountpaid').innerHTML = currentBill.p_year_total_paid ? `${formatDollar(parseFloat(formatAmount(currentBill.p_year_total_paid)) + parseFloat(formatAmount(currentBill.adjust_arrears)))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_current').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_arrears').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(formatAmount(currentBill.original_arrears)) - parseFloat(formatAmount(currentBill.adjust_arrears))) } ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_total').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
 
         document.getElementById('r_ac_arrears_3').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(currentBill.arrears))} ` : `${formatDollar(0.0)} `
-        document.getElementById('r_ac_current').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_current_3').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_total_3').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_tpaid_3').innerHTML = currentBill.total_paid ? `${formatDollar(parseFloat(currentBill.total_paid))} ` : `${formatDollar(0.0)} `
@@ -656,7 +656,11 @@ $(document).ready(function(){
     }
 
     function formatAmount(amount) {
-      return (amount == "NaN" || amount == NaN || isNaN(amount)) ? 0 : amount
+       if(amount == "NaN" || amount == NaN || isNaN(amount) || amount == "null" || amount == null){
+         amount = ~~NaN
+       }
+       console.log(`......amount......is....->${amount}`);
+       return amount
     }
 
     function formatDollar(num) {

@@ -61,7 +61,7 @@ class BillingController extends Controller
       // dd($request->all());
       $setting = Setting::latest()->first();
       $tag = '';
-      $view = $request->bill_type == 'p' ? env('ASSEMBLY_CODE') == 'KKMA' ? 'console.billing.property.bulk-print' : 'console.billing.property.t' : 'console.billing.business.bulk-print';
+      $view = $request->bill_type == 'p' ? ((env('ASSEMBLY_CODE') == 'KKMA') ? 'console.billing.property.bulk-print' : 'console.billing.property.t') : 'console.billing.business.bulk-print';
       $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
       if($request->account_no):
         $tag = '';
