@@ -702,10 +702,9 @@ $(document).ready(function(){
         document.getElementById('r_ac_electoral_2').innerHTML = parentParse.electoral ? parentParse.electoral.description : 'NO NAME'
         document.getElementById('r_ac_tas_2').innerHTML = parentParse.tas ? parentParse.tas.description : "NO NAME"
         document.getElementById('r_ac_street_2').innerHTML = parentParse.street ? parentParse.street.description : "NO NAME"
-        document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(currentBill.p_year_bill))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(currentBill.p_year_bill) + parseFloat(currentBill.adjust_arrears))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_amountpaid').innerHTML = currentBill.p_year_total_paid ? `${formatDollar(parseFloat(currentBill.p_year_total_paid))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_arrears').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(currentBill.original_arrears))} ` : `${formatDollar(0.0)} `
-document.getElementById('r_adjust_arrears').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(currentBill.adjust_arrears))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_current').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_total').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_arrears_2').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(currentBill.arrears))} ` : `${formatDollar(0.0)} `

@@ -292,10 +292,6 @@
                                 <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_arrears">GHc 0.00</span> &nbsp;&nbsp;</p>
                               </article>
                               <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
-                                <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Adjusted Arrears:</p>
-                                <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_adjust_arrears">GHc 0.00</span> &nbsp;&nbsp;</p>
-                              </article>
-                              <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
                                 <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Current Fee:</p>
                                 <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_current">GHc 225.00</span> &nbsp;&nbsp;</p>
                               </article>
@@ -527,10 +523,9 @@ $(document).ready(function(){
         document.getElementById('r_ac_com').innerHTML = parentParse.community ? parentParse.community.description : 'NO NAME'
         document.getElementById('r_ac_tas').innerHTML = parentParse.tas ? parentParse.tas.description : "NO NAME"
         document.getElementById('r_ac_street').innerHTML = parentParse.street ? parentParse.street.description : "NO NAME"
-        document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(currentBill.p_year_bill))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(currentBill.p_year_bill) + parseFloat(currentBill.adjust_arrears))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_amountpaid').innerHTML = currentBill.p_year_total_paid ? `${formatDollar(parseFloat(currentBill.p_year_total_paid))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_arrears').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(currentBill.original_arrears))} ` : `${formatDollar(0.0)} `
-document.getElementById('r_adjust_arrears').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(currentBill.adjust_arrears))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_current').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_total').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_year').innerHTML = currentBill.year
