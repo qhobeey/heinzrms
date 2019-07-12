@@ -51,7 +51,7 @@
                                       <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->bill_type; ?></a></td>
                                       <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo $bill->rate_pa; ?></a></td>
                                       <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo $bill->current_amount; ?></a></td>
-                                      <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo $bill->arrears; ?></a></td>
+                                      <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo (floatval($bill->original_arrears) - floatval($bill->adjust_arrears)); ?></a></td>
                                       <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo $bill->account_balance; ?></a></td>
                                       <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo $bill->total_paid; ?></a></td>
                                       <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->year; ?></a></td>
@@ -286,7 +286,7 @@
                               <p style="font-size: 13px; font-weight: 600; color: black; margin-top: 10px;">For enquires contact the <?= $setting->organization_type; ?> finance office on the ff Nos. <?= $setting->contact_info_text; ?></p>
                               <div style="background-color:white; width:100%; border:2px solid black; margin-top: 10px; padding-left: 10px; padding-bottom: 3px;">
                                 <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
-                                  <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Previous Year Bill:</p>
+                                  <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Previous Year(s) Bill:</p>
                                   <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_pyear">GHc 0.00</span> &nbsp;&nbsp;</p>
                                 </article>
                                 <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">

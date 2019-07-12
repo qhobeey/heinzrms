@@ -103,7 +103,7 @@ class BillingController extends Controller
       $bill = \App\Bill::where('account_no', $request->account_no)->where('year', $max)->first();
       $adjustTable = \App\AdjustArrears::create([
         'account_no' => $request->account_no,
-        'bill_year' => (string)(intval($bill->year)-1);
+        'bill_year' => (string)(intval($bill->year)-1),
         'amount' => $adjustedValue,
         'adjusted_by' => auth()->user()->name.'-'.auth()->user()->user_id,
         'bill_type' => $bill->bill_type,
