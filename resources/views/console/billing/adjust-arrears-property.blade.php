@@ -18,7 +18,7 @@
               </div>
               <div class="col-md-8">
                 <div class="form-group">
-                  <input type="text" class="form-control" disabled name="year" id="year" value="<?php echo date('Y'); ?>">
+                  <input type="text" class="form-control" disabled name="year" id="year" value="<?php echo (string)(intval(date('Y'))-1); ?>">
                 </div>
               </div>
             </div>

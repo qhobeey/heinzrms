@@ -103,7 +103,7 @@ class BillingController extends Controller
       $bill = \App\Bill::where('account_no', $request->account_no)->where('year', $max)->first();
       $adjustTable = \App\AdjustArrears::create([
         'account_no' => $request->account_no,
-        'bill_year' => $bill->year,
+        'bill_year' => (string)(intval($bill->year)-1);
         'amount' => $adjustedValue,
         'adjusted_by' => auth()->user()->name.'-'.auth()->user()->user_id,
         'bill_type' => $bill->bill_type,
@@ -355,6 +355,7 @@ class BillingController extends Controller
       $previousBill = \App\Bill::where('account_no', $account)->where('year', (string)(intval($year)-1))->first();
       $arrears = $previousBill ? floatval($previousBill->account_balance) : floatval(0);
       $totalPaid = \App\Payment::where('account_no', $account)->where('payment_year', $year)->sum('amount_paid');
+      // $lastYearTotalPaid = \App\Payment::where('account_no', $account)->where('payment_year', (string)(intval($year) - 1))->sum('amount_paid');
       $lastYearTotalPaid = \App\Payment::where('account_no', $account)->where('payment_year', (string)(intval($year) - 1))->sum('amount_paid');
       $lastYearBill = $previousBill ? floatval($previousBill->rate_pa) : floatval(0);
       $lastYearArrears = $previousBill ? floatval($previousBill->arrears) : floatval(0);
@@ -372,7 +373,9 @@ class BillingController extends Controller
       if($billRes):
         if($billRes->adjust_arrears != null || $billRes->adjust_arrears != ''):
           unset($bill['account_balance']);
-          $bill = array_merge($bill, ['account_balance' => number_format(floatval(($ans + $arrears) - ($totalPaid + $billRes->adjust_arrears)), 2, '.', '')]);
+          $bill = array_merge($bill, [
+            'account_balance' => number_format(floatval(($ans + $arrears) - ($totalPaid + $billRes->adjust_arrears)), 2, '.', '')
+          ]);
         endif;
         // $bill = array_merge($bill, ['arrears' => $arrears, 'account_balance' => $ans + $arrears]);
         $billRes->update($bill);
