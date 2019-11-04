@@ -14,7 +14,7 @@
       <div id="menuZonal" class="tab-pane fade in active">
         <h3 style="font-size: 19px; text-transform: uppercase;margin-left: 10px; margin-right: 10px;text-align:center;">Property by Sub Metro</h3>
         <hr style="border-top: 1px solid #ebeff2;margin-bottom: 10px;margin-top: 10px;width: 76%;">
-        <form class="" action="#" method="get">
+        <form class="" action="{{route('advanced.report.property')}}" method="get">
           @csrf
           <div class="row search-cont">
 

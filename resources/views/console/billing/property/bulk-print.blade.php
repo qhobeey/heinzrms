@@ -51,7 +51,7 @@
                                       <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->bill_type; ?></a></td>
                                       <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo $bill->rate_pa; ?></a></td>
                                       <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo $bill->current_amount; ?></a></td>
-                                      <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo $bill->arrears; ?></a></td>
+                                      <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo (floatval($bill->original_arrears) - floatval($bill->adjust_arrears)); ?></a></td>
                                       <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo $bill->account_balance; ?></a></td>
                                       <td class="sorting_1 text-number" tabindex="0"><a href="#"><?php echo $bill->total_paid; ?></a></td>
                                       <td class="sorting_1" tabindex="0"><a href="#"><?php echo $bill->year; ?></a></td>
@@ -702,14 +702,21 @@ $(document).ready(function(){
         document.getElementById('r_ac_electoral_2').innerHTML = parentParse.electoral ? parentParse.electoral.description : 'NO NAME'
         document.getElementById('r_ac_tas_2').innerHTML = parentParse.tas ? parentParse.tas.description : "NO NAME"
         document.getElementById('r_ac_street_2').innerHTML = parentParse.street ? parentParse.street.description : "NO NAME"
-        document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(formatAmount(currentBill.p_year_bill)) + parseFloat(formatAmount(currentBill.adjust_arrears)))} ` : `${formatDollar(0.0)} `
-        document.getElementById('r_ac_amountpaid').innerHTML = currentBill.p_year_total_paid ? `${formatDollar(parseFloat(currentBill.p_year_total_paid))} ` : `${formatDollar(0.0)} `
-        document.getElementById('r_ac_arrears').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(formatAmount(currentBill.original_arrears)) + parseFloat(formatAmount(currentBill.adjust_arrears))) } ` : `${formatDollar(0.0)} `
-        document.getElementById('r_ac_current').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
-        document.getElementById('r_ac_total').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
-        document.getElementById('r_ac_arrears_2').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(currentBill.arrears))} ` : `${formatDollar(0.0)} `
+        // document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(formatAmount(currentBill.p_year_bill)) + parseFloat(formatAmount(currentBill.adjust_arrears)))} ` : `${formatDollar(0.0)} `
+        // document.getElementById('r_ac_amountpaid').innerHTML = currentBill.p_year_total_paid ? `${formatDollar(parseFloat(currentBill.p_year_total_paid))} ` : `${formatDollar(0.0)} `
+        // document.getElementById('r_ac_arrears').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(formatAmount(currentBill.original_arrears)) + parseFloat(formatAmount(currentBill.adjust_arrears))) } ` : `${formatDollar(0.0)} `
+        // document.getElementById('r_ac_current').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
+        // document.getElementById('r_ac_total').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_arrears_2').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(formatAmount(currentBill.original_arrears)) - parseFloat(formatAmount(currentBill.adjust_arrears))) } ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_current_2').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_total_2').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
+
+        document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(currentBill.p_year_bill))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_amountpaid').innerHTML = (currentBill.p_year_total_paid || parseFloat(currentBill.p_year_total_paid) == parseFloat(0)) ? `${formatDollar(parseFloat(formatAmount(currentBill.p_year_total_paid)) + parseFloat(formatAmount(currentBill.adjust_arrears)))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_current').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_arrears').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(formatAmount(currentBill.original_arrears)) - parseFloat(formatAmount(currentBill.adjust_arrears))) } ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_total').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
+
         document.getElementById('r_ac_arrears_3').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(currentBill.arrears))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_current_3').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_total_3').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
@@ -738,7 +745,12 @@ $(document).ready(function(){
     }
 
     function formatAmount(amount) {
-      return (amount == "NaN" || amount == NaN) ? ~~NaN : amount
+      console.log(`......amount......before....->${amount}`);
+       if(!amount || amount == "NaN" || amount == NaN || isNaN(amount) || amount == "null" || amount == null || amount == ''){
+         amount = 0.00
+       }
+       console.log(`......amount......after....->${amount}`);
+       return amount
     }
 
     function formatDollar(num) {

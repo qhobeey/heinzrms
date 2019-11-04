@@ -74,11 +74,11 @@ class NorminalRowExportProperty implements FromCollection, ShouldAutoSize, Shoul
         foreach ($bills->chunk(1000) as $key => $chunk) {
           foreach ($chunk as $bill) {
             if(!$bill->property) continue;
-            if($bill->current_amount == '' || $bill->current_amount == 0) continue;
-            if($bill->account_balance == '' || $bill->account_balance == 0) continue;
+            // if($bill->current_amount == '' || $bill->current_amount == 0) continue;
+            // if($bill->account_balance == '' || $bill->account_balance == 0) continue;
             $newData = [
               $key + 1, $bill->account_no, $bill->property->electoral ? $bill->property->electoral->description : 'NA',
-              $bill->property->owner ? $bill->property->owner->name : 'NO NAME', $bill->property->address,
+              $bill->property->owner ? $bill->property->owner->name : 'NO NAME', $bill->property->address, $bill->property->house_no,
               $bill->property->type ? $bill->property->type->description : 'NA',
               $bill->property->category ? $bill->property->category->description : 'NA', floatval($bill->rate_imposed),
               floatval($bill->property->rateable_value), floatval($bill->arrears),
@@ -118,6 +118,7 @@ class NorminalRowExportProperty implements FromCollection, ShouldAutoSize, Shoul
             'ELECTORAL',
             'OWNER NAME	',
             'PROPERTY ADDRESS',
+            'HOUSE NO',
             'PROPERTY TYPE.',
             'PROPERTY CAT.',
             'RATE IMPOSED',

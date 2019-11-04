@@ -75,8 +75,8 @@ class NorminalRowExportBusiness implements FromCollection, ShouldAutoSize, Shoul
         foreach ($bills->chunk(1000) as $key => $chunk) {
           foreach ($chunk as $bill) {
             if(!$bill->business) continue;
-            if($bill->current_amount == '' || $bill->current_amount == 0) continue;
-            if($bill->account_balance == '' || $bill->account_balance == 0) continue;
+            // if($bill->current_amount == '' || $bill->current_amount == 0) continue;
+            // if($bill->account_balance == '' || $bill->account_balance == 0) continue;
             $newData = [
               $key + 1, $bill->account_no, $bill->business->business_name, $bill->business->electoral ? $bill->business->electoral->description : 'NA',
               $bill->business->owner ? $bill->business->owner->name : 'NO NAME', $bill->business->address, $bill->business->store_number,
