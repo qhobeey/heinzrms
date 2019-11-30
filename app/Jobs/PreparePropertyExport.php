@@ -22,17 +22,19 @@ class PreparePropertyExport implements ShouldQueue
     protected $year;
     protected $electoral;
     protected $name;
+    protected $type;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($year, $electoral, $name)
+    public function __construct($year, $electoral, $name, $type)
     {
       $this->year = $year;
       $this->electoral = $electoral;
       $this->name = $name;
+      $this->type = $type;
     }
 
     /**
@@ -45,8 +47,8 @@ class PreparePropertyExport implements ShouldQueue
       ini_set('memory_limit','256M');
       \App\TemporalFiles::truncate();
       // \App\TemporalFiles::create(['file' => 'gt', 'filename' => $this->name]);
-      (new NorminalRowExportProperty($this->year, $this->electoral))->queue($this->name);
-      $gt = Excel::raw(new NorminalRowExportProperty($this->year, $this->electoral), \Maatwebsite\Excel\Excel::XLSX);
+      (new NorminalRowExportProperty($this->year, $this->electoral, $this->type))->queue($this->name);
+      $gt = Excel::raw(new NorminalRowExportProperty($this->year, $this->electoral, $this->type), \Maatwebsite\Excel\Excel::XLSX);
       \App\TemporalFiles::create(['file' => $gt, 'filename' => $this->name]);
       // $page = File::put(public_path('images/kbills/'.$this->name), $gt);
 

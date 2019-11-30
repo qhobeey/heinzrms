@@ -7,6 +7,7 @@ use App\Repositories\Reports\ReportListing as Report;
 
 use App\Models\Location\Zonal;
 use App\Models\Location\Electoral;
+use App\Models\Location\Community;
 
 use App\Reports\ElectoralPropertyReport;
 use App\Reports\ElectoralBusinessReport;
@@ -14,6 +15,7 @@ use App\Reports\ElectoralBusinessReport;
 use App\Reports\ZonalPropertyReport;
 // use App\Reports\ElectoralBusinessReport;
 
+use App\Reports\CommunityPropertyReport;
 
 use App\Reports\PropertyReport;
 use App\Reports\BusinessReport;
@@ -52,13 +54,15 @@ class AdvancedReportController extends Controller
 
     public function __construct(Request $request, Zonal $zonal, PropertyReport $property,
         ElectoralPropertyReport $electoralProperty, ElectoralBusinessReport $electoralBusiness,
-        Bill $bill, BusinessReport $business, ZonalPropertyReport $zonalProperty)
+        Bill $bill, BusinessReport $business, ZonalPropertyReport $zonalProperty,
+        CommunityPropertyReport $communityProperty)
     {
       $this->zonal = $zonal;
       $this->property = $property;
       $this->electoralProperty = $electoralProperty;
       $this->electoralBusiness = $electoralBusiness;
       $this->zonalProperty = $zonalProperty;
+      $this->communityProperty = $communityProperty;
       $this->bill = $bill;
       $this->request = $request;
       $this->business = $business;
@@ -105,7 +109,7 @@ class AdvancedReportController extends Controller
            $elects = $this->electoralProperty->with(['bills'=>function($query) use ($year) {
               $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->orderBy('account_no', 'asc');
            }])->get();
-           return view('advanced.report.property.property-listing', compact($location, 'location', 'year', 'wcpScript'));
+           return view('advanced.report.property.property-listing', compact('electorals', 'location', 'year', 'wcpScript'));
            break;
          case 'zonal':
            $zonals = $this->zonalProperty->with(['bills'=>function($query) use ($year) {
@@ -115,6 +119,15 @@ class AdvancedReportController extends Controller
               $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->orderBy('account_no', 'asc');
            }])->get();
            return view('advanced.report.property.property-listing-zonal', compact('zonals', 'location', 'year', 'wcpScript'));
+           break;
+         case 'community':
+           $communities = $this->communityProperty->with(['bills'=>function($query) use ($year) {
+              $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
+           }])->paginate(50)->appends(request()->query());
+           $elects = $this->communityProperty->with(['bills'=>function($query) use ($year) {
+              $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->orderBy('account_no', 'asc');
+           }])->get();
+           return view('advanced.report.property.property-listing-community', compact('communities', 'location', 'year', 'wcpScript'));
            break;
 
          default:
@@ -231,6 +244,20 @@ class AdvancedReportController extends Controller
             // dd($year, $location, $code, $info);
             return view('advanced.report.property.property-listing-details-zonal', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill', 'zonal', 'code'));
           break;
+        case 'community':
+            $community = $this->communityProperty->where('code', $code)->whereHas('bills', function($q) use ($year) {
+              $q->where('year', $year);
+            })->with(['bills' => function($query) use ($year) {
+              $query->with('properties')->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->orderBy('account_no', 'asc');
+            }])->first();
+
+            $bills = $community ? $this->paginate($community->bills, $perPage = 30, $page = null, $baseUrl = $request->url().'/', $options = []) : [];
+            $info = $community ? $community->description : '';
+            $totalBill = $community ? $community->bills->count(): '';
+            // return ['result'=> $bills->currentPage()];
+            // dd($year, $location, $code, $info);
+            return view('advanced.report.property.property-listing-details-community', compact('bills', 'year', 'location', 'info', 'wcpScript', 'totalBill', 'community', 'code'));
+          break;
 
         default:
           return redirect()->back;
@@ -260,13 +287,33 @@ class AdvancedReportController extends Controller
     // }
 
 
-    public function exportProperty(Request $request, $year, $electoral)
+    public function exportProperty(Request $request, $year, $electoral, $type='electorals')
     {
-      // dd($year, $electoral);
-      $elct = Electoral::where('code', $electoral)->first();
-      // $export = new NorminalRowExportProperty(2019, '1401');
-      $name = strtoupper(str_slug($elct->description).'-property-norminal-row-'.$year).'.xlsx';
-      PreparePropertyExport::dispatch($year, $electoral, $name);
+      switch ($type) {
+        case 'electorals':
+          $elct = Electoral::where('code', $electoral)->first();
+          // $export = new NorminalRowExportProperty(2019, '1401');
+          $name = strtoupper(str_slug($elct->description).'-property-norminal-row-'.$year).'.xlsx';
+          PreparePropertyExport::dispatch($year, $electoral, $name, $type);
+          break;
+        case 'communities':
+          $elct = Community::where('code', $electoral)->first();
+          // $export = new NorminalRowExportProperty(2019, '1401');
+          $name = strtoupper(str_slug($elct->description).'-property-norminal-row-'.$year).'.xlsx';
+          PreparePropertyExport::dispatch($year, $electoral, $name, $type);
+          break;
+        case 'zonals':
+          $elct = Zonal::where('code', $electoral)->first();
+          // $export = new NorminalRowExportProperty(2019, '1401');
+          $name = strtoupper(str_slug($elct->description).'-property-norminal-row-'.$year).'.xlsx';
+          PreparePropertyExport::dispatch($year, $electoral, $name, $type);
+          break;
+
+        default:
+          // code...
+          break;
+      }
+
       return redirect()->back();
     }
 

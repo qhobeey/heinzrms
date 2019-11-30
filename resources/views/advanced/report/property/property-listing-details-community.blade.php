@@ -46,11 +46,11 @@
                 <td colspan="3"><a style="color:brown; font-weight: 600;" href="{{ URL::previous() }}"><?= $info; ?>&nbsp; [<?= $totalBill; ?>]</a></td>
                 <td></td>
                 <td></td>
-                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($zonal->bills->sum('arrears'), true); ?></td>
-                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($zonal->bills->sum('current_amount'), true); ?></td>
-                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($zonal->bills->sum('arrears') + $zonal->bills->sum('current_amount')), true); ?></td>
-                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($zonal->bills->sum('total_paid'), true); ?></td>
-                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($zonal->bills->sum('arrears') + $zonal->bills->sum('current_amount')) - $zonal->bills->sum('total_paid'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($community->bills->sum('arrears'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($community->bills->sum('current_amount'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($community->bills->sum('arrears') + $community->bills->sum('current_amount')), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($community->bills->sum('total_paid'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($community->bills->sum('arrears') + $community->bills->sum('current_amount')) - $community->bills->sum('total_paid'), true); ?></td>
 
             </tr>
           </div>
@@ -79,11 +79,11 @@
           <div class="tableInner">
             <tr class="odd2 heyy gtotal">
                 <td colspan="7" style="font-size: 18px;">GRAND TOTAL</td>
-                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($zonal->bills->sum('arrears'), true); ?></td>
-                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($zonal->bills->sum('current_amount'), true); ?></td>
-                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($zonal->bills->sum('arrears') + $zonal->bills->sum('current_amount')), true); ?></td>
-                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($zonal->bills->sum('total_paid'), true); ?></td>
-                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($zonal->bills->sum('arrears') + $zonal->bills->sum('current_amount')) - $zonal->bills->sum('total_paid'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($community->bills->sum('arrears'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($community->bills->sum('current_amount'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($community->bills->sum('arrears') + $community->bills->sum('current_amount')), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney($community->bills->sum('total_paid'), true); ?></td>
+                <td class="text-number"><?= \App\Repositories\ExpoFunction::formatMoney(($community->bills->sum('arrears') + $community->bills->sum('current_amount')) - $community->bills->sum('total_paid'), true); ?></td>
 
             </tr>
           </div>
@@ -106,7 +106,7 @@
   <div class="row">
     <div class="col-md-6">
       <button type="button" onclick="javascript:showRsp()" id="repPrintBtn" class="btn btn-xs" style="background: black; color: white;">Print Report</button>
-      <a href="{{route('property.export.excel', [$year, $code, 'zonals'])}}">Export to excel</a>
+      <a href="{{route('property.export.excel', [$year, $code, 'communities'])}}">Export to excel</a>
     </div>
     <div class="col-md-6">
       <div class="row"  style="width: 84%; margin: auto;">

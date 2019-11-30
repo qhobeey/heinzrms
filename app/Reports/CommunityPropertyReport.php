@@ -4,9 +4,9 @@ namespace App\Reports;
 
 use App\Reports\PropertyReport as Property;
 
-class ZonalPropertyReport extends Model
+class CommunityPropertyReport extends Model
 {
-	protected $table = 'zonals';
+	protected $table = 'communities';
     protected $primaryKey = 'code';
     protected $keyType = 'string';
     public $incrementing = false;
@@ -27,16 +27,16 @@ class ZonalPropertyReport extends Model
 
     public function properties()
     {
-      return $this->hasMany('App\Property','zonal_id');
+      return $this->hasMany('App\Property','community_id');
     }
     public function bills()
     {
-      return $this->hasMany('App\Bill','zonal_id', 'code');
+      return $this->hasMany('App\Bill','community_id', 'code');
     }
     public function businesses()
     {
-      return $this->hasMany('App\Business','zonal_id');
+      return $this->hasMany('App\Business','community_id');
     }
-
+    
 
 }

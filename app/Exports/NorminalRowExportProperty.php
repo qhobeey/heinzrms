@@ -5,6 +5,8 @@ namespace App\Exports;
 use Illuminate\Support\Collection;;
 
 use App\Reports\ElectoralPropertyReport;
+use App\Reports\CommunityPropertyReport;
+use App\Reports\ZonalPropertyReport;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -38,11 +40,13 @@ class NorminalRowExportProperty implements FromCollection, ShouldAutoSize, Shoul
 
     protected $electoral;
     protected $year;
+    protected $type;
 
-    public function __construct(int $year, string $electoral)
+    public function __construct(int $year, string $electoral, string $type)
     {
         $this->year = $year;
         $this->electoral = $electoral;
+        $this->type = $type;
     }
 
     // public function collection()
@@ -58,11 +62,35 @@ class NorminalRowExportProperty implements FromCollection, ShouldAutoSize, Shoul
         $response = array();
         $footer = array();
         $year = $this->year;
-        $bills = ElectoralPropertyReport::where('code', $this->electoral)->whereHas('bills', function($q) use ($year) {
-          $q->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
-        })->with(['bills' => function($query) use ($year) {
-          $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->orderBy('account_no', 'asc');
-        }])->first()->bills;
+        $type = $this->type;
+        $bills;
+        switch ($type) {
+          case 'electorals':
+            $bills = ElectoralPropertyReport::where('code', $this->electoral)->whereHas('bills', function($q) use ($year) {
+              $q->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
+            })->with(['bills' => function($query) use ($year) {
+              $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->orderBy('account_no', 'asc');
+            }])->first()->bills;
+            break;
+          case 'communities':
+            $bills = CommunityPropertyReport::where('code', $this->electoral)->whereHas('bills', function($q) use ($year) {
+              $q->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
+            })->with(['bills' => function($query) use ($year) {
+              $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->orderBy('account_no', 'asc');
+            }])->first()->bills;
+            break;
+          case 'zonals':
+            $bills = ZonalPropertyReport::where('code', $this->electoral)->whereHas('bills', function($q) use ($year) {
+              $q->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'));
+            })->with(['bills' => function($query) use ($year) {
+              $query->where('year', $year)->where(strtoupper('bill_type'), strtoupper('p'))->orderBy('account_no', 'asc');
+            }])->first()->bills;
+            break;
+
+          default:
+            break;
+        }
+
         \App\Processing::create(['total' => $bills->count(), 'count' => 0, 'percentage' => 0]);
 
         $sumArrears = 0.0;
