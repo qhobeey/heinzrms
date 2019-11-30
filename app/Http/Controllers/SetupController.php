@@ -96,7 +96,7 @@ class SetupController extends Controller
 
     }
 
-    public function filterProperySMSQuery(Request $request, $query=null)
+    public function filterPropertySMSQuery(Request $request, $query=null)
     {
       if($request->account_no):
         $properties = \App\Property::where('business_no', $request->account_no)->get();

@@ -114,7 +114,7 @@ class PropertyController extends Controller
             'phone' => '', 'address' => '','building_permit_no' => '',
             'serial_no' => '', 'property_type' => 'required',
             'property_category' => 'required', 'zonal_id' => '',
-            'valuation_no' => '', 'house_no' => '',
+            'valuation_no' => '', 'house_no' => '', 'rateable_value' => '',
             'street_id' => '', 'loc_longitude' => '', 'loc_latitude' => '',
             'image' => '', 'client' => '', 'electoral_id' => '', 'tas_id' => '', 'community_id' => ''
         ]);
@@ -401,7 +401,7 @@ class PropertyController extends Controller
               'valuation_no' => '', 'house_no' => '', 'division' => '',
               'street_id' => '', 'loc_longitude' => '', 'loc_latitude' => '',
               'image' => '', 'electoral_id' => '', 'tas_id' => '', 'community_id' => '',
-              'street_id' => ''
+              'street_id' => '', 'rateable_value' => ''
           ]);
 
           $owner = \App\PropertyOwner::where('owner_id', $request->owner_id)->first();
