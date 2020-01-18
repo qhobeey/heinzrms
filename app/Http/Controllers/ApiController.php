@@ -495,10 +495,10 @@ class ApiController extends Controller
         // return response()->json(['status' => 'success', 'data' => $props], 201);
         $property = Property::create($props);
         if($property):
-          $tkn = \App\TrackAccountNumber::first();
-          $addedValue = $tkn->property + 1;
-          $tkn->property = $addedValue;
-          $tkn->save();
+          // $tkn = \App\TrackAccountNumber::first();
+          // $addedValue = $tkn->property + 1;
+          // $tkn->property = $addedValue;
+          // $tkn->save();
 
           $collectorPayment = $this->createCollectorPayment([
             'email' => $property->client,
