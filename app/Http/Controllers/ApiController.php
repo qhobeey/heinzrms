@@ -393,8 +393,8 @@ class ApiController extends Controller
                 if($mobile[0] == '0') $mobile = ltrim($mobile, '0');
                 $mobile = '233' . $mobile;
                 // $mobile = '233248160008';
-                $max = Bill::where('account_no', $account)->max('year');
-                $bill = Bill::where('account_no', $account)->where('year', $max)->first();
+                $max = Bill::where('account_no', $payment->account_no)->max('year');
+                $bill = Bill::where('account_no', $payment->account_no)->where('year', $max)->first();
                 $message = 'Dear ' . $account->owner ? $account->owner->name : 'sir/madma' . ' of ACC: '. $payment->account_no . '. You have been credited with a payment amount of GHc' .$payment->amount_paid . ' with a GCR No '. $payment->gcr_number . ' and your current balance is GHc ' . $bill->current_amount . '.Thanks';
                 $smsRes = Setup::sendSms($mobile, $message);
                 // dd($smsRes, 'o');
