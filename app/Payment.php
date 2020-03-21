@@ -4,5 +4,5 @@ namespace App;
 
 class Payment extends Model
 {
-    
+    protected $guarded = [];
 }

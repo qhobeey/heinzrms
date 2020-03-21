@@ -28,6 +28,10 @@ Route::post('save_property_from_mobile', 'ApiController@savePropertyFromMobile')
 Route::put('update_property_from_mobile/{property}/{owner}', 'ApiController@updatePropertyFromMobile');
 Route::post('check_auth_system', 'ApiController@checkMobileAuth');
 Route::post('request_payment', 'ApiController@postPayment');
+Route::post('editpayment', 'ApiController@editPayment');
+Route::get('return/payments/{id}/{clt}', 'ApiController@returnPaymentBills');
+Route::get('fetch/payments/{id}', 'ApiController@fetchPaymentBill');
+
 
 
 Route::put('re_update_business_owner/{id}', 'BusinessApiController@updateBusinessOwnerData');

@@ -112,7 +112,9 @@ class ApiController extends Controller
         if (!$paymentGcr) return response()->json(['status' => 'failed', 'data' => '']);
         if($paymentGcr->collector_id) $collector = DB::table('collectors')->where('collector_id', $paymentGcr->collector_id)->first();
         // dd($paymentGcr);
-        $account = (strtoupper($paymentGcr->data_type) == strtoupper('p')) ? Property::with(['type', 'category', 'owner'])->where('property_no', $paymentGcr->account_no)->first() : Business::with(['type', 'category', 'owner'])->where('property_no', $paymentGcr->account_no)->first();
+        $account = (strtoupper($paymentGcr->data_type) == strtoupper('p'))
+          ? Property::with(['type', 'category', 'owner'])->where('property_no', $paymentGcr->account_no)->first()
+          : Business::with(['type', 'category', 'owner'])->where('business_no', $paymentGcr->account_no)->first();
         // dd($paymentGcr->account_no,$account);
         $data = array_merge($data, [
           'is_used' => ($enumGcr->is_used) ? true : false, 'in_stock' => !$enumGcr->is_used, 'is_damaged' => ($enumGcr->is_damaged) ? true : false, 'collector' => ($collector) ? $collector->name : 'no data',
@@ -395,11 +397,14 @@ class ApiController extends Controller
                 // $mobile = '233248160008';
                 $max = Bill::where('account_no', $payment->account_no)->max('year');
                 $bill = Bill::where('account_no', $payment->account_no)->where('year', $max)->first();
-                $message = 'Dear ' . $account->owner ? $account->owner->name : 'sir/madma' . ' of ACC: '. $payment->account_no . '. You have been credited with a payment amount of GHc' .$payment->amount_paid . ' with a GCR No '. $payment->gcr_number . ' and your current balance is GHc ' . $bill->current_amount . '.Thanks';
-                $smsRes = Setup::sendSms($mobile, $message);
+                $msg = 'Dear ' . ($account->owner ? $account->owner->name : 'sir/madma') . ' of ACC: '. $payment->account_no . '. You have been credited with a payment amount of GHc' .$payment->amount_paid . ' with a GCR No '. $payment->gcr_number . ' and your current balance is GHc ' . $bill->account_balance . '.Thank you for doing business with the assembly.';
+                $smsRes = Setup::sendSms($mobile, $msg);
+                // $msg = $payment->account_no.' trsting'.
+                // $smsRes = Setup::sendSms('233248160008', $msg);
                 // dd($smsRes, 'o');
+                // $smsRes = 'good';
                 if ($smsRes == 'good') {
-                  return response()->json(['status' => 'success', 'data' => 'Saved and SMS sent', 'payment' => $payment, 'account' => $bill, 'owner' => $account->owner ? $account->owner->name : 'no owner name found']);
+                  return response()->json(['status' => 'success', 'data' => 'Saved and SMS sent', 'payment' => $payment, 'account' => $bill, 'owner' => $account->owner ? $account->owner->name : 'no owner name found', 'message' => $msg]);
                 }else{
                   return response()->json(['status' => 'success', 'data' => 'Saved..Sending message error']);
                 }
@@ -415,6 +420,81 @@ class ApiController extends Controller
 
     }
 
+    public function editPayment(Request $request)
+    {
+
+      $info = $request->validate([
+        'amount_paid' => 'required',
+        'gcr_number' => 'required', 'payment_mode' => 'required',
+        'cheque_no' => '', 'date' => ''
+      ]);
+      if(!$info['date'] || $info['date'] == ""){
+         unset($info['date']);
+      }else{
+        $dateArray = explode('-', $info['date']);
+        $info = array_merge($info, ['payment_date' => $info['date'], 'payment_year' => current($dateArray)]);
+        unset($info['date']);
+      }
+      $payment = \App\Payment::where('gcr_number', $request->gcr_number_old)->first();
+      $payment2 = \App\Payment::where('gcr_number', $request->gcr_number_old)->first();
+      $collector = Collector::where('collector_id', $payment->collector_id)->first();
+
+
+      if($this->recalculateGCR($info['gcr_number'], $collector->collector_id)):
+        if($this->recalculateBill2($payment->account_no, $info['amount_paid'], $payment->amount_paid)):
+          $payment->update($info);
+          $pmt = \App\Payment::where('gcr_number', $info['gcr_number'])->first();
+          if($payment2->gcr_number != $info['gcr_number']){
+            $data = EnumGcr::where('id_collector', $collector->collector_id)->where('gcr_number', $payment2->gcr_number)->first();
+            $data->update(['is_used' => 0]);
+          }
+          $payment->update($info);
+          if($pmt) {
+            $account = (strtoupper($payment->data_type) == strtoupper('p'))
+                        ? Property::with(['type', 'category', 'owner'])->where('property_no', $payment->account_no)->first()
+                        : Business::with(['type', 'category', 'owner'])->where('business_no', $payment->account_no)->first();
+            // dd($account->owner);
+            if ($account->owner && $account->owner->phone) {
+              $mobile = $account->owner->phone;
+              if($mobile[0] == '0') $mobile = ltrim($mobile, '0');
+              $mobile = '233' . $mobile;
+              // $mobile = '233248160008';
+              $max = Bill::where('account_no', $payment->account_no)->max('year');
+              $bill = Bill::where('account_no', $payment->account_no)->where('year', $max)->first();
+              $msg = 'Dear ' . ($account->owner ? $account->owner->name : 'sir/madma') . ' of ACC: '. $payment->account_no . '. Your payment with amount of GHc' .$pmt->amount_paid . ' and GCR No '. $pmt->gcr_number . ' has been edited to the correct figures and your current balance is GHc ' . $bill->account_balance. '. Thank you for doing business with the assembly.';
+              $smsRes = Setup::sendSms($mobile, $msg);
+              // $msg = $payment->account_no.' trsting'.
+              // $smsRes = Setup::sendSms('233248160008', $msg);
+              // dd($smsRes, 'o');
+              // $smsRes = 'good';
+              if ($smsRes == 'good') {
+                return response()->json(['status' => 'success', 'data' => 'Saved and SMS sent', 'payment' => $pmt, 'account' => $bill, 'owner' => $account->owner ? $account->owner->name : 'no owner name found', 'message' => $msg]);
+              }else{
+                return response()->json(['status' => 'success', 'data' => 'Saved..Sending message error']);
+              }
+            }else {
+              return response()->json(['status' => 'success', 'data' => 'Saved with no owner number']);
+            }
+
+          }
+        endif;
+      endif;
+
+      return response()->json(['status' => 'success', 'data' => 'good']);
+
+    }
+
+    public function returnPaymentBills(Request $request, $id, $clt) {
+      $collector = Collector::where('id', $clt)->first();
+      $payments = \App\Payment::where('account_no', $id)->where('collector_id', $collector->collector_id)->orderBy('updated_at', 'desc')->get();
+      return response()->json(['status' => 'success', 'data' => $payments]);
+    }
+
+    public function fetchPaymentBill(Request $request, $id) {
+      $payment = \App\Payment::where('gcr_number', $id)->first();
+      return response()->json(['status' => 'success', 'data' => $payment]);
+    }
+
 
 
     protected function recalculateBill($account, $amount)
@@ -425,6 +505,19 @@ class ApiController extends Controller
       // $bill = Bill::where('account_no', $account)->first();
       $totalPayment = floatval($bill->total_paid) + floatval($amount);
       $checkBal = floatval($bill->account_balance) - floatval($amount);
+      $balance = $checkBal == floatval(0) ? floatval(0): $checkBal;
+      $bill->update(['account_balance' => $balance, 'total_paid' => $totalPayment]);
+      return true;
+    }
+
+    protected function recalculateBill2($account, $amount, $old)
+    {
+
+      $max = Bill::where('account_no', $account)->max('year');
+      $bill = Bill::where('account_no', $account)->where('year', $max)->first();
+      // $bill = Bill::where('account_no', $account)->first();
+      $totalPayment = (floatval($bill->total_paid) - floatval($old)) + floatval($amount);
+      $checkBal = floatval($bill->account_balance) + floatval($old) - floatval($amount);
       $balance = $checkBal == floatval(0) ? floatval(0): $checkBal;
       $bill->update(['account_balance' => $balance, 'total_paid' => $totalPayment]);
       return true;
@@ -495,10 +588,10 @@ class ApiController extends Controller
         // return response()->json(['status' => 'success', 'data' => $props], 201);
         $property = Property::create($props);
         if($property):
-          // $tkn = \App\TrackAccountNumber::first();
-          // $addedValue = $tkn->property + 1;
-          // $tkn->property = $addedValue;
-          // $tkn->save();
+          $tkn = \App\TrackAccountNumber::first();
+          $addedValue = $tkn->property + 1;
+          $tkn->property = $addedValue;
+          $tkn->save();
 
           $collectorPayment = $this->createCollectorPayment([
             'email' => $property->client,
