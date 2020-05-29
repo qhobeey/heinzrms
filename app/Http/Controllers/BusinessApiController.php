@@ -291,7 +291,7 @@ class BusinessApiController extends Controller
         $res = BusinessOwner::create($owns);
         if($res) {
           $owners = BusinessOwner::latest()->count();
-          $res->owner_id = strtoupper(env('ASSEMBLY_CODE')[0].$res->lastname[0].sprintf('%03d', $owners));
+          $res->owner_id = strtoupper(env('ASSEMBLY_CODE')[0].$res->name[0].sprintf('%03d', $owners));
           $res->save();
         }
         unset($props['firstname'], $props['lastname']);

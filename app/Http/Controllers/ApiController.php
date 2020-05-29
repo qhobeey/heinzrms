@@ -397,7 +397,8 @@ class ApiController extends Controller
                 // $mobile = '233248160008';
                 $max = Bill::where('account_no', $payment->account_no)->max('year');
                 $bill = Bill::where('account_no', $payment->account_no)->where('year', $max)->first();
-                $msg = 'Dear ' . ($account->owner ? $account->owner->name : 'sir/madma') . ' of ACC: '. $payment->account_no . '. You have been credited with a payment amount of GHc' .$payment->amount_paid . ' with a GCR No '. $payment->gcr_number . ' and your current balance is GHc ' . $bill->account_balance . '.Thank you for doing business with the assembly.';
+                // $msg = 'Dear ' . ($account->owner ? $account->owner->name : 'sir/madma') . ' of ACC: '. $payment->account_no . '. You have been credited with a payment amount of GHc' .$payment->amount_paid . ' with a GCR No '. $payment->gcr_number . ' and your current balance is GHc ' . $bill->account_balance . '.Thank you for doing business with the assembly.';
+                $msg = 'Dear '. ($account->owner ? $account->owner->name : 'sir/madma') . ' of ACC: '. $payment->account_no .'. A payment of GHc '.$payment->amount_paid.' on GCR-'.$payment->gcr_number.' on '.date('Y-m-d').' has been received, your balance is GHc '.$bill->account_balance;
                 $smsRes = Setup::sendSms($mobile, $msg);
                 // $msg = $payment->account_no.' trsting'.
                 // $smsRes = Setup::sendSms('233248160008', $msg);
@@ -461,7 +462,8 @@ class ApiController extends Controller
               // $mobile = '233248160008';
               $max = Bill::where('account_no', $payment->account_no)->max('year');
               $bill = Bill::where('account_no', $payment->account_no)->where('year', $max)->first();
-              $msg = 'Dear ' . ($account->owner ? $account->owner->name : 'sir/madma') . ' of ACC: '. $payment->account_no . '. Your payment with amount of GHc' .$pmt->amount_paid . ' and GCR No '. $pmt->gcr_number . ' has been edited to the correct figures and your current balance is GHc ' . $bill->account_balance. '. Thank you for doing business with the assembly.';
+              // $msg = 'Dear ' . ($account->owner ? $account->owner->name : 'sir/madma') . ' of ACC: '. $payment->account_no . '. Your payment with amount of GHc' .$pmt->amount_paid . ' and GCR No '. $pmt->gcr_number . ' has been edited to the correct figures and your current balance is GHc ' . $bill->account_balance. '. Thank you for doing business with the assembly.';
+              $msg = 'Dear '. ($account->owner ? $account->owner->name : 'sir/madma') . ' of ACC: '. $payment->account_no . '.An amount of GHc '.$pmt->amount_paid . ' with GCR No '. $pmt->gcr_number . ' has been corrected against GCR No '.$request->gcr_number_old.' .Your outstanding balance is '. $bill->account_balance;
               $smsRes = Setup::sendSms($mobile, $msg);
               // $msg = $payment->account_no.' trsting'.
               // $smsRes = Setup::sendSms('233248160008', $msg);
