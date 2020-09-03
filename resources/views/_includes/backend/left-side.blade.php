@@ -129,6 +129,8 @@
                       <li><a href="{{route('advanced.report.search.business')}}">{{__('Business Listings')}}</a></li>
                       <li><a href="{{route('advanced.report.search.feefixing')}}">{{__('Feefixing Listings')}}</a></li>
                       <li><a href="{{route('report.defaulters')}}">{{__('Defaulters Report')}}</a></li>
+                      <li><a href="{{route('statements.index')}}">{{__('Statement')}}</a></li>
+                      <li><a href="{{route('statements.payment.index')}}">{{__('Payments')}}</a></li>
                     </ul>
                 </li>
 

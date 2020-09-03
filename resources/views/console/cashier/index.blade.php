@@ -16,7 +16,9 @@
                       <form class="" action="{{route('cashier.filter.payment')}}" method="get">
                         @csrf
                         <div id="datatable-responsive_filter" class="dataTables_filter">
-                            <label>Search:<input type="search" class="form-control input-sm" placeholder="" name="filter" aria-controls="datatable-responsive"></label>
+                            <label>Search: <input type="radio" checked name="sortby" value="name"> name&nbsp;
+                            <input type="radio" name="sortby" value="gcr"> gcr &nbsp;<input type="search" class="form-control input-sm" placeholder="" name="filter" aria-controls="datatable-responsive"></label>
+
                             <button type="submit">Search</button>
                         </div>
                       </form>

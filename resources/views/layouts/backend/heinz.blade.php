@@ -125,6 +125,7 @@
 <script src="/js/dashboard/parsley.min.js"></script>
 
 <script src="/js/app.js"></script>
+@yield('bb')
 <script type="text/javascript">
 function printDiv(divName) {
    var printContents = document.getElementById(divName).innerHTML;

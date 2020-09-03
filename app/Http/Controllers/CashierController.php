@@ -10,10 +10,10 @@ use App\Payment;
 class CashierController extends Controller
 {
 
-  function __construct()
-  {
-      $this->middleware('auth');
-  }
+    function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     /**
      * Display a listing of the resource.
@@ -22,37 +22,43 @@ class CashierController extends Controller
      */
     public function index()
     {
-        $payments = DB::table('payments')->where('is_verfied', 0)->orderBy('id')->paginate(100);
+        $payments = DB::table('payments')->where('is_verfied', 0)->orderBy('id');
         // $payments = DB::table('payments')->WhereNull('collector_name')->where('is_verfied', 0)->orderBy('id')->paginate(100);
         $sumTotal = floatval($payments->sum('amount_paid'));
+        $payments = $payments->latest()->paginate(100);
         return view('console.cashier.index', compact('payments', 'sumTotal'));
     }
 
     public function filterForm(Request $request)
     {
-      // dd($request->all());
-      $query = $request->input('filter');
-      if(!$query || $query == ''):
-        return redirect()->route('cashiers.index');
-      endif;
+        // dd($request->all());
+        $query = $request->input('filter');
+        if (!$query || $query == '') :
+            return redirect()->route('cashiers.index');
+        endif;
 
-      $payments = Payment::where('collector_name', 'LIKE', "%{$query}%")->where('is_verfied', 0)->get();
-      $sumTotal = floatval($payments->sum('amount_paid'));
-      return view('console.cashier.index', compact('payments', 'sumTotal'));
+        $payments = Payment::query();
+        if ($request->sortby == 'name') {
+            $payments = $payments->where('collector_name', 'LIKE', "%{$query}%")->where('is_verfied', 0);
+        } else {
+            $payments = $payments->where('gcr_number', 'LIKE', "%{$query}%")->where('is_verfied', 0);
+        }
+        $sumTotal = floatval($payments->sum('amount_paid'));
+        $payments = $payments->latest()->paginate(100);
+        return view('console.cashier.index', compact('payments', 'sumTotal'));
     }
 
     public function checkoutPayment(Request $request)
     {
-      foreach ($request->gcrs as $gcr) {
-        $payment = Payment::where('gcr_number', $gcr)->first();
-        $payment->cprn = $request->gcr_number;
-        $payment->cashier_id = $request->cashier;
-        $payment->is_verfied = 1;
-        $payment->save();
-      }
+        foreach ($request->gcrs as $gcr) {
+            $payment = Payment::where('gcr_number', $gcr)->first();
+            $payment->cprn = $request->gcr_number;
+            $payment->cashier_id = $request->cashier;
+            $payment->is_verfied = 1;
+            $payment->save();
+        }
 
-      return redirect()->back();
-
+        return redirect()->back();
     }
 
     /**
@@ -75,10 +81,10 @@ class CashierController extends Controller
     {
         $data = $request->validate(['name' => 'required', 'email' => 'required']);
         $res = Cashier::create($data);
-        if($res) {
-          $cashiers = Cashier::latest()->count();
-          $res->cashier_id = strtoupper(env('ASSEMBLY_CODE')[0].$res->name[0].sprintf('%03d', $cashiers));
-          $res->save();
+        if ($res) {
+            $cashiers = Cashier::latest()->count();
+            $res->cashier_id = strtoupper(env('ASSEMBLY_CODE')[0] . $res->name[0] . sprintf('%03d', $cashiers));
+            $res->save();
         }
         return redirect()->route('cashiers.create');
     }

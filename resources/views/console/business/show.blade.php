@@ -3,6 +3,7 @@
 @section('content')
 <div class="content">
     <div class="container">
+        <?php //dd($business->bills); ?>
 
         <div class="col-sm-12">
             <div class="card-box">
@@ -31,10 +32,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="">Industry</label>
-                                        <input type="text" disabled="true" value="{{$business->industry}}" name="industry" class="form-control">
-                                    </div>
+                                  <div class="form-group">
+                                      <label for="">Business Owner</label>
+                                      <input disabled="true" type="text" value="<?= $business->owner ? $business->owner->name : $business->business_owner; ?>" name="use_code" class="form-control">
+                                  </div>
                                 </div>
                             </div>
 
@@ -42,8 +43,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Business Type</label>
-                                        <select class="form-control">
-                                            <option selected="true" disabled>
+                                        <select class="form-control" disabled>
+                                            <option selected="true" >
                                               <?= $business->type ? $business->type->description : $business->business_type; ?>
                                             </option>
                                         </select>
@@ -52,27 +53,22 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Business Category</label>
-                                        <select class="form-control">
-                                            <option selected="true" disabled>
+                                        <select class="form-control" disabled>
+                                            <option selected="true" >
                                               <?= $business->category ? $business->category->description : $business->business_category; ?>
                                             </option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                  <div class="form-group">
-                                      <label for="">Business Owner</label>
-                                      <input disabled="true" type="text" value="<?= $business->owner ? $business->owner->name : $business->business_owner; ?>" name="use_code" class="form-control">
-                                  </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="">Registration No</label>
-                                        <input disabled="true" type="text" value="{{$business->reg_no}}" name="reg_no" class="form-control">
+                                        <label for="">Fee Fixing Rate</label>
+                                        <input disabled="true" type="text" value="{{$business->bills[0]->rate_pa}}" name="assessment_date" class="form-control">
                                     </div>
                                 </div>
+
+                            </div>
+                            <div class="row">
                                 <div class="col-md-4">
                                   <div class="form-group">
                                       <label for="">Tin No</label>
@@ -264,6 +260,26 @@
                                     <div class="form-group">
                                         <label for="">Assessment Date</label>
                                         <input disabled="true" type="date" name="assessment_date" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">Bill Year</label>
+                                        <input disabled="true" type="text" value="{{$business->bills[0]->year}}" name="assessment_date" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">Arrears</label>
+                                        <input disabled="true" type="text" value="GHc {{number_format($business->bills[0]->arrears, 2)}}" name="assessment_date" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">Account Balance</label>
+                                        <input disabled="true" type="text" value="GHc {{number_format($business->bills[0]->account_balance, 2)}}" name="assessment_date" class="form-control">
                                     </div>
                                 </div>
                             </div>

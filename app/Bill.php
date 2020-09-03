@@ -21,27 +21,31 @@ class Bill extends Model
 
     public function properties()
     {
-      return $this->hasMany(Property::class, 'property_no', 'account_no');
+        return $this->hasMany(Property::class, 'property_no', 'account_no');
+    }
+
+    public function paymt()
+    {
+        return $this->hasMany(Payment::class, 'account_no', 'account_no');
     }
     public function businesses()
     {
-      return $this->hasMany(Business::class, 'business_no', 'account_no');
+        return $this->hasMany(Business::class, 'business_no', 'account_no');
     }
     public function getOutstndAttribute()
     {
-      return ($this->arrears + $this->current_amount) - $this->total_paid;
+        return ($this->arrears + $this->current_amount) - $this->total_paid;
     }
     public function getTbillAttribute()
     {
-      return ($this->arrears + $this->current_amount);
+        return ($this->arrears + $this->current_amount);
     }
     public function getArrearsAttribute()
     {
-      // dd($this->attribute['arrears']);
-      if($this->adjust_arrears != null || $this->adjust_arrears != '') {
-        return floatval($this->adjust_arrears);
-      }
-      return $this->attributes['arrears'];
-
+        // dd($this->attribute['arrears']);
+        if ($this->adjust_arrears != null || $this->adjust_arrears != '') {
+            return floatval($this->adjust_arrears);
+        }
+        return $this->attributes['arrears'];
     }
 }

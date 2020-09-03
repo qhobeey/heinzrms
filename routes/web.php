@@ -195,7 +195,6 @@ Route::prefix('console')->group(function () {
 
     Route::get('advanced/report/search/feefixing', 'AdvancedReportController@feefixingListingSearch')->name('advanced.report.search.feefixing');
     Route::get('advanced/report/feefixing', 'AdvancedReportController@feefixingListing')->name('advanced.report.feefixing');
-
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -211,6 +210,13 @@ Route::get('fix/business/id', 'FixRequestsController@businessID')->name('fix.bus
 Route::get('fix/property/id', 'FixRequestsController@propertyID')->name('fix.property.id');
 Route::get('fix/feefixing/property', 'FixRequestsController@feeFixingProperty')->name('fix.feefixing.property');
 Route::get('fix/feefixing/business', 'FixRequestsController@feeFixingBusiness')->name('fix.feefixing.business');
+
+Route::prefix('statements')->group(function () {
+    Route::get('index', 'StatementController@index')->name('statements.index');
+    Route::get('preview', 'StatementController@preview')->name('statements.preview');
+    Route::get('payment', 'StatementController@paymentsIndex')->name('statements.payment.index');
+    Route::get('payment/preview', 'StatementController@paymentsPreview')->name('statements.payment.preview');
+});
 
 Route::prefix('api/v1/console')->group(function () {
     Route::get('get_data_from/{query}', 'ApiController@getFromData');
@@ -309,5 +315,4 @@ Route::prefix('api/v1/console')->group(function () {
 
     Route::get('check_process_status', 'ApiController@checkProcessStatus');
     Route::get('check/link/available', 'AdvancedReportController@checkLinkAvailable');
-
 });
