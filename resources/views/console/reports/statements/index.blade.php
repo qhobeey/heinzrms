@@ -21,14 +21,24 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="">Start Date</label>
-                <input type="date" name="startdate" required class="form-control" value="">
+                <label for="">Start Year</label>
+                <select class="form-control" name="startdate" required>
+                  <?php
+                    for ($i=date('Y'); $i>2006; $i--) {?>
+                      <option value="<?= $i; ?>"><?= $i; ?></option>
+                    <?php }?>
+                </select>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="">End Date</label>
-                <input type="date" name="enddate" required class="form-control" value="">
+                <label for="">End Year</label>
+                <select class="form-control" name="enddate" required>
+                  <?php
+                    for ($i=date('Y'); $i>2006; $i--) {?>
+                      <option value="<?= $i; ?>"><?= $i; ?></option>
+                    <?php }?>
+                </select>
               </div>
             </div>
             <div class="col-md-12">

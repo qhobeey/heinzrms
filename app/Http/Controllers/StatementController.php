@@ -40,11 +40,15 @@ class StatementController extends Controller
         // dd($from, $to);
         $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
         $bills = Bill::with(['paymt' => function ($query) use ($from, $to) {
-            $query->whereBetween('payment_date', [$from, $to])->orderBy('payment_date', 'asc');
-        }])->where('account_no', $request->account)->whereBetween('bill_date', [$from, $to])->orderBy('year', 'asc')->get();
+            $query->whereBetween('payment_year', [$from, $to])->orderBy('payment_year', 'asc');
+        }])->where('account_no', $request->account)->whereBetween('year', [$from, $to])->orderBy('year', 'asc')->get();
         // dd($bills);
+        $openBalance = Bill::where('account_no', $request->account)->where('year', ($bills->min('year') - 1))->first();
+        // dd($openBalance);
+        $openBalance = $openBalance ? $openBalance->account_balance : '0.00';
+        // dd($openBalance);
         $message = "Account Statement for    " . \Carbon\Carbon::parse($from)->toFormattedDateString() . "   to     " . \Carbon\Carbon::parse($to)->toFormattedDateString();
-        return view('console.reports.statements.preview', compact('wcpScript', 'bills', 'message'));
+        return view('console.reports.statements.preview', compact('wcpScript', 'bills', 'message', 'openBalance'));
     }
 
     public function paymentsPreview(Request $request)

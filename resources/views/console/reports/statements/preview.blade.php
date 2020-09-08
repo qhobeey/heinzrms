@@ -60,7 +60,7 @@
           @if (count($bills) > 0)
             <tr>
                     <td colspan="3"></td>
-                    <td colspan="3">Opening Balance = 898989</td>
+                    <td colspan="3">Opening Balance = GHC {{number_format($openBalance, 2)}}</td>
                 </tr>
               @foreach ($bills as $bill)
                 <tr>

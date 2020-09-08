@@ -3,7 +3,7 @@
 @section('content')
 <div class="content">
     <div class="container">
-        <?php //dd($business->bills); ?>
+        <?php //dd(count($business->bills) ? 'yes' : 'no'); ?>
 
         <div class="col-sm-12">
             <div class="card-box">
@@ -63,7 +63,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Fee Fixing Rate</label>
-                                        <input disabled="true" type="text" value="{{$business->bills[0]->rate_pa}}" name="assessment_date" class="form-control">
+                                        <input disabled="true" type="text" value="{{count($business->bills) ? $business->bills[0]->rate_pa: 'NA'}}" name="assessment_date" class="form-control">
                                     </div>
                                 </div>
 
@@ -265,21 +265,21 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Bill Year</label>
-                                        <input disabled="true" type="text" value="{{$business->bills[0]->year}}" name="assessment_date" class="form-control">
+                                        <input disabled="true" type="text" value="{{count($business->bills) ? $business->bills[0]->year : 'NA'}}" name="assessment_date" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Arrears</label>
-                                        <input disabled="true" type="text" value="GHc {{number_format($business->bills[0]->arrears, 2)}}" name="assessment_date" class="form-control">
+                                        <input disabled="true" type="text" value="GHc {{count($business->bills) ? number_format($business->bills[0]->arrears, 2) : 'NA'}}" name="assessment_date" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Account Balance</label>
-                                        <input disabled="true" type="text" value="GHc {{number_format($business->bills[0]->account_balance, 2)}}" name="assessment_date" class="form-control">
+                                        <input disabled="true" type="text" value="GHc {{count($business->bills) ? number_format($business->bills[0]->account_balance, 2) : 'NA'}}" name="assessment_date" class="form-control">
                                     </div>
                                 </div>
                             </div>
