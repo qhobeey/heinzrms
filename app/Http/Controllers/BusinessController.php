@@ -259,6 +259,7 @@ class BusinessController extends Controller
 
     public function filterBusinessByColumn(Request $request)
     {
+        // dd($request->all());
         $query = '';
         $queryArray = [];
         $businesses = [];
@@ -283,7 +284,10 @@ class BusinessController extends Controller
                 $query = $reqs['query'];
                 break;
             case 'business_owner':
+                // dd($reqs['query']);
+                // $bo = \App\BusinessOwner::latest()->get();
                 $queryArray = \App\BusinessOwner::where('name', 'LIKE', "%{$reqs['query']}%")->pluck('owner_id');
+                // dd($bo);
                 break;
             case 'zonal_id':
                 $queryArray = \App\Zonal::where('description', 'LIKE', "%{$reqs['query']}%")->pluck('code');

@@ -15,15 +15,32 @@
                         <?php $business = \App\Business::latest()->get(); echo $business->count(); ?>
                       </button>
                       <div class="row c-stats">
-                        <h5>Total revenue:
+                        <h5>Collector cash:
                           <span><?php
                             $count = 0.0;
-                            $dataType = "b";
-                            $datas = \App\Payment::where('data_type', 'LIKE', "%{$dataType}%")->where('payment_year', date('Y'))->get();
-                            foreach ($datas as $data) {
-                              $count += $data->amount_paid;
-                            }
-                            echo "GHc". \App\Repositories\ExpoFunction::formatMoney($count, true);
+                            $dataTypeAl = "b";
+                            $datasAl = \App\Payment::where('data_type', 'LIKE', "%{$dataTypeAl}%")->where('payment_year', date('Y'));
+
+                            echo "GHc". number_format($datasAl->where('is_verfied', 1)->sum('amount_paid'), 2);
+                           ?></span>
+                        </h5>
+
+                        <h5 class="t-align-right">Cashier cash:
+                          <span><?php
+                            echo "GHc". number_format($datasAl->where('is_verfied', 0)->sum('amount_paid'), 2);
+                            ?></span>
+                        </h5>
+
+                        <h5>Total revenue:
+                          <span><?php
+                            // $count = 0.0;
+                            // $dataType = "b";
+                            // $datas = \App\Payment::where('data_type', 'LIKE', "%{$dataType}%")->where('payment_year', date('Y'))->get();
+                            // foreach ($datas as $data) {
+                            //   $count += $data->amount_paid;
+                            // }
+                            // echo "GHc". \App\Repositories\ExpoFunction::formatMoney($count, true);
+                            echo "GHc". number_format($datasAl->sum('amount_paid'), 2);
                            ?></span>
                         </h5>
 
@@ -80,15 +97,24 @@
                           <?php $property = \App\Property::latest()->get(); echo $property->count(); ?>
                         </button>
                         <div class="row c-stats">
+                        <h5>Collector cash:
+                          <span><?php
+                            $count = 0.0;
+                            $dataTypeAl = "p";
+                            $datasAl = \App\Payment::where('data_type', 'LIKE', "%{$dataTypeAl}%")->where('payment_year', date('Y'));
+
+                            echo "GHc". number_format($datasAl->where('is_verfied', 1)->sum('amount_paid'), 2);
+                           ?></span>
+                        </h5>
+
+                        <h5 class="t-align-right">Cashier cash:
+                          <span><?php
+                            echo "GHc". number_format($datasAl->where('is_verfied', 0)->sum('amount_paid'), 2);
+                            ?></span>
+                        </h5>
                           <h5>Total revenue:
                             <span><?php
-                              $count = 0.0;
-                              $dataType = "p";
-                              $datas = \App\Payment::where('data_type', 'LIKE', "%{$dataType}%")->where('payment_year', date('Y'))->get();
-                              foreach ($datas as $data) {
-                                $count += $data->amount_paid;
-                              }
-                              echo "GHc". \App\Repositories\ExpoFunction::formatMoney($count, true);
+                                echo "GHc". number_format($datasAl->sum('amount_paid'), 2);
                              ?></span>
                           </h5>
 
