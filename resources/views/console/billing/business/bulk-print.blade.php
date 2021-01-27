@@ -203,9 +203,11 @@
                           <img src="/images/assemblies/ghanacoatofarms.jpg" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
                         </div>
                         <h2 style="text-align: center; font-size: 20px; margin-top: -10px; margin-bottom: 0px; font-weight: 500; text-transform: capitalize;; color: black;">
-                          <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; right: 175px; text-transform: capitalize;">Account No:
-                            <span id="r_acc_no">&nbsp;&nbsp;&nbsp;AAS4444</span>
-                          </span>
+                            @if ($setting->bill_date)
+                            <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; right: 175px; text-transform: capitalize;">Bill date:
+                              <span id="">&nbsp;&nbsp;&nbsp;<?= \Carbon\Carbon::parse($setting->bill_date)->toFormattedDateString();?></span>
+                            </span>
+                            @endif
                           Business Operating Permit
                           <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; left: 100px; text-transform: capitalize;">Bill year:
                             <span id="r_ac_year" style="position: relative; left: 14px;">2019</span>
@@ -215,7 +217,11 @@
                         <div style="background-color: white; width:870px; display: flex;">
                           <div style="background-color: white; width: 466px;">
                             <article style="width:100%; display:flex;">
-                              <!-- <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Store Number:</p> -->
+                              <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Acount Number:</p>
+                              <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;<span id="r_acc_no">AAS4444</span></p>
+                            </article>
+                            <article style="width:100%; display:flex;">
+                              <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Store Number:</p>
                               <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;<span id="r_acc_snumber">ER56</span></p>
                             </article>
                             <article style="width:100%; display:flex;">
@@ -260,13 +266,17 @@
                           </div>
                           <div style="background-color: white; width: 430px;">
                             <article style="width:100%; display:flex;">
+                              <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Zone:</p>
+                              <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;<span id="r_ac_zonal">NO NAME</span></p>
+                            </article>
+                            <article style="width:100%; display:flex;">
                               <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Electoral Area:</p>
                               <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;<span id="r_ac_electoral">NO NAME</span></p>
                             </article>
-                            <article style="width:100%; display:flex;">
+                            {{-- <article style="width:100%; display:flex;">
                               <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Town Area Council:</p>
                               <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;<span id="r_ac_tas">NO NAME</span></p>
-                            </article>
+                            </article> --}}
                             <article style="width:100%; display:flex;">
                               <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Community:</p>
                               <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;&nbsp;<span id="r_ac_com">NO NAME</span></p>
@@ -521,11 +531,11 @@ $(document).ready(function(){
         document.getElementById('r_ac_zonal').innerHTML = parentParse.zonal ? parentParse.zonal.description : 'NO NAME'
         document.getElementById('r_ac_electoral').innerHTML = parentParse.electoral ? parentParse.electoral.description : 'NO NAME'
         document.getElementById('r_ac_com').innerHTML = parentParse.community ? parentParse.community.description : 'NO NAME'
-        document.getElementById('r_ac_tas').innerHTML = parentParse.tas ? parentParse.tas.description : "NO NAME"
+        // document.getElementById('r_ac_tas').innerHTML = parentParse.tas ? parentParse.tas.description : "NO NAME"
         document.getElementById('r_ac_street').innerHTML = parentParse.street ? parentParse.street.description : "NO NAME"
-        document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(formatAmount(currentBill.p_year_bill)) + parseFloat(formatAmount(currentBill.adjust_arrears)))} ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(formatAmount(currentBill.p_year_bill)) + parseFloat(formatAmount(currentBill.adjust_arrears ?currentBill.adjust_arrears: 0.0)))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_amountpaid').innerHTML = currentBill.p_year_total_paid ? `${formatDollar(parseFloat(currentBill.p_year_total_paid))} ` : `${formatDollar(0.0)} `
-        document.getElementById('r_ac_arrears').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(formatAmount(currentBill.original_arrears)) + parseFloat(formatAmount(currentBill.adjust_arrears))) } ` : `${formatDollar(0.0)} `
+        document.getElementById('r_ac_arrears').innerHTML = currentBill.arrears ? `${formatDollar(parseFloat(formatAmount(currentBill.original_arrears)) + parseFloat(formatAmount(currentBill.adjust_arrears ?currentBill.adjust_arrears: 0.0))) } ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_current').innerHTML = currentBill.current_amount ? `${formatDollar(parseFloat(currentBill.current_amount))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_total').innerHTML = currentBill.account_balance ? `${formatDollar(parseFloat(currentBill.account_balance))} ` : `${formatDollar(0.0)} `
         document.getElementById('r_ac_year').innerHTML = currentBill.year

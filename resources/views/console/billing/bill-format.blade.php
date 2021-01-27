@@ -75,6 +75,15 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="">Bill date</label>
+            <input type="date" class="form-control" name="bill_date" value="<?= $setting->bill_date; ?>">
+          </div>
+        </div>
+      </div>
       <div class="row">
         <button type="submit" class="btn btn-danger">Save</button>
       </div>

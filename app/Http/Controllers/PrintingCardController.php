@@ -27,32 +27,35 @@ use Cloudder;
 
 class PrintingCardController extends Controller
 {
-    public function bills($account){
-      $bill = \App\Bill::with(['property', 'business'])->where('account_no', $account)->first();
-      $lastyear = \App\Bill::where('account_no', $account)->where('year', $bill->year - 1)->first();
-      $setting = \App\BillSetting::first();
-      // dd($setting);
+    public function bills($account)
+    {
+        $bill = \App\Bill::with(['property', 'business'])->where('account_no', $account)->first();
+        $lastyear = \App\Bill::where('account_no', $account)->where('year', $bill->year - 1)->first();
+        $setting = \App\BillSetting::first();
+        // dd($setting);
         $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
 
         return view('console.prints.bill-card', ['wcpScript' => $wcpScript, 'bill' => $bill, 'lastyear' => $lastyear, 'setting' => $setting]);
     }
 
-    public function notice(){
+    public function notice()
+    {
 
         $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
 
         return view('console.prints.demand-notice-card', ['wcpScript' => $wcpScript]);
     }
 
-    public function printFile(Request $request){
+    public function printFile(Request $request)
+    {
 
-       if ($request->exists(WebClientPrint::CLIENT_PRINT_JOB)) {
+        if ($request->exists(WebClientPrint::CLIENT_PRINT_JOB)) {
 
             $useDefaultPrinter = ($request->input('useDefaultPrinter') === 'checked');
             $printerName = urldecode($request->input('printerName'));
 
             // $filePath = $request->input('imageFileName');
-            $filePath = public_path().'/bills/images/' . $request->input('imageFileName');
+            $filePath = public_path() . '/bills/images/' . $request->input('imageFileName');
 
             //create a temp file name for our image file...
 
@@ -67,26 +70,24 @@ class PrintingCardController extends Controller
             $cpj = new ClientPrintJob();
             //Create a PrintFile object with the PNG file
             $cpj->printFile = new PrintFile($filePath, $fileName, null);
-            if ($useDefaultPrinter || $printerName === 'null'){
+            if ($useDefaultPrinter || $printerName === 'null') {
                 $cpj->clientPrinter = new DefaultPrinter();
-            }else{
+            } else {
                 $cpj->clientPrinter = new InstalledPrinter($printerName);
             }
 
             //Send ClientPrintJob back to the client
             return response($cpj->sendToClient())
-                        ->header('Content-Type', 'application/octet-stream');
-
-
+                ->header('Content-Type', 'application/octet-stream');
         }
     }
 
     public function formatBill()
     {
-      $bill = \App\Bill::with(['property', 'business'])->first();
-      $lastyear = \App\Bill::where('account_no', $bill->account_no)->where('year', $bill->year - 1)->first();
-      $setting = \App\BillSetting::first();
-      // dd($setting);
+        $bill = \App\Bill::with(['property', 'business'])->first();
+        $lastyear = \App\Bill::where('account_no', $bill->account_no)->where('year', $bill->year - 1)->first();
+        $setting = \App\BillSetting::first();
+        // dd($setting);
         $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
 
         return view('console.billing.bill-format', ['wcpScript' => $wcpScript, 'bill' => $bill, 'lastyear' => $lastyear, 'setting' => $setting]);
@@ -95,56 +96,58 @@ class PrintingCardController extends Controller
     public function updateFormatBill(Request $request)
     {
 
-      // dd($request->all());
+        // dd($request->all());
 
-      $setting = \App\BillSetting::first();
-      if(!is_null($request->paymet_date)):
-        $setting->paymet_date = $request->paymet_date;
-      endif;
-      if(!is_null($request->contact_info_text)):
-        $setting->contact_info_text = $request->contact_info_text;
-      endif;
-      if(!is_null($request->authority_person)):
-        $setting->authority_person = $request->authority_person;
-      endif;
-      if(!is_null($request->organization_type)):
-        $setting->organization_type = $request->organization_type;
-      endif;
-      if(!is_null($request->enforce_law_text)):
-        $setting->enforce_law_text = $request->enforce_law_text;
-      endif;
+        $setting = \App\BillSetting::first();
+        if (!is_null($request->paymet_date)) :
+            $setting->paymet_date = $request->paymet_date;
+        endif;
+        if (!is_null($request->contact_info_text)) :
+            $setting->contact_info_text = $request->contact_info_text;
+        endif;
+        if (!is_null($request->authority_person)) :
+            $setting->authority_person = $request->authority_person;
+        endif;
+        if (!is_null($request->organization_type)) :
+            $setting->organization_type = $request->organization_type;
+        endif;
+        if (!is_null($request->enforce_law_text)) :
+            $setting->enforce_law_text = $request->enforce_law_text;
+        endif;
+        if (!is_null($request->bill_date)) :
+            $setting->bill_date = $request->bill_date;
+        endif;
 
-      if($request->assembly_logo):
-        Cloudder::upload(request('assembly_logo'), null);
-        list($width, $height) = getimagesize($request->assembly_logo);
-        $image_url= Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height"=>$height]);
-        $setting->logo = $image_url;
-      endif;
+        if ($request->assembly_logo) :
+            Cloudder::upload(request('assembly_logo'), null);
+            list($width, $height) = getimagesize($request->assembly_logo);
+            $image_url = Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height" => $height]);
+            $setting->logo = $image_url;
+        endif;
 
-      if($request->assembly_signature):
-        Cloudder::upload(request('assembly_signature'), null);
-        list($width, $height) = getimagesize($request->assembly_logo);
-        $image_url= Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height"=>$height]);
-        $setting->signature = $image_url;
-      endif;
+        if ($request->assembly_signature) :
+            Cloudder::upload(request('assembly_signature'), null);
+            list($width, $height) = getimagesize($request->assembly_logo);
+            $image_url = Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height" => $height]);
+            $setting->signature = $image_url;
+        endif;
 
-      $setting->save();
-      return redirect()->back();
+        $setting->save();
+        return redirect()->back();
     }
 
     public function printPropertyBills()
     {
-      $setting = \App\BillSetting::first();
-      // dd($setting);
-      $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
-      return view('console.billing.property.print-bills',['wcpScript' => $wcpScript, 'setting' => $setting]);
+        $setting = \App\BillSetting::first();
+        // dd($setting);
+        $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
+        return view('console.billing.property.print-bills', ['wcpScript' => $wcpScript, 'setting' => $setting]);
     }
     public function printBusinessBills()
     {
-      $setting = \App\BillSetting::first();
-      // dd($setting);
-      $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
-      return view('console.billing.business.print-bills',['wcpScript' => $wcpScript, 'setting' => $setting]);
+        $setting = \App\BillSetting::first();
+        // dd($setting);
+        $wcpScript = WebClientPrint::createScript(action('WebClientPrintController@processRequest'), action('PrintHtmlCardController@printFile'), Session::getId());
+        return view('console.billing.business.print-bills', ['wcpScript' => $wcpScript, 'setting' => $setting]);
     }
-
 }

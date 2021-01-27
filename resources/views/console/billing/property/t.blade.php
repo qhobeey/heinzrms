@@ -162,6 +162,10 @@
                         <div class="form-group">
                           <input type="checkbox" id="zeroRated" class="form-control" value="">
                           <label for="">Do not print bills with Zero(0) Rate Imposed</label>
+                        </div> <br>
+                        <div class="form-group">
+                          <input type="checkbox" id="onlyCurrent" class="form-control" value="">
+                          <label for="">Print only current fees</label>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -285,27 +289,31 @@
                               <p style="font-size: 13px; font-weight: 600; color: black; margin-top: 10px; margin-bottom:0px;">All bills must be settled on or before &nbsp;<?= \Carbon\Carbon::parse($setting->paymet_date)->toFormattedDateString();?></p>
                               <p style="font-size: 13px; font-weight: 600; color: black; margin-top: 10px;">For enquires contact the <?= $setting->organization_type; ?> finance office on the ff Nos. <?= $setting->contact_info_text; ?></p>
                               <div style="background-color:white; width:100%; border:2px solid black; margin-top: 10px; padding-left: 10px; padding-bottom: 3px;">
-                                <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
-                                  <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Previous Year(s) Bill:</p>
-                                  <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_pyear">GHc 0.00</span> &nbsp;&nbsp;</p>
-                                </article>
-                                <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
-                                  <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Amount Paid(Last Yr):</p>
-                                  <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_amountpaid">GHc 0.00</span> &nbsp;&nbsp;</p>
-                                </article>
-                                <hr style="width: 61%; display: flex; justify-content: space-between; border-top: 2px dashed rgb(0, 0, 0); padding-top: 6px; margin-top: 10px; margin-bottom: 0px; float: right;">
-                                <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
-                                  <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Arrears:</p>
-                                  <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_arrears">GHc 0.00</span> &nbsp;&nbsp;</p>
-                                </article>
+                                <span id="lost1">
+                                    <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
+                                    <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Previous Year Bill:</p>
+                                    <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_pyear">GHc 0.00</span> &nbsp;&nbsp;</p>
+                                    </article>
+                                    <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
+                                    <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Amount Paid(Last Yr):</p>
+                                    <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_amountpaid">GHc 0.00</span> &nbsp;&nbsp;</p>
+                                    </article>
+                                    <hr style="width: 61%; display: flex; justify-content: space-between; border-top: 2px dashed rgb(0, 0, 0); padding-top: 6px; margin-top: 10px; margin-bottom: 0px; float: right;">
+                                    <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
+                                    <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Arrears:</p>
+                                    <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_arrears">GHc 0.00</span> &nbsp;&nbsp;</p>
+                                    </article>
+                                </span>
                                 <article style="width:100%; display:flex; justify-content: space-between; margin-top: 5px;">
                                   <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Current Fee:</p>
                                   <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 300;"><span id="r_ac_current">GHc 225.00</span> &nbsp;&nbsp;</p>
                                 </article>
-                                <article style="width:100%; display:flex; justify-content: space-between; margin-top: 10px;padding-top: 5px; border-top: 2px solid black; border-bottom: 2px solid black; padding-bottom: 5px; background: antiquewhite;">
-                                  <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Total Amount Due Fee:</p>
-                                  <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;"><span id="r_ac_total">GHc 225.00</span> &nbsp;&nbsp;</p>
-                                </article>
+                                <span id="lost2">
+                                    <article style="width:100%; display:flex; justify-content: space-between; margin-top: 10px;padding-top: 5px; border-top: 2px solid black; border-bottom: 2px solid black; padding-bottom: 5px; background: antiquewhite;">
+                                      <p style="color: black;margin-bottom: 0px;width: 40%;font-size: 13px; font-weight: 600;">Total Amount Due Fee:</p>
+                                      <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;"><span id="r_ac_total">GHc 225.00</span> &nbsp;&nbsp;</p>
+                                    </article>
+                                </span>
                               </div>
                             </div>
                           </div>
@@ -595,6 +603,7 @@ $(document).ready(function(){
         var parentParse = mode;
         var currentBill = mode.bills[0];
         var zeroRatedBox = document.querySelector('#zeroRated').checked;
+        var onlyCurrentBox = document.querySelector('#onlyCurrent').checked;
         console.log(parentParse)
         console.table(currentBill)
         console.log(`.............${parseFloat(currentBill.p_year_total_paid > 0) ? 'jk' : 'ol'}`);
@@ -638,6 +647,12 @@ $(document).ready(function(){
         //   document.getElementById('tt3').innerHTML = parseInt(document.getElementById('tt3').innerHTML) + 1
         //   return true;
         // }
+
+        if(onlyCurrentBox) {
+            console.log('checked.......current')
+            document.getElementById('lost1').style.display = "none";
+            document.getElementById('lost2').style.display = "none";
+        }
 
         if(zeroRatedBox){
           if(parseFloat(currentBill.account_balance) == parseFloat(0) || parseFloat(currentBill.account_balance) == parseFloat(0.0)){
