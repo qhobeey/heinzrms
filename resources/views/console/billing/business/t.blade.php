@@ -202,7 +202,7 @@
                           </div>
                           <img src="/images/assemblies/ghanacoatofarms.jpg" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
                         </div>
-                        <h2 style="text-align: center; font-size: 20px; margin-top: -10px; margin-bottom: 0px; font-weight: 500; text-transform: capitalize;; color: black;">
+                        {{-- <h2 style="text-align: center; font-size: 20px; margin-top: -10px; margin-bottom: 0px; font-weight: 500; text-transform: capitalize;; color: black;">
                           <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; right: 125px; text-transform: capitalize;">Account No:
                             <span id="r_acc_no">&nbsp;&nbsp;&nbsp;AAS4444</span>
                           </span>
@@ -210,12 +210,29 @@
                           <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; left: 90px; text-transform: capitalize;">Bill year:
                             <span id="r_ac_year" style="position: relative; left: 14px;">2019</span>
                           </span>
+                        </h2> --}}
+                        <h2 style="text-align: center; font-size: 20px; margin-top: -10px; margin-bottom: 0px; font-weight: 500; text-transform: capitalize;; color: black;">
+                            @if ($setting->bill_date)
+                            <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; right: 175px; text-transform: capitalize;">Bill date:
+                              <span id="">&nbsp;&nbsp;&nbsp;<?= \Carbon\Carbon::parse($setting->bill_date)->toFormattedDateString();?></span>
+                            </span>
+                            @endif
+                            <span style="position: relative; right:30px;">
+                                Business Operating Permit
+                            </span>
+                          <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; left: 100px; text-transform: capitalize;">Bill year:
+                            <span id="r_ac_year" style="position: relative; left: 14px;">2019</span>
+                          </span>
                         </h2>
                         <hr style="margin-top: 0px; margin-bottom: 20px; width: 65%; border-top: 2px solid black;">
                         <div style="background-color: white; width:725px; display: flex;">
                           <div style="background-color: white; width: 380px;">
                             <article style="width:100%; display:flex;">
-                              <!-- <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Store Number:</p> -->
+                              <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Acount Number:</p>
+                              <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;<span id="r_acc_no">AAS4444</span></p>
+                            </article>
+                            <article style="width:100%; display:flex;">
+                              <p style="color: black;margin-bottom: 0px;width: 28%;font-size: 13px; font-weight: 600;">Store Number:</p>
                               <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;">&nbsp;&nbsp;&nbsp;<span id="r_acc_snumber">ER56</span></p>
                             </article>
                             <article style="width:100%; display:flex;">
@@ -520,7 +537,7 @@ $(document).ready(function(){
         document.getElementById('r_ac_imposed').innerHTML = currentBill.rate_pa ? `${formatDollar(parseFloat(currentBill.rate_pa))} ` : `${formatDollar(parseFloat(0.0))} `
         document.getElementById('r_ac_zonal').innerHTML = parentParse.zonal ? parentParse.zonal.description : 'NO NAME'
         document.getElementById('r_ac_electoral').innerHTML = parentParse.electoral ? parentParse.electoral.description : 'NO NAME'
-        document.getElementById('r_ac_com').innerHTML = parentParse.community ? parentParse.community.description : 'NO NAME'
+        document.getElementById('r_ac_com').innerHTML = parentParse.communities ? parentParse.communities.description : 'NO NAME'
         document.getElementById('r_ac_tas').innerHTML = parentParse.tas ? parentParse.tas.description : "NO NAME"
         document.getElementById('r_ac_street').innerHTML = parentParse.street ? parentParse.street.description : "NO NAME"
         document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(formatAmount(currentBill.p_year_bill)) + parseFloat(formatAmount(currentBill.adjust_arrears)))} ` : `${formatDollar(0.0)} `

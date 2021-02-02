@@ -190,10 +190,23 @@
                   </div>
                   <img src="/images/assemblies/ghanacoatofarms.jpg" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
                 </div>
-                <h2 style="text-align: center; font-size: 26px; margin-top: 0px; margin-bottom: 0px; font-weight: 500; text-transform: uppercase; color: black;">Property Rate
+                {{-- <h2 style="text-align: center; font-size: 26px; margin-top: 0px; margin-bottom: 0px; font-weight: 500; text-transform: uppercase; color: black;">Property Rate
                   <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; left: 100px; text-transform: capitalize;">Bill year:
                     <span id="r_ac_year" style="position: relative; left: 14px;">2019</span>
                   </span>
+                </h2> --}}
+                <h2 style="text-align: center; font-size: 26px; margin-top: 0px; margin-bottom: 0px; font-weight: 500; text-transform: uppercase; color: black;">
+                    @if ($setting->bill_date)
+                    <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; right: 175px; text-transform: capitalize;">Bill date:
+                        <span id="">&nbsp;&nbsp;&nbsp;<?= \Carbon\Carbon::parse($setting->bill_date)->toFormattedDateString();?></span>
+                    </span>
+                    @endif
+                    <span style="position: relative; right:30px;">
+                        Property Rate
+                    </span>
+                    <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; left: 100px; text-transform: capitalize;">Bill year:
+                        <span id="r_ac_year" style="position: relative; left: 14px;">2019</span>
+                    </span>
                 </h2>
                 <hr style="margin-top: 0px; margin-bottom: 20px; width: 65%; border-top: 2px solid black;">
                 <div style="background-color: white; width:880px; display: flex;">

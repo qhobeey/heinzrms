@@ -215,8 +215,16 @@
                             </div>
                             <img src="/images/assemblies/ghanacoatofarms.jpg" style="width: 80px; height: 80px; object-fit: contain; margin: auto;">
                           </div>
-                          <h2 style="text-align: center; font-size: 26px; margin-top: 0px; margin-bottom: 0px; font-weight: 500; text-transform: uppercase; color: black;">Property Rate
-                            <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; left: 100px; text-transform: capitalize;">Bill year:
+                          <h2 style="text-align: center; font-size: 26px; margin-top: 0px; margin-bottom: 0px; font-weight: 500; text-transform: uppercase; color: black;">
+                            @if ($setting->bill_date)
+                            <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; right: 100px; text-transform: capitalize;">Bill date:
+                              <span id="">&nbsp;&nbsp;&nbsp;<?= \Carbon\Carbon::parse($setting->bill_date)->toFormattedDateString();?></span>
+                            </span>
+                            @endif
+                            <span style="position: relative; right:30px;">
+                                Property Rate <span id="lost3" style="display: none;">(Provisional)</span>
+                            </span>
+                            <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; left: 50px; text-transform: capitalize;">Bill year:
                               <span id="r_ac_year" style="position: relative; left: 14px;">2019</span>
                             </span>
                           </h2>
@@ -314,7 +322,16 @@
                                       <p style="color: black;margin-bottom: 0px;font-size: 13px; font-weight: 600;"><span id="r_ac_total">GHc 225.00</span> &nbsp;&nbsp;</p>
                                     </article>
                                 </span>
+
                               </div>
+                              <span id="lost4" style="display: none">
+                                    <article style="width:100%; display:flex; justify-content: space-between; margin-top: 10px;padding-top: 5px; margin-bottom: 5px;">
+                                      <p style="color: black;margin-bottom: 0px;width: 100%;font-size: 13px; font-weight: 600; text-transform:uppercase;">
+                                        this is a Provisional bill for the year, because it does not include arrears. all arrears before 31st Dec. of last Year
+                                        will be sent later. For any enquiries, please contact the assembly's revenue office.
+                                      </p>
+                                    </article>
+                                </span>
                             </div>
                           </div>
                           <div style="background-color:white; width: 100%; font-size: 11px; color: black; margin-top:0px;">
@@ -652,6 +669,11 @@ $(document).ready(function(){
             console.log('checked.......current')
             document.getElementById('lost1').style.display = "none";
             document.getElementById('lost2').style.display = "none";
+            document.getElementById('lost3').style.display = "inline";
+            document.getElementById('lost4').style.display = "inline";
+        }else{
+            document.getElementById('lost3').style.display = "none";
+            document.getElementById('lost4').style.display = "none";
         }
 
         if(zeroRatedBox){

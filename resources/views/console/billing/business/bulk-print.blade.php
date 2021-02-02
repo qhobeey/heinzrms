@@ -208,11 +208,14 @@
                               <span id="">&nbsp;&nbsp;&nbsp;<?= \Carbon\Carbon::parse($setting->bill_date)->toFormattedDateString();?></span>
                             </span>
                             @endif
-                          Business Operating Permit
+                            <span style="position: relative; right:30px;">
+                                Business Operating Permit
+                            </span>
                           <span style="color: black; margin-bottom: 0px; width: 40%; font-size: 13px; font-weight: 800; position: relative; left: 100px; text-transform: capitalize;">Bill year:
                             <span id="r_ac_year" style="position: relative; left: 14px;">2019</span>
                           </span>
                         </h2>
+
                         <hr style="margin-top: 0px; margin-bottom: 20px; width: 65%; border-top: 2px solid black;">
                         <div style="background-color: white; width:870px; display: flex;">
                           <div style="background-color: white; width: 466px;">
@@ -515,6 +518,7 @@ $(document).ready(function(){
         var parentParse = mode;
         var currentBill = mode.bills[0];
         var zeroRatedBox = document.querySelector('#zeroRated').checked;
+        console.log('.................')
         console.log(parentParse)
         // console.table(currentBill)
         // console.log();
@@ -530,7 +534,7 @@ $(document).ready(function(){
         document.getElementById('r_ac_imposed').innerHTML = currentBill.rate_pa ? `${formatDollar(parseFloat(currentBill.rate_pa))} ` : `${formatDollar(parseFloat(0.0))} `
         document.getElementById('r_ac_zonal').innerHTML = parentParse.zonal ? parentParse.zonal.description : 'NO NAME'
         document.getElementById('r_ac_electoral').innerHTML = parentParse.electoral ? parentParse.electoral.description : 'NO NAME'
-        document.getElementById('r_ac_com').innerHTML = parentParse.community ? parentParse.community.description : 'NO NAME'
+        document.getElementById('r_ac_com').innerHTML = parentParse.communities ? parentParse.communities.description : 'NO NAME'
         // document.getElementById('r_ac_tas').innerHTML = parentParse.tas ? parentParse.tas.description : "NO NAME"
         document.getElementById('r_ac_street').innerHTML = parentParse.street ? parentParse.street.description : "NO NAME"
         document.getElementById('r_ac_pyear').innerHTML = currentBill.p_year_bill ? `${formatDollar(parseFloat(formatAmount(currentBill.p_year_bill)) + parseFloat(formatAmount(currentBill.adjust_arrears ?currentBill.adjust_arrears: 0.0)))} ` : `${formatDollar(0.0)} `
