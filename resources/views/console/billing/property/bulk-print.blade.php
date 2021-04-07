@@ -106,7 +106,7 @@
                         <div class="form-group">
                           <label for="">Community</label>
                           <?php $communities = App\Models\Location\Community::orderBy('description', 'asc')->get(); ?>
-                          <select disabled class="form-control" name="">
+                          <select class="form-control" name="community_id">
                             <option value="">SELECT</option>
                             <?php foreach ($communities as $key => $community): ?>
                               <option value="<?php echo $community->code; ?>"><?php echo $community->description; ?></option>
